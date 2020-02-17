@@ -1,17 +1,10 @@
-## Setup
+## Anki Notes
 
-```shell
-npm install -g degit
-npx degit ampcpmgp/parcel-svelte-mocktimes-starter
-npm i
-```
-
-* edit `package.json` `name` property
-* edit `README.md`
-* edit `src/index.html` title
+暗記ノート。
 
 
-## Start
+## Development
+
 ```shell
 npm start
 npm run storybook

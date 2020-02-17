@@ -1,5 +1,5 @@
 {
-  "name": "parcel-svelte-mocktimes-starter",
+  "name": "anki-notes",
   "version": "1.0.0",
   "scripts": {
     "start": "parcel mock/testbed/*.html",
@@ -28,6 +28,7 @@
     "@storybook/svelte": "^5.3.12",
     "am-mocktimes": "^3.0.3",
     "am-mocktimes-addon-screenshot": "^0.1.2",
+    "am-parts-cli": "0.0.3",
     "ava": "^3.2.0",
     "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
