@@ -40,7 +40,7 @@ export async function init() {
 
   isAuthenticated.subscribe(async value => {
     // 未認証の場合は早期リターン
-    if (!value) {
+    if (value) {
       existsClient.set(true)
 
       return
