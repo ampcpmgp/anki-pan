@@ -1,6 +1,25 @@
 <script>
-  import { name, greeting } from '../../states/greetings'
+  import {
+    accessToken,
+    userProfile,
+    existsClient,
+    isAuthenticated,
+    init,
+    logout,
+    login,
+  } from '../../states/auth'
+
+  init()
 </script>
 
-<h1>{$greeting}</h1>
-<input bind:value={$name} />
+{#if !$existsClient}
+  <p>...認証確認中</p>
+{:else}
+  {#if !$isAuthenticated}
+    <button on:click={login}>Log in</button>
+  {:else}
+    <button on:click={logout}>Log out</button>
+    <p>{$accessToken}</p>
+    <p>{JSON.stringify($userProfile)}</p>
+  {/if}
+{/if}
