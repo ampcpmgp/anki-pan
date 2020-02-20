@@ -1,5 +1,13 @@
 <script>
-  import {  accessToken, userProfile, existsClient, isAuthenticated, init, logout,login } from "../../states/auth";
+  import {
+    accessToken,
+    userProfile,
+    existsClient,
+    isAuthenticated,
+    init,
+    logout,
+    login,
+  } from '../../states/auth'
 
   init()
 </script>

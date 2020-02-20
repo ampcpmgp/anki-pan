@@ -9,5 +9,5 @@ export default {
 
 export const Main = () => ({
   Component: Editor,
-  props: { text: 'dummy-text' }
+  props: { text: 'dummy-text' },
 })
