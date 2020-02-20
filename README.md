@@ -1,6 +1,6 @@
-## Anki Notes
+## Anki Pan
 
-暗記ノート。
+絵と音と隠し文字で学ぶ、暗記アプリ。
 
 
 ## Development
