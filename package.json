@@ -1,8 +1,9 @@
 {
-  "name": "anki-notes",
+  "name": "anki-pan",
   "version": "1.0.0",
   "scripts": {
     "start": "parcel mock/testbed/*.html",
+    "start-dev": "parcel src/index.html --open",
     "test": "ava",
     "test:watch": "npm run test -- --watch",
     "dist": "run-s dist:*",
@@ -46,7 +47,9 @@
     "svelte-loader": "^2.13.6"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.6.4",
     "modern-css-reset": "^1.1.0",
+    "query-string": "^6.11.0",
     "svelte": "^3.18.2",
     "svelte-spa-router": "^2.0.0"
   },
