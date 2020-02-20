@@ -39,7 +39,8 @@ export async function init() {
   await updateAuthenticated()
 
   isAuthenticated.subscribe(async value => {
-    if (value) {
+    // 未認証の場合は早期リターン
+    if (!value) {
       existsClient.set(true)
 
       return
@@ -47,6 +48,7 @@ export async function init() {
 
     const { code, state } = queryString.parse(location.search)
 
+    // 認証済みでリダイレクトされてきた場合の処理
     if (code && state) {
       await auth0.handleRedirectCallback()
       await updateAuthenticated()
