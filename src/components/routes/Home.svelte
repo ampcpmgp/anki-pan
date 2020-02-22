@@ -1,4 +1,5 @@
 <script>
+  import { link } from 'svelte-spa-router'
   import {
     getAuth0,
     isAuthenticated,
@@ -11,7 +12,9 @@
 
 {#await getAuth0}
   <p>...認証確認中</p>
-{:then value}
+{:then _}
+  <a href="/test" use:link>testへ</a>
+
   {#if !$isAuthenticated}
     <button on:click={login}>Log in</button>
   {:else}

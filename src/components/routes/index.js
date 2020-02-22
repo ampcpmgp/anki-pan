@@ -3,5 +3,6 @@ import NotFound from './NotFound'
 
 export default {
   '/': Home,
+  '/test': Home,
   '*': NotFound,
 }

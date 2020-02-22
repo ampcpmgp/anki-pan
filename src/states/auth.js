@@ -31,13 +31,8 @@ export async function init() {
       await auth0.handleRedirectCallback()
       await updateAuthenticated()
 
-      switch (process.env.NODE_ENV) {
-        case value:
-          break
-
-        default:
-          break
-      }
+      const hash = location.hash
+      window.history.replaceState({}, document.title, `/${hash}`)
     }
   })
 }
