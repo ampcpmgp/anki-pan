@@ -1,18 +1,13 @@
 <script>
   import { link } from 'svelte-spa-router'
-  import {
-    getAuth0,
-    isAuthenticated,
-    getAuthorization,
-    getUserProfile,
-    logout,
-    login,
-  } from '../../states/auth'
+  import { getAuth0, isAuthenticated, logout, login } from '../../states/auth'
+
+  import { fetchAccount, account } from '../../states/user'
 </script>
 
 {#await getAuth0()}
   <p>...認証確認中</p>
-{:then _}
+{:then}
   <a href="/test" use:link>testへ</a>
 
   {#if !$isAuthenticated}
@@ -20,12 +15,10 @@
   {:else}
     <button on:click={logout}>Log out</button>
 
-    {#await getAuthorization() then value}
-      <p>{value}</p>
-    {/await}
-
-    {#await getUserProfile() then value}
-      <p>{JSON.stringify(value)}</p>
+    {#await fetchAccount()}
+      <p>...ユーザー情報取得中</p>
+    {:then}
+      <p>{JSON.stringify($account)}</p>
     {/await}
   {/if}
 {/await}
