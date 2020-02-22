@@ -1,25 +1,28 @@
 <script>
   import {
-    accessToken,
-    userProfile,
-    existsClient,
+    getAuth0,
     isAuthenticated,
-    init,
+    getAuthorization,
+    getUserProfile,
     logout,
     login,
   } from '../../states/auth'
-
-  init()
 </script>
 
-{#if !$existsClient}
+{#await getAuth0}
   <p>...認証確認中</p>
-{:else}
+{:then value}
   {#if !$isAuthenticated}
     <button on:click={login}>Log in</button>
   {:else}
     <button on:click={logout}>Log out</button>
-    <p>{$accessToken}</p>
-    <p>{JSON.stringify($userProfile)}</p>
+
+    {#await getAuthorization() then value}
+      <p>{value}</p>
+    {/await}
+
+    {#await getUserProfile() then value}
+      <p>{JSON.stringify(value)}</p>
+    {/await}
   {/if}
-{/if}
+{/await}

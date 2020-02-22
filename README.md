@@ -5,7 +5,24 @@
 
 ## Development
 
+Local (Mocktimes)
+
 ```shell
 npm start
+# other console tab
+npm run dev-api
+```
+
+Local
+
+```shell
+npm run start-dev
+# other console tab
+npm run dev-api
+```
+
+
+Storybook
+```shell
 npm run storybook
 ```
