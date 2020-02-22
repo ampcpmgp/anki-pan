@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 import queryString from 'query-string'
 import createAuth0Client from '@auth0/auth0-spa-js'
 import config from '../auth0/config.json'
@@ -18,27 +18,27 @@ export async function init() {
 
   await updateAuthenticated()
 
-  isAuthenticated.subscribe(async value => {
-    // 未認証の場合は早期リターン
-    if (value) {
-      return
-    }
+  const checkAuthenticated = get(isAuthenticated)
 
-    const { code, state } = queryString.parse(location.search)
+  // 未認証の場合は早期リターン
+  if (checkAuthenticated) {
+    return
+  }
 
-    // 認証済みでリダイレクトされてきた場合の処理
-    if (code && state) {
-      await auth0.handleRedirectCallback()
-      await updateAuthenticated()
+  const { code, state } = queryString.parse(location.search)
 
-      const hash = location.hash
-      window.history.replaceState({}, document.title, `/${hash}`)
-    }
-  })
+  // 認証済みでリダイレクトされてきた場合の処理
+  if (code && state) {
+    await auth0.handleRedirectCallback()
+    await updateAuthenticated()
+
+    const hash = location.hash
+    window.history.replaceState({}, document.title, `/${hash}`)
+  }
 }
 
 export async function getAuth0() {
-  return await auth0Promise
+  await auth0Promise
 }
 
 export async function getAuthorization() {

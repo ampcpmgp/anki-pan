@@ -10,7 +10,7 @@
   } from '../../states/auth'
 </script>
 
-{#await getAuth0}
+{#await getAuth0()}
   <p>...認証確認中</p>
 {:then _}
   <a href="/test" use:link>testへ</a>
