@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "parcel mock/testbed/*.html NODE_ENV=mock",
-    "start-dev": "parcel src/index.html --open",
-    "dev-api": "now dev --listen localhost:1234",
+    "start-dev": "parcel watch src/index.html  --public-url ./",
+    "dev-api": "now dev",
     "test": "ava",
     "test:watch": "npm run test -- --watch",
     "dist": "run-s dist:*",
@@ -50,6 +50,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
     "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.7.0",
     "modern-css-reset": "^1.1.0",
     "ms": "^2.1.2",
     "query-string": "^6.11.0",

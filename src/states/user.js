@@ -7,7 +7,7 @@ export async function fetchAccount() {
     const Authorization = await getAuthorization()
 
     const response = await loginUser.get({
-      endpoint: 'users/account',
+      endpoint: 'users/account/get',
       Authorization,
     })
 

@@ -5,7 +5,7 @@
   import { fetchAccount, account } from '../../states/user'
 </script>
 
-<p>ホームページ</p>
+<p>テストページ</p>
 {#await getAuth0()}
   <p>...認証確認中</p>
 {:then}

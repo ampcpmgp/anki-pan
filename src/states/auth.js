@@ -12,6 +12,7 @@ export async function init() {
     domain: config.domain,
     client_id: config.clientId,
     redirect_uri: location.href,
+    scope: '',
   })
 
   const auth0 = await auth0Promise
@@ -20,7 +21,7 @@ export async function init() {
 
   const checkAuthenticated = get(isAuthenticated)
 
-  // 未認証の場合は早期リターン
+  // 認証済みの場合は早期リターン
   if (checkAuthenticated) {
     return
   }
@@ -32,8 +33,8 @@ export async function init() {
     await auth0.handleRedirectCallback()
     await updateAuthenticated()
 
-    const hash = location.hash
-    window.history.replaceState({}, document.title, `/${hash}`)
+    const { pathname, hash } = location
+    window.history.replaceState({}, document.title, `${pathname}${hash}`)
   }
 }
 
