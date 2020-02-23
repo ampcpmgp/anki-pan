@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store'
 import queryString from 'query-string'
 import createAuth0Client from '@auth0/auth0-spa-js'
-import config from '../auth0/config.json'
+import config from '../../auth0/config.json'
 
 let auth0Promise
 
@@ -12,7 +12,7 @@ export async function init() {
     domain: config.domain,
     client_id: config.clientId,
     redirect_uri: location.href,
-    scope: '',
+    scope: 'openid profile',
   })
 
   const auth0 = await auth0Promise

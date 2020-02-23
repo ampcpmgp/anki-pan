@@ -1,9 +1,22 @@
-const { verifyToken } = require('../_utils/jwt')
+const config = require('../../../auth0/config.json')
+const fetch = require('node-fetch')
 
 module.exports = async (req, res) => {
-  const { sub: subjectClaim } = await verifyToken(req)
+  const url = `https://${config.domain}/userinfo`
 
-  console.log('sub', subjectClaim)
+  const response = await fetch(url, {
+    headers: {
+      Authorization: req.headers.authorization,
+    },
+  })
+
+  if (response.status !== 200) {
+    throw new Error('Authorization Error')
+  }
+
+  const { sub: subjectClaim } = await response.json()
+
+  console.log(subjectClaim)
 
   const displayName = ''
   const posts = []

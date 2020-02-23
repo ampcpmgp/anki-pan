@@ -53,6 +53,7 @@
     "jwks-rsa": "^1.7.0",
     "modern-css-reset": "^1.1.0",
     "ms": "^2.1.2",
+    "node-fetch": "^2.6.0",
     "query-string": "^6.11.0",
     "svelte": "^3.18.2",
     "svelte-spa-router": "^2.0.0"
