@@ -25,6 +25,6 @@ export async function fetchAccount() {
 }
 
 export const account = writable({
-  displayName: '',
-  posts: [],
+  userName: '',
+  breads: [],
 })

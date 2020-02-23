@@ -1,12 +1,10 @@
 module.exports = (req, res) => {
   const {
-    query: { userName },
+    body: { bread, breadId },
   } = req
 
-  const breads = []
-
   res.json({
-    userName,
-    breads,
+    breadId,
+    bread,
   })
 }

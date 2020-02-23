@@ -8,10 +8,11 @@ module.exports = async (req, res) => {
   }
 
   const { sub: subjectClaim } = await response.json()
-
   console.warn(subjectClaim)
 
-  const userName = ''
+  const {
+    body: { userName },
+  } = req
   const breads = []
 
   res.json({
