@@ -9,7 +9,7 @@
 {#await getAuth0()}
   <p>...認証確認中</p>
 {:then}
-  <a href="/test" use:link>testへ</a>
+  <a href="/" use:link>homeへ</a>
 
   {#if !$isAuthenticated}
     <button on:click={login}>Log in</button>

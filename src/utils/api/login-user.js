@@ -7,7 +7,6 @@ export function get({ endpoint, Authorization, params = {} }) {
   return fetch(url, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       Authorization,
     },
   })

@@ -9,8 +9,6 @@ Local (Mocktimes)
 
 ```shell
 npm start
-# other console tab
-npm run dev-api
 ```
 
 Local
@@ -19,6 +17,7 @@ Local
 npm run start-dev
 # other console tab
 npm run dev-api
+# Open file `./dist/index.html`
 ```
 
 
