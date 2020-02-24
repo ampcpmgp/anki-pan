@@ -11,3 +11,5 @@ dist-no-minified/
 
 # storybook
 storybook-static/
+
+.now

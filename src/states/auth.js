@@ -1,77 +1,80 @@
-import { writable, derived } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 import queryString from 'query-string'
 import createAuth0Client from '@auth0/auth0-spa-js'
-import config from '../auth0/config.json'
+import config from '../../auth0/config.json'
 
-let auth0
+let auth0Promise
 
-export const existsClient = writable(false)
 export const isAuthenticated = writable(false)
 
-export const accessToken = derived(
-  isAuthenticated,
-  async ($isAuthenticated, set) => {
-    if ($isAuthenticated) {
-      const value = await auth0.getTokenSilently()
-
-      set(value)
-    }
-  }
-)
-
-export const userProfile = derived(
-  isAuthenticated,
-  async ($isAuthenticated, set) => {
-    if ($isAuthenticated) {
-      const value = await auth0.getUser()
-
-      set(value)
-    }
-  }
-)
-
 export async function init() {
-  auth0 = await createAuth0Client({
+  auth0Promise = createAuth0Client({
     domain: config.domain,
     client_id: config.clientId,
+    redirect_uri: location.href,
+    scope: 'openid profile',
   })
+
+  const auth0 = await auth0Promise
 
   await updateAuthenticated()
 
-  isAuthenticated.subscribe(async value => {
-    // 未認証の場合は早期リターン
-    if (value) {
-      existsClient.set(true)
+  const checkAuthenticated = get(isAuthenticated)
 
-      return
-    }
+  // 認証済みの場合は早期リターン
+  if (checkAuthenticated) {
+    return
+  }
 
-    const { code, state } = queryString.parse(location.search)
+  const { code, state } = queryString.parse(location.search)
 
-    // 認証済みでリダイレクトされてきた場合の処理
-    if (code && state) {
-      await auth0.handleRedirectCallback()
-      await updateAuthenticated()
-      window.history.replaceState({}, document.title, '/')
-    }
+  // 認証済みでリダイレクトされてきた場合の処理
+  if (code && state) {
+    await auth0.handleRedirectCallback()
+    await updateAuthenticated()
 
-    existsClient.set(true)
-  })
+    const { pathname, hash } = location
+    window.history.replaceState({}, document.title, `${pathname}${hash}`)
+  }
+}
+
+export async function getAuth0() {
+  await auth0Promise
+}
+
+export async function getAuthorization() {
+  const auth0 = await auth0Promise
+  const value = await auth0.getTokenSilently()
+
+  return `Bearer ${value}`
+}
+
+export async function getUserProfile() {
+  const auth0 = await auth0Promise
+  const value = await auth0.getUser()
+
+  return value
 }
 
 export async function login() {
+  const auth0 = await auth0Promise
+
   await auth0.loginWithRedirect({
-    redirect_uri: window.location.origin,
+    redirect_uri: location.href,
   })
 }
 
 export async function logout() {
+  const auth0 = await auth0Promise
+
   await auth0.logout({
-    redirect_uri: window.location.origin,
+    redirect_uri: location.href,
   })
 }
 
 async function updateAuthenticated() {
+  const auth0 = await auth0Promise
+
   try {
     const checkAuthenticated = await auth0.isAuthenticated()
 
