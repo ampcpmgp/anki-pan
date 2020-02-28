@@ -1,0 +1,67 @@
+name: Deploy to Now
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - run: npm install
+    - name: "Versions"
+      run: |
+        cat /etc/os-release
+        node --version
+        npm --version
+
+    - run: npm run lint
+    - run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Deploy to staging
+        uses: amondnet/now-deployment@v2
+        id: now-deployment-staging
+        if: github.event_name == 'pull_request'
+        with:
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          now-project-id: ${{ secrets.NOW_PROJECT_ID }}
+          now-org-id: ${{ secrets.NOW_ORG_ID }}
+          now-args: '-A now-staging.json'
+      - name: Deploy to production
+        uses: amondnet/now-deployment@v2
+        id: now-deployment-production
+        if: github.event_name == 'push'
+        with:
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          now-project-id: ${{ secrets.NOW_PROJECT_ID }}
+          now-org-id: ${{ secrets.NOW_ORG_ID }}
+          now-args: '--prod -A now-prod.json'

@@ -1,0 +1,5 @@
+{
+  "env": {
+    "FAUNA_DB_SECRET": "@staging_fauna_db_secret"
+  }
+}

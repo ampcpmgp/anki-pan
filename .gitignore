@@ -12,4 +12,6 @@ dist-no-minified/
 # storybook
 storybook-static/
 
+# Deploy
+.env
 .now
