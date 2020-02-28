@@ -14,8 +14,6 @@ npm i now -g
 
 ### Local (with am-mocktimes)
 
-execute
-
 ```shell
 npm start
 ```
@@ -27,7 +25,7 @@ Required `now login`, then set local env below vars on  `.env` file in repositor
 FAUNA_DB_SECRET=<fauna_db_secret>
 ```
 
-execute
+Execute below.
 
 ```shell
 npm run start-dev
