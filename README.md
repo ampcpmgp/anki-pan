@@ -20,7 +20,7 @@ npm start
 
 ### Local (with zeit now staging api)
 
-Required `now login`, then set local env below vars on  `.env` file in repository root.
+Required `now login`, then set local env vars in  `.env` file on repository root.
 ```env
 FAUNA_DB_SECRET=<fauna_db_secret>
 ```
@@ -41,8 +41,6 @@ npm run storybook
 ```
 
 ## Other Setting
-
-staging and production
 
 ```shell
 now secrets add staging_fauna_db_secret <staging_fauna_db_secret>
