@@ -12,13 +12,19 @@ npm i
 npm i now -g
 ```
 
-### Local (with am-mocktimes)
+### Local (With am-mocktimes, completely offline)
 
 ```shell
 npm start
 ```
 
-### Local (with zeit now staging api)
+### Storybook
+
+```shell
+npm run storybook
+```
+
+### Local (With `now dev`, and online services)
 
 Required `now login`, then set local env vars in  `.env` file on repository root.
 ```env
@@ -30,18 +36,12 @@ Execute below.
 
 ```shell
 npm run start-dev
-# other console tab
+# And open other tab
 now dev
 # Open file `./dist/index.html`
 ```
 
-### Storybook
-
-```shell
-npm run storybook
-```
-
-## Other Setting
+## Other Settings
 
 ```shell
 now secrets add staging_fauna_db_secret <staging_fauna_db_secret>

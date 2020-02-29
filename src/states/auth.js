@@ -7,15 +7,32 @@ let auth0Promise
 
 export const isAuthenticated = writable(false)
 
-export async function init() {
-  auth0Promise = createAuth0Client({
+function createClient() {
+  if (process.env.NODE_ENV === 'mock') {
+    return Promise.resolve({
+      isAuthenticated() {
+        return true
+      },
+      getTokenSilently() {
+        return 'dummy-token'
+      },
+    })
+  }
+
+  return createAuth0Client({
     domain: config.domain,
     client_id: config.clientId,
     redirect_uri: location.href,
     scope: 'openid profile',
   })
+}
+
+export async function init() {
+  auth0Promise = createClient()
 
   const auth0 = await auth0Promise
+
+  console.log(auth0)
 
   await updateAuthenticated()
 
