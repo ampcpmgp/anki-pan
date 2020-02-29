@@ -1,4 +1,9 @@
 {
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
   "env": {
     "FAUNA_DB_SECRET": "@prod_fauna_db_secret"
   }

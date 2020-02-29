@@ -1,4 +1,4 @@
-const config = require('../../auth0/config.json')
+const config = require('../../auth0')
 const fetch = require('node-fetch')
 
 exports.getUserInfo = async function(req) {
