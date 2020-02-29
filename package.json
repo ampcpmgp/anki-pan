@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "parcel mock/testbed/*.html",
-    "start-dev": "parcel watch src/index.html  --public-url ./",
+    "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html  --public-url ./",
     "test": "ava",
     "test:watch": "npm run test -- --watch",
     "dist": "run-s dist:*",
@@ -29,6 +29,7 @@
     "am-parts-cli": "0.0.3",
     "ava": "^3.2.0",
     "babel-loader": "^8.0.6",
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-plugin-svelte3": "^2.7.3",
     "esm": "^3.2.25",

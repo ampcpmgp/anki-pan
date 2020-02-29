@@ -22,6 +22,7 @@ npm start
 
 Required `now login`, then set local env vars in  `.env` file on repository root.
 ```env
+NODE_ENV=local
 FAUNA_DB_SECRET=<fauna_db_secret>
 ```
 
