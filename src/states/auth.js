@@ -32,8 +32,6 @@ export async function init() {
 
   const auth0 = await auth0Promise
 
-  console.log(auth0)
-
   await updateAuthenticated()
 
   const checkAuthenticated = get(isAuthenticated)
