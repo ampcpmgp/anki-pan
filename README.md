@@ -36,7 +36,7 @@ Execute below.
 
 ```shell
 npm run start-dev
-# And open other tab
+# Then open other tab
 now dev
 # Open file `./dist/index.html`
 ```
