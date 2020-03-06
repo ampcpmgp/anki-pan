@@ -1,4 +1,4 @@
-import { withKnobs } from '@storybook/addon-knobs'
+import { withKnobs, text } from '@storybook/addon-knobs'
 import Button from './Button.svelte'
 
 export default {
@@ -7,7 +7,17 @@ export default {
   decorators: [withKnobs],
 }
 
-export const Main = () => ({
+export const Hot = () => ({
   Component: Button,
-  props: { text: 'dummy-text' },
+  props: { text: text('text', 'ログイン'), type: 'hot' },
+})
+
+export const Calm = () => ({
+  Component: Button,
+  props: { text: text('text', 'ログアウト'), type: 'calm' },
+})
+
+export const Active = () => ({
+  Component: Button,
+  props: { text: text('text', 'パンを焼く'), type: 'active' },
 })
