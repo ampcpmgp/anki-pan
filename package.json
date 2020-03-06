@@ -24,7 +24,7 @@
     "@storybook/addon-viewport": "^5.3.12",
     "@storybook/addons": "^5.3.12",
     "@storybook/svelte": "^5.3.12",
-    "am-mocktimes": "^3.0.3",
+    "am-mocktimes": "^3.1.0",
     "am-mocktimes-addon-screenshot": "^0.1.2",
     "am-parts-cli": "^0.1.0",
     "ava": "^3.2.0",
