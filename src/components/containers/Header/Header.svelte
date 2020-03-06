@@ -26,7 +26,7 @@
     display: grid;
     grid-auto-flow: column;
     justify-content: space-between;
-    margin: 12px;
+    padding: 8px 16px;
   }
 
   .right-side {
