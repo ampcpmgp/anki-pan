@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
+    "eva-icons": "^1.1.3",
     "faunadb": "^2.11.1",
     "modern-css-reset": "^1.1.0",
     "nanoid": "^2.1.11",

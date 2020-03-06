@@ -2,7 +2,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import Component from './Main.svelte'
 
 export default {
-  title: 'Header',
+  title: 'H1',
   component: Component,
   decorators: [withKnobs],
 }
