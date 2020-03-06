@@ -1,5 +1,5 @@
 import { withKnobs } from '@storybook/addon-knobs'
-import Component from './Main.svelte'
+import Component from './Home.svelte'
 
 export default {
   title: 'H1',
@@ -7,6 +7,6 @@ export default {
   decorators: [withKnobs],
 }
 
-export const Main = () => ({
+export const Home = () => ({
   Component,
 })

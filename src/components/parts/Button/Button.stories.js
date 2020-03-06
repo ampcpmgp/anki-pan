@@ -10,14 +10,23 @@ export default {
 export const Hot = () => ({
   Component: Button,
   props: { text: text('text', 'ログイン'), type: 'hot' },
+  on: {
+    click: console.info,
+  },
 })
 
 export const Calm = () => ({
   Component: Button,
   props: { text: text('text', 'ログアウト'), type: 'calm' },
+  on: {
+    click: console.info,
+  },
 })
 
 export const Active = () => ({
   Component: Button,
   props: { text: text('text', 'パンを焼く'), type: 'active' },
+  on: {
+    click: console.info,
+  },
 })

@@ -7,11 +7,12 @@
     color: green;
     border-bottom: solid 1px green;
     display: inline-grid;
-    align-items: center;
+    align-items: end;
     grid-auto-flow: column;
     grid-column-gap: 12px;
-    padding: 0 8px;
-    font-size: 28px;
+    padding: 4px 8px;
+    font-size: 26px;
+    line-height: 26px;
   }
 
   img {
