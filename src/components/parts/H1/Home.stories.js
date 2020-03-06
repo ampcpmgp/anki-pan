@@ -9,4 +9,8 @@ export default {
 
 export const Home = () => ({
   Component,
+
+  props: {
+    version: '1.0.0',
+  },
 })

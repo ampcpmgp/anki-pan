@@ -8,6 +8,7 @@
   } from '../../../states/auth'
   import H1 from '../../parts/H1/Home'
   import Button from '../../parts/Button/Button'
+  import { version } from '../../../../package.json'
 
   const svg = {
     plusCircle: feather.icons['plus-circle'].toSvg({
@@ -38,7 +39,7 @@
 </style>
 
 <header>
-  <H1 />
+  <H1 {version} />
 
   <div class="right-side">
     {#if !$isExistsClient}

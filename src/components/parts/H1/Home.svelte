@@ -1,5 +1,7 @@
 <script>
   import favicon from '../../../favicon.svg'
+
+  export let version
 </script>
 
 <style>
@@ -22,5 +24,5 @@
 
 <h1>
   <img src={favicon} alt="" />
-  暗記パン
+  暗記パン v{version}
 </h1>
