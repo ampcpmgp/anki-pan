@@ -12,7 +12,7 @@
     "lint": "eslint --ignore-path .gitignore **/*.{js,svelte}",
     "format": "prettier --ignore-path .gitignore --write **/*.{js,svelte}",
     "screenshot": "am-mocktimes--screenshot",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./node_modules",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
@@ -24,9 +24,9 @@
     "@storybook/addon-viewport": "^5.3.12",
     "@storybook/addons": "^5.3.12",
     "@storybook/svelte": "^5.3.12",
-    "am-mocktimes": "^3.0.3",
+    "am-mocktimes": "^3.1.0",
     "am-mocktimes-addon-screenshot": "^0.1.2",
-    "am-parts-cli": "0.0.3",
+    "am-parts-cli": "^0.1.0",
     "ava": "^3.2.0",
     "babel-loader": "^8.0.6",
     "cross-env": "^7.0.0",
@@ -48,6 +48,7 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
     "faunadb": "^2.11.1",
+    "feather-icons": "^4.26.0",
     "modern-css-reset": "^1.1.0",
     "nanoid": "^2.1.11",
     "node-fetch": "^2.6.0",

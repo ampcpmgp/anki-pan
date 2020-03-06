@@ -1,8 +1,13 @@
 settings:
   url: mock.html
-default page:
+Home:
   func: [page, /]
-  change greeting name after 1000ms:
-    - [sleep, 1000]
-    - [greetings.name.set, 'changed name']
+  認証中:
+    - [sleep, 0]
+    - [auth.isExistsClient.set, false]
+  未ログイン:
+    - [sleep, 0]
+  ログイン済み:
+    - [sleep, 0]
+    - [auth.isAuthenticated.set, true]
 404 page: [page, /404]

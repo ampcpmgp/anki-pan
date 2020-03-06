@@ -5,18 +5,25 @@ import config from '../../auth0'
 
 let auth0Promise
 
+export const isExistsClient = writable(false)
 export const isAuthenticated = writable(false)
 
 function createClient() {
   if (process.env.NODE_ENV === 'mock') {
-    return Promise.resolve({
+    return Promise.resolve().then(() => ({
+      loginWithRedirect() {
+        isAuthenticated.set(true)
+      },
+      logout() {
+        isAuthenticated.set(false)
+      },
       isAuthenticated() {
-        return true
+        return false
       },
       getTokenSilently() {
         return 'dummy-token'
       },
-    })
+    }))
   }
 
   return createAuth0Client({
@@ -31,6 +38,8 @@ export async function init() {
   auth0Promise = createClient()
 
   const auth0 = await auth0Promise
+
+  isExistsClient.set(true)
 
   await updateAuthenticated()
 
