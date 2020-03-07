@@ -1,5 +1,6 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
 import Detail from './Detail.svelte'
+import svg from '../../../images/真核生物_細胞.js'
 
 export default {
   title: 'Bread Detail',
@@ -15,9 +16,10 @@ export const Main = () => ({
       '最大文字数＿３０文字最大文字数＿３０文字最大文字数＿３０文字'
     ),
     userId: text('title', 'dummy-id__0123456789'),
-    image: '',
+    image: svg,
     answers: '',
-    source: '',
-    license: '',
+    source:
+      'https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:Prefectures_of_Japan_nallow_gray_labeled_Jp.svg',
+    license: 'CC0',
   },
 })

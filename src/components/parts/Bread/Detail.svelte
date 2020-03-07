@@ -9,7 +9,7 @@
 
 <div>{title}</div>
 <div>{userId}</div>
-<div>{image}</div>
+<img src={image} alt="" />
 <div>{answers}</div>
 <div>{source}</div>
 <div>{license}</div>
