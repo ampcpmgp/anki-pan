@@ -1,14 +1,14 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import SummaryBread from './SummaryBread.svelte'
+import Summary from './Summary.svelte'
 
 export default {
-  title: 'SummaryBread',
-  component: SummaryBread,
+  title: 'Bread Summary',
+  component: Summary,
   decorators: [withKnobs],
 }
 
 export const MaxWord = () => ({
-  Component: SummaryBread,
+  Component: Summary,
   props: {
     title: text(
       'title',
@@ -23,7 +23,7 @@ export const MaxWord = () => ({
 })
 
 export const MinWord = () => ({
-  Component: SummaryBread,
+  Component: Summary,
   props: {
     title: text('title', '魚'),
     userId: text('userId', 'a'),
