@@ -1,3 +1,4 @@
+// TODO: 削除
 const faunadb = require('faunadb')
 // const nanoid = require('nanoid')
 

@@ -1,5 +1,8 @@
 <script>
   import Header from '../containers/Header/Header'
+  import Frame from '../containers/Frame/Frame'
 </script>
 
-<Header text="Text" />
+<Frame>
+  <Header text="Text" />
+</Frame>
