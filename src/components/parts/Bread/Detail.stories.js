@@ -1,6 +1,6 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
 import Detail from './Detail.svelte'
-import svg from '../../../images/真核生物_細胞.js'
+import svg from '../../../images/都道府県_答え有'
 
 export default {
   title: 'Bread Detail',
