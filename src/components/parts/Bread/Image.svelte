@@ -1,19 +1,16 @@
 <script>
-  import { onMount } from 'svelte'
   import { getImageSize, readFile } from '../../../utils/file'
 
   let fileDrop
   export let imgBase64
 
-  onMount(() => {
-    fileDrop.addEventListener('filedrop', async e => {
-      const file = e.files[0]
-      const result = await readFile(file)
-      const { width, height } = await getImageSize(result)
+  async function onFileDrop(e) {
+    const file = e.files[0]
+    const result = await readFile(file)
+    const { width, height } = await getImageSize(result)
 
-      console.log(file.size, width, height)
-    })
-  })
+    console.log(file.size, width, height)
+  }
 </script>
 
 <style>
@@ -47,7 +44,11 @@
   }
 </style>
 
-<file-drop class="bread-image-file-drop" accept="image/*" bind:this={fileDrop}>
+<file-drop
+  class="bread-image-file-drop"
+  accept="image/*"
+  bind:this={fileDrop}
+  on:filedrop={onFileDrop}>
   {#if imgBase64}
     <img src={imgBase64} alt="" />
   {:else}
