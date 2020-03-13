@@ -3,6 +3,7 @@ import Compresser from 'compressorjs'
 /**
  * compress image
  * @param {file} File
+ * @return {Promise<File>}
  */
 export function compressImage(file) {
   return new Promise(resolve => {
