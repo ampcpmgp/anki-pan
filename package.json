@@ -47,13 +47,13 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
+    "compressorjs": "^1.0.6",
     "faunadb": "^2.11.1",
     "feather-icons": "^4.26.0",
     "file-drop-element": "^0.2.0",
     "modern-css-reset": "^1.1.0",
     "nanoid": "^2.1.11",
     "node-fetch": "^2.6.0",
-    "pica": "^5.1.0",
     "query-string": "^6.11.0",
     "svelte": "^3.18.2",
     "svelte-spa-router": "^2.0.0"

@@ -1,6 +1,6 @@
 import { withKnobs } from '@storybook/addon-knobs'
 import Image from './Image.svelte'
-import imgBase64 from '../.././../images/真核生物_細胞.js'
+import earthMini from '../../../images/stories/240px-The_Earth_seen_from_Apollo_17.jpg'
 
 export default {
   title: 'Bread Image',
@@ -11,13 +11,13 @@ export default {
 export const 画像未設定 = () => ({
   Component: Image,
   props: {
-    imgBase64: '',
+    imgSrc: '',
   },
 })
 
-export const 画像設定済み = () => ({
+export const 地球小型 = () => ({
   Component: Image,
   props: {
-    imgBase64,
+    imgSrc: earthMini,
   },
 })

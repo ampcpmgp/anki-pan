@@ -1,26 +1,29 @@
 <script>
-  import { getImageSize, readFile } from '../../../utils/file'
+  import { readFile, compressImage } from '../../../utils/file'
+  import { MAX_IMAGE_SIZE } from '../../../const/file'
+
+  export let imgSrc
 
   let fileDrop
-  export let imgBase64
 
   async function onFileDrop(e) {
     const file = e.files[0]
-    const result = await readFile(file)
-    const { width, height } = await getImageSize(result)
 
-    console.log(file.size, width, height)
+    if (file.size > MAX_IMAGE_SIZE) {
+      alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
+      return
+    }
+
+    const result = await compressImage(file)
+    imgSrc = await readFile(result)
   }
 </script>
 
 <style>
   file-drop {
     display: grid;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #555;
-    color: #333;
-    font-weight: bold;
+    width: 100%;
+    height: 100%;
   }
 
   :global(.bread-image-file-drop.drop-valid) {
@@ -40,17 +43,35 @@
   }
 
   .message {
-    padding: 60px 10px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px #555;
+    color: #333;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bread {
+    display: grid;
+  }
+
+  .bread {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
   }
 </style>
 
 <file-drop
+  disabled
   class="bread-image-file-drop"
   accept="image/*"
   bind:this={fileDrop}
   on:filedrop={onFileDrop}>
-  {#if imgBase64}
-    <img src={imgBase64} alt="" />
+  {#if imgSrc}
+    <div class="bread" style="background-image: url({imgSrc})" />
   {:else}
     <div class="message">
       <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
