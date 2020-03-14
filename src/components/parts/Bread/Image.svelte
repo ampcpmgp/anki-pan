@@ -9,10 +9,32 @@
   let fileDropHeight = 0
   let imageWidth = 0
   let imageHeight = 0
+  let pin = initialPos()
+  let mousePos = initialPos()
 
   $: fileDropAspectoRatio = fileDropWidth / fileDropHeight
   $: imageAspectoRatio = imageWidth / imageHeight
   $: isLandScape = imageAspectoRatio > fileDropAspectoRatio
+
+  function initialPos() {
+    return { x: -1, y: -1 }
+  }
+
+  function existsPinned() {
+    return pin.x !== -1 && pin.y !== -1
+  }
+
+  function onBreadClick(e) {
+    mousePos.x = pin.x = e.clientX
+    mousePos.y = pin.y = e.clientY
+  }
+
+  function onBreadMouseMove(e) {
+    if (!existsPinned()) return
+
+    mousePos.x = e.clientX
+    mousePos.y = e.clientY
+  }
 
   async function setImageSize() {
     const { width, height } = await getImageSize(imgSrc)
@@ -56,21 +78,30 @@
   :global(.bread-image-file-drop.drop-invalid) .valid {
     display: none;
   }
+
   .bread {
-    display: grid;
-    align-items: center;
+    cursor: pointer;
+    background-size: contain;
   }
-  img {
-    justify-self: center;
-    width: auto;
-    height: 100%;
-    /* position: absolute を入れることで height を画面高さに調整可能。 */
-    /* https://stackoverflow.com/questions/14554908/imgs-max-height-not-respecting-parents-dimensions */
-    position: absolute;
-  }
-  img.landscape {
+  .bread.landscape {
+    margin: auto 0;
     width: 100%;
-    height: auto;
+  }
+  .bread:not(.landscape) {
+    margin: 0 auto;
+    height: 100%;
+  }
+
+  img {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .bread.landscape img {
+    width: 100%;
+  }
+  .bread:not(.landscape) img {
+    height: 100%;
+    max-height: 100%;
   }
 
   .message {
@@ -97,8 +128,13 @@
     {#await setImageSize()}
       読込中...
     {:then value}
-      <div class="bread">
-        <img class:landscape={isLandScape} src={imgSrc} alt="" />
+      <div
+        class="bread"
+        class:landscape={isLandScape}
+        style="background-image: url({imgSrc})"
+        on:click={onBreadClick}
+        on:click={onBreadMouseMove}>
+        <img src={imgSrc} alt="" />
       </div>
     {/await}
   {:else}
