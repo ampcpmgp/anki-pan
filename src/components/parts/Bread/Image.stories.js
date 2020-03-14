@@ -2,6 +2,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import Image from './Image.svelte'
 import earthMini from '../../../images/stories/240px-The_Earth_seen_from_Apollo_17.jpg'
 import 都道府県svg from '../../../images/stories/Prefectures_of_Japan_nallow_gray_labeled_Jp.svg'
+import landScapeBig from '../../../images/stories/Rheinfall_Panorama_revised_big.jpg'
 
 export default {
   title: 'Bread Image',
@@ -27,5 +28,12 @@ export const 地球小型200x200 = () => ({
   Component: Image,
   props: {
     imgSrc: earthMini,
+  },
+})
+
+export const landScape画像 = () => ({
+  Component: Image,
+  props: {
+    imgSrc: landScapeBig,
   },
 })
