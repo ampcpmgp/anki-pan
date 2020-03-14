@@ -64,6 +64,9 @@
     justify-self: center;
     width: auto;
     height: 100%;
+    /* position: absolute を入れることで height を画面高さに調整可能。 */
+    /* https://stackoverflow.com/questions/14554908/imgs-max-height-not-respecting-parents-dimensions */
+    position: absolute;
   }
   img.landscape {
     width: 100%;
