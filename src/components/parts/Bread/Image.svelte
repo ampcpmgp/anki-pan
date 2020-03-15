@@ -1,20 +1,55 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
   import { getImageSize, readFile, compressImage } from '../../../utils/file'
   import { MAX_IMAGE_SIZE } from '../../../const/file'
 
   export let imgSrc
+  export let editable
+
+  const dispatch = createEventDispatcher()
 
   let fileDrop
-  let fileDropWidth = 0
-  let fileDropHeight = 0
-  let imageWidth = 0
-  let imageHeight = 0
+  let bread
+  const size = {
+    fileDrop: { width: 0, height: 0 },
+    image: { width: 0, height: 0 },
+    bread: { width: 0, height: 0 },
+  }
   let pin = initialPos()
   let mousePos = initialPos()
+  let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
+  let currentRectangleStyle = ''
 
-  $: fileDropAspectoRatio = fileDropWidth / fileDropHeight
-  $: imageAspectoRatio = imageWidth / imageHeight
+  $: fileDropAspectoRatio = size.fileDrop.width / size.fileDrop.height
+  $: imageAspectoRatio = size.image.width / size.image.height
   $: isLandScape = imageAspectoRatio > fileDropAspectoRatio
+  $: {
+    currentRectangle.left =
+      (pin.x > mousePos.x ? mousePos.x : pin.x) / size.bread.width
+    currentRectangle.top =
+      (pin.y > mousePos.y ? mousePos.y : pin.y) / size.bread.height
+    currentRectangle.width = Math.abs(pin.x - mousePos.x) / size.bread.width
+    currentRectangle.height = Math.abs(pin.y - mousePos.y) / size.bread.height
+
+    currentRectangleStyle = getRectangleStyle(currentRectangle)
+  }
+
+  function getRectangleStyle({ left, top, width, height }) {
+    return `
+      left: ${left * 100}%;
+      top: ${top * 100}%;
+      width: ${width * 100}%;
+      height: ${height * 100}%;
+    `
+  }
+
+  function getOffset(event, element) {
+    // 参考 - https://www.geeksforgeeks.org/how-to-get-relative-click-coordinates-on-the-target-element-using-jquery/
+    return {
+      x: event.pageX - element.offsetLeft,
+      y: event.pageY - element.offsetTop,
+    }
+  }
 
   function initialPos() {
     return { x: -1, y: -1 }
@@ -24,26 +59,39 @@
     return pin.x !== -1 && pin.y !== -1
   }
 
-  function onBreadClick(e) {
-    mousePos.x = pin.x = e.clientX
-    mousePos.y = pin.y = e.clientY
+  function onBreadMouseDown(e) {
+    const { x, y } = getOffset(e, bread)
+    mousePos.x = pin.x = x
+    mousePos.y = pin.y = y
+  }
+
+  function onBreadMouseUp() {
+    dispatch('generateRectangle', { ...currentRectangle })
+
+    pin = initialPos()
+    mousePos = initialPos()
   }
 
   function onBreadMouseMove(e) {
     if (!existsPinned()) return
 
-    mousePos.x = e.clientX
-    mousePos.y = e.clientY
+    const { x, y } = getOffset(e, bread)
+    mousePos.x = x
+    mousePos.y = y
   }
 
   async function setImageSize() {
     const { width, height } = await getImageSize(imgSrc)
 
-    imageWidth = width
-    imageHeight = height
+    size.image.width = width
+    size.image.height = height
   }
 
   async function onFileDrop(e) {
+    if (!editable && !window.confirm('本当に変更しても良いですか?😳')) {
+      return
+    }
+
     const file = e.files[0]
 
     if (file.size > MAX_IMAGE_SIZE) {
@@ -53,6 +101,7 @@
 
     const result = await compressImage(file)
     imgSrc = await readFile(result)
+    await setImageSize()
   }
 </script>
 
@@ -80,8 +129,10 @@
   }
 
   .bread {
-    cursor: pointer;
+    cursor: crosshair;
     background-size: contain;
+    position: relative;
+    border: solid 1px darkorange;
   }
   .bread.landscape {
     margin: auto 0;
@@ -90,6 +141,14 @@
   .bread:not(.landscape) {
     margin: 0 auto;
     height: 100%;
+  }
+
+  .rectangle {
+    position: absolute;
+    background-color: yellow;
+  }
+  .rectangle.current {
+    opacity: 0.8;
   }
 
   img {
@@ -121,8 +180,8 @@
   class="bread-image-file-drop"
   accept="image/*"
   bind:this={fileDrop}
-  bind:clientWidth={fileDropWidth}
-  bind:clientHeight={fileDropHeight}
+  bind:clientWidth={size.fileDrop.width}
+  bind:clientHeight={size.fileDrop.height}
   on:filedrop={onFileDrop}>
   {#if imgSrc}
     {#await setImageSize()}
@@ -132,9 +191,15 @@
         class="bread"
         class:landscape={isLandScape}
         style="background-image: url({imgSrc})"
-        on:click={onBreadClick}
-        on:click={onBreadMouseMove}>
+        bind:this={bread}
+        bind:clientWidth={size.bread.width}
+        bind:clientHeight={size.bread.height}
+        on:mousedown={onBreadMouseDown}
+        on:mouseup={onBreadMouseUp}
+        on:mousemove={onBreadMouseMove}>
         <img src={imgSrc} alt="" />
+
+        <div class="rectangle current" style={currentRectangleStyle} />
       </div>
     {/await}
   {:else}

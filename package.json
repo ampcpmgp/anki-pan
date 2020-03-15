@@ -12,7 +12,7 @@
     "lint": "eslint --ignore-path .gitignore **/*.{js,svelte}",
     "format": "prettier --ignore-path .gitignore --write **/*.{js,svelte}",
     "screenshot": "am-mocktimes--screenshot",
-    "storybook": "start-storybook -p 6006 -s ./node_modules",
+    "storybook": "start-storybook -p 6006 -s ./node_modules --ci",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
