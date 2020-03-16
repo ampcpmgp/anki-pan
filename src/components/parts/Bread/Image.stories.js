@@ -12,11 +12,31 @@ export default {
   decorators: [withKnobs],
 }
 
+const answers = [
+  {
+    left: 0.2,
+    top: 0.25,
+    width: 0.08,
+    height: 0.05,
+    answer: '北海道',
+    reading: 'ほっかいどー',
+  },
+  {
+    left: 0.72,
+    top: 0.641,
+    width: 0.07,
+    height: 0.029,
+    answer: '秋田県',
+    reading: '',
+  },
+]
+
 export const 画像未設定 = () => ({
   Component: Image,
   props: {
     imgSrc: '',
     editable: boolean('editable', true),
+    answers: [],
   },
   on: {
     generateRectangle: console.info,
@@ -28,6 +48,7 @@ export const 都道府県 = () => ({
   props: {
     imgSrc: 都道府県svg,
     editable: boolean('editable', true),
+    answers,
   },
   on: {
     generateRectangle: console.info,
@@ -39,6 +60,7 @@ export const 地球小型200 = () => ({
   props: {
     imgSrc: earthMini,
     editable: boolean('editable', true),
+    answers,
   },
   on: {
     generateRectangle: console.info,
@@ -50,6 +72,7 @@ export const 地球大型1023 = () => ({
   props: {
     imgSrc: earthBig,
     editable: boolean('editable', true),
+    answers,
   },
   on: {
     generateRectangle: console.info,
@@ -61,6 +84,7 @@ export const landScape小型 = () => ({
   props: {
     imgSrc: landScapeMini,
     editable: boolean('editable', true),
+    answers,
   },
   on: {
     generateRectangle: console.info,
@@ -72,6 +96,7 @@ export const landScape大型 = () => ({
   props: {
     imgSrc: landScapeBig,
     editable: boolean('editable', true),
+    answers,
   },
   on: {
     generateRectangle: console.info,
@@ -83,6 +108,7 @@ export const 編集不可 = () => ({
   props: {
     imgSrc: landScapeBig,
     editable: boolean('editable', false),
+    answers,
   },
   on: {
     generateRectangle: console.info,

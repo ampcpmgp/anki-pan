@@ -5,6 +5,7 @@
 
   export let imgSrc
   export let editable
+  export let answers
 
   const dispatch = createEventDispatcher()
 
@@ -78,6 +79,11 @@
     const { x, y } = getOffset(e, bread)
     mousePos.x = x
     mousePos.y = y
+  }
+
+  function onBreadMouseLeave() {
+    pin = initialPos()
+    mousePos = initialPos()
   }
 
   async function setImageSize() {
@@ -196,10 +202,14 @@
         bind:clientHeight={size.bread.height}
         on:mousedown={onBreadMouseDown}
         on:mouseup={onBreadMouseUp}
-        on:mousemove={onBreadMouseMove}>
+        on:mousemove={onBreadMouseMove}
+        on:mouseleave={onBreadMouseLeave}>
         <img src={imgSrc} alt="" />
 
         <div class="rectangle current" style={currentRectangleStyle} />
+        {#each answers as answer}
+          <div class="rectangle" style={getRectangleStyle(answer)} />
+        {/each}
       </div>
     {/await}
   {:else}
