@@ -13,6 +13,16 @@ function init() {
 export function speak(text) {
   utterance.text = text
   speechSynthesis.speak(utterance)
+
+  return new Promise(resolve => {
+    utterance.onend(event => {
+      resolve(event)
+    })
+  })
+}
+
+export function cancel() {
+  speechSynthesis.cancel()
 }
 
 init()

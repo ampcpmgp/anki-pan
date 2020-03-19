@@ -17,7 +17,7 @@ const answers = [
     left: 0.2,
     top: 0.25,
     width: 0.08,
-    height: 0.05,
+    height: 0.07,
     name: '北海道',
     reading: 'ほっかいどー',
   },
@@ -26,7 +26,7 @@ const answers = [
     top: 0.641,
     width: 0.07,
     height: 0.029,
-    name: '秋田県',
+    name: '神奈川県',
     reading: '',
   },
 ]
@@ -125,7 +125,7 @@ export const 都道府県_再生 = () => ({
   Component: Image,
   props: {
     imgSrc: 都道府県svg,
-    editable: boolean('editable', true),
+    editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', 0),
   },

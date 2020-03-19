@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher, beforeUpdate } from 'svelte'
   import { getImageSize, readFile, compressImage } from '../../../utils/file'
+  import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
   import { MAX_IMAGE_SIZE } from '../../../const/file'
 
@@ -13,15 +14,22 @@
 
   let fileDrop
   let bread
+  let isPlay = false
+  let pin = initialPos()
+  let mousePos = initialPos()
+  let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
+  let currentRectangleStyle = ''
+  let speakingIndex = -1
   const size = {
     fileDrop: { width: 0, height: 0 },
     image: { width: 0, height: 0 },
     bread: { width: 0, height: 0 },
   }
-  let pin = initialPos()
-  let mousePos = initialPos()
-  let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
-  let currentRectangleStyle = ''
+  const Animation = {
+    DURATION_MSEC: 400,
+    COUNT: 3,
+    BEFORE_SPEAKING_MSEC: 500,
+  }
 
   $: fileDropAspectoRatio = size.fileDrop.width / size.fileDrop.height
   $: imageAspectoRatio = size.image.width / size.image.height
@@ -39,20 +47,28 @@
 
   beforeUpdate(() => {
     if (playbackIndex === -1) return
+    if (isPlay) return
 
     const answer = answers[playbackIndex]
     if (!answers) {
+      playbackIndex = -1
       dispatch('end')
-
       return
     }
 
     play(answer)
   })
 
-  function play(answer) {
-    speak(answer.name)
+  async function play(answer) {
+    isPlay = true
+    const time =
+      Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
+    await sleep(time)
+    speakingIndex = playbackIndex
+    await speak(answer.name)
+    isPlay = false
     dispatch('next')
+    speakingIndex = -1
   }
 
   function getRectangleStyle({ left, top, width, height }) {
@@ -81,6 +97,8 @@
   }
 
   function onBreadMouseDown(e) {
+    if (!editable) return
+
     const { x, y } = getOffset(e, bread)
     mousePos.x = pin.x = x
     mousePos.y = pin.y = y
@@ -155,10 +173,12 @@
   }
 
   .bread {
-    cursor: crosshair;
     background-size: contain;
     position: relative;
     border: solid 1px darkorange;
+  }
+  .bread.is-editable {
+    cursor: crosshair;
   }
   .bread.landscape {
     margin: auto 0;
@@ -179,8 +199,13 @@
   }
   .rectangle.is-active {
     animation-name: flashing;
-    animation-duration: 0.4s;
-    animation-iteration-count: 3;
+  }
+  .rectangle.is-speaking {
+    background-color: transparent;
+  }
+  .rectangle.is-complete {
+    background-color: transparent;
+    border: none;
   }
 
   @keyframes flashing {
@@ -226,6 +251,7 @@
     {:then value}
       <div
         class="bread"
+        class:is-editable={editable}
         class:landscape={isLandScape}
         style="background-image: url({imgSrc})"
         bind:this={bread}
@@ -242,7 +268,11 @@
           <div
             class="rectangle"
             class:is-active={i === playbackIndex}
-            style={getRectangleStyle(answer)} />
+            class:is-speaking={i === speakingIndex}
+            class:is-complete={i < playbackIndex}
+            style="
+            {getRectangleStyle(answer)} animation-duration: {Animation.DURATION_MSEC}ms;
+            animation-iteration-count: {Animation.COUNT}; " />
         {/each}
       </div>
     {/await}
