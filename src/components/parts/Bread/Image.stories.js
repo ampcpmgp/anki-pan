@@ -1,4 +1,4 @@
-import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { withKnobs, boolean, number } from '@storybook/addon-knobs'
 import Image from './Image.svelte'
 import earthMini from '../../../images/stories/240px-The_Earth_seen_from_Apollo_17.jpg'
 import earthBig from '../../../images/stories/1023px-The_Earth_seen_from_Apollo_17.jpg'
@@ -18,7 +18,7 @@ const answers = [
     top: 0.25,
     width: 0.08,
     height: 0.05,
-    answer: '北海道',
+    name: '北海道',
     reading: 'ほっかいどー',
   },
   {
@@ -26,7 +26,7 @@ const answers = [
     top: 0.641,
     width: 0.07,
     height: 0.029,
-    answer: '秋田県',
+    name: '秋田県',
     reading: '',
   },
 ]
@@ -37,21 +37,12 @@ export const 画像未設定 = () => ({
     imgSrc: '',
     editable: boolean('editable', true),
     answers: [],
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
-  },
-})
-
-export const 都道府県 = () => ({
-  Component: Image,
-  props: {
-    imgSrc: 都道府県svg,
-    editable: boolean('editable', true),
-    answers,
-  },
-  on: {
-    generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })
 
@@ -61,9 +52,12 @@ export const 地球小型200 = () => ({
     imgSrc: earthMini,
     editable: boolean('editable', true),
     answers,
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })
 
@@ -73,9 +67,12 @@ export const 地球大型1023 = () => ({
     imgSrc: earthBig,
     editable: boolean('editable', true),
     answers,
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })
 
@@ -85,9 +82,12 @@ export const landScape小型 = () => ({
     imgSrc: landScapeMini,
     editable: boolean('editable', true),
     answers,
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })
 
@@ -97,9 +97,12 @@ export const landScape大型 = () => ({
     imgSrc: landScapeBig,
     editable: boolean('editable', true),
     answers,
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })
 
@@ -109,8 +112,26 @@ export const 編集不可 = () => ({
     imgSrc: landScapeBig,
     editable: boolean('editable', false),
     answers,
+    playbackIndex: number('playbackIndex', -1),
   },
   on: {
     generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
+  },
+})
+
+export const 都道府県_再生 = () => ({
+  Component: Image,
+  props: {
+    imgSrc: 都道府県svg,
+    editable: boolean('editable', true),
+    answers,
+    playbackIndex: number('playbackIndex', 0),
+  },
+  on: {
+    generateRectangle: console.info,
+    next: console.info,
+    end: console.info,
   },
 })

@@ -1,11 +1,13 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, beforeUpdate } from 'svelte'
   import { getImageSize, readFile, compressImage } from '../../../utils/file'
+  import { speak } from '../../../utils/speech'
   import { MAX_IMAGE_SIZE } from '../../../const/file'
 
   export let imgSrc
   export let editable
   export let answers
+  export let playbackIndex
 
   const dispatch = createEventDispatcher()
 
@@ -33,6 +35,24 @@
     currentRectangle.height = Math.abs(pin.y - mousePos.y) / size.bread.height
 
     currentRectangleStyle = getRectangleStyle(currentRectangle)
+  }
+
+  beforeUpdate(() => {
+    if (playbackIndex === -1) return
+
+    const answer = answers[playbackIndex]
+    if (!answers) {
+      dispatch('end')
+
+      return
+    }
+
+    play(answer)
+  })
+
+  function play(answer) {
+    speak(answer.name)
+    dispatch('next')
   }
 
   function getRectangleStyle({ left, top, width, height }) {
@@ -151,12 +171,23 @@
 
   .rectangle {
     position: absolute;
-    background-color: yellow;
+    background-color: white;
+    border: solid 1px #555;
   }
   .rectangle.current {
     opacity: 0.8;
   }
+  .rectangle.is-active {
+    animation-name: flashing;
+    animation-duration: 0.4s;
+    animation-iteration-count: 3;
+  }
 
+  @keyframes flashing {
+    50% {
+      background-color: lightpink;
+    }
+  }
   img {
     visibility: hidden;
     pointer-events: none;
@@ -207,8 +238,11 @@
         <img src={imgSrc} alt="" />
 
         <div class="rectangle current" style={currentRectangleStyle} />
-        {#each answers as answer}
-          <div class="rectangle" style={getRectangleStyle(answer)} />
+        {#each answers as answer, i}
+          <div
+            class="rectangle"
+            class:is-active={i === playbackIndex}
+            style={getRectangleStyle(answer)} />
         {/each}
       </div>
     {/await}
