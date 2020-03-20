@@ -1,5 +1,5 @@
 import { stringify } from 'query-string'
-const { API_ROOT } = require('../../const/url')
+const { API_ROOT } = require('../../const/Url')
 
 export function get({ endpoint, Authorization, params = {} }) {
   const url = `${API_ROOT}${endpoint}${stringify(params)}`

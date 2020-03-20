@@ -3,7 +3,7 @@
   import { getImageSize, readFile, compressImage } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
-  import { MAX_IMAGE_SIZE } from '../../../const/file'
+  import { MAX_IMAGE_SIZE } from '../../../const/File'
 
   export let imgSrc
   export let editable
