@@ -20,6 +20,7 @@
   let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
   let currentRectangleStyle = ''
   let speakingIndex = -1
+  // DOMや画像の縦横幅を設定する
   const size = {
     fileDrop: { width: 0, height: 0 },
     image: { width: 0, height: 0 },

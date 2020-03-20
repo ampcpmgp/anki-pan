@@ -76,7 +76,7 @@ export const 地球大型1023 = () => ({
   },
 })
 
-export const landScape小型 = () => ({
+export const 横長画像_小型 = () => ({
   Component: Image,
   props: {
     imgSrc: landScapeMini,
@@ -91,7 +91,7 @@ export const landScape小型 = () => ({
   },
 })
 
-export const landScape大型 = () => ({
+export const 横長画像_大型 = () => ({
   Component: Image,
   props: {
     imgSrc: landScapeBig,
