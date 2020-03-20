@@ -21,20 +21,20 @@
     background-size: contain;
     display: inline-grid;
     justify-content: center;
+    grid-row-gap: 30px;
     width: 240px;
     height: 240px;
-    padding: 60px 20px 40px 20px;
+    padding: 20px;
   }
 
   .title {
-    align-self: start;
+    align-self: end;
     font-weight: bold;
     color: #333;
     margin: 0 auto;
   }
 
   .author {
-    align-self: end;
     font-size: 0.9em;
     margin: 0 auto;
   }

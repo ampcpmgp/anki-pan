@@ -8,10 +8,10 @@ export default {
   decorators: [withKnobs],
 }
 
-export const 新規_１２文字 = () => ({
+export const 新規_６文字 = () => ({
   Component: Summary,
   props: {
-    title: text('title', '１２文字１２文字１２文字'),
+    title: text('title', '６文字６文字'),
     type: select('type', BreadType, BreadType.NEW),
     userId: text('userId', 'dummy-id__0123456789'),
     breadId: text('breadId', 'dummy-bread-id'),
