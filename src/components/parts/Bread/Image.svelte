@@ -29,6 +29,7 @@
   const Animation = {
     DURATION_MSEC: 400,
     COUNT: 3,
+    AFTER_DISP_ANSWER: 300,
     BEFORE_SPEAKING_MSEC: 500,
   }
 
@@ -66,6 +67,7 @@
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
     await sleep(time)
     speakingIndex = playbackIndex
+    await sleep(Animation.AFTER_DISP_ANSWER)
     await speak(answer.name)
     isPlay = false
     dispatch('next')
@@ -78,6 +80,8 @@
       top: ${top * 100}%;
       width: ${width * 100}%;
       height: ${height * 100}%;
+      animation-duration: ${Animation.DURATION_MSEC}ms;
+      animation-iteration-count: ${Animation.COUNT};
     `
   }
 
@@ -271,9 +275,7 @@
             class:is-active={i === playbackIndex}
             class:is-speaking={i === speakingIndex}
             class:is-complete={i < playbackIndex}
-            style="
-            {getRectangleStyle(answer)} animation-duration: {Animation.DURATION_MSEC}ms;
-            animation-iteration-count: {Animation.COUNT}; " />
+            style={getRectangleStyle(answer)} />
         {/each}
       </div>
     {/await}

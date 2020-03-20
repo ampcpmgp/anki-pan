@@ -50,7 +50,7 @@ export const 自作_３０文字 = () => ({
   },
 })
 
-export const ダウンロード済みパン = () => ({
+export const ダウンロード済み = () => ({
   Component: Summary,
   props: {
     title: text('title', 'ダウンロード済み'),
