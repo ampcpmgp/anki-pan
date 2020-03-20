@@ -20,12 +20,6 @@
 
 <style>
   .wrapper {
-    border-style: solid;
-    border-width: 1px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    padding-bottom: 10px;
     min-height: 120px;
   }
 
@@ -44,7 +38,7 @@
   }
 </style>
 
-<div class="wrapper" style="border-color: {getColor(type)}">
+<div class="wrapper">
   <H2 {type} />
 
   {#if items.length > 0}
@@ -66,8 +60,6 @@
             on:click={readMore} />
         </div>
       {/if}
-
     </div>
   {/if}
-
 </div>

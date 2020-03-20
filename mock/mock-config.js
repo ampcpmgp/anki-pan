@@ -4,7 +4,7 @@ import { replace } from 'svelte-spa-router'
 import sleep from '../src/utils/sleep'
 import * as auth from '../src/states/auth'
 
-fetchMock.mock('/api/users/account/get', {})
+fetchMock.mock('/api/user/account/get', {})
 
 mock({
   sleep,

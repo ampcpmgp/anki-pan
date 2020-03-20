@@ -2,7 +2,12 @@ import { writable } from 'svelte/store'
 import { loginUser } from '../utils/api'
 import { getAuthorization } from './auth'
 
-export async function fetchAccount() {
+export const account = writable({
+  userName: '',
+  breads: [],
+})
+
+export async function fetch() {
   try {
     const Authorization = await getAuthorization()
 
@@ -23,8 +28,3 @@ export async function fetchAccount() {
     alert(error)
   }
 }
-
-export const account = writable({
-  userName: '',
-  breads: [],
-})

@@ -38,7 +38,7 @@ Execute below.
 npm run start-dev
 # Then open other tab
 now dev
-# Open file `./dist/index.html`
+# Aceess http://localhost:3000, And ppen file `./dist/index.html`
 ```
 
 ## Other Settings
