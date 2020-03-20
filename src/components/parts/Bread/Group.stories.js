@@ -15,12 +15,25 @@ export default {
   decorators: [withKnobs],
 }
 
-export const Main = () => ({
+export const パン10個 = () => ({
   Component: Group,
   props: {
     type: select('type', BreadType, BreadType.NEW),
     items,
-    isLast: boolean('isLast', false),
+    showReadMore: boolean('showReadMore', true),
+  },
+  on: {
+    click: e => console.info(e.detail),
+    readMore: e => console.info(e.detail),
+  },
+})
+
+export const パン0個 = () => ({
+  Component: Group,
+  props: {
+    type: select('type', BreadType, BreadType.FAVORITES),
+    items: [],
+    showReadMore: boolean('showReadMore', false),
   },
   on: {
     click: e => console.info(e.detail),

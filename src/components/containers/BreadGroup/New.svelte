@@ -1,11 +1,6 @@
 <script>
-  import { isExistsClient } from '../../../states/auth'
+  import BreadType from '../../../const/bread-type'
+  import Group from '../../parts/Bread/Group'
 </script>
 
-<div class="wrapper">
-  {#if !$isExistsClient}
-    <p>...認証確認中</p>
-  {:else}
-    <p>tests</p>
-  {/if}
-</div>
+<Group type={BreadType.NEW} />

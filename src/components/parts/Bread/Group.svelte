@@ -7,7 +7,7 @@
 
   export let type = 0
   export let items = []
-  export let isLast = false
+  export let showReadMore = true
 
   const dispatch = createEventDispatcher()
 
@@ -19,6 +19,16 @@
 </script>
 
 <style>
+  .wrapper {
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding-bottom: 10px;
+    min-height: 120px;
+  }
+
   .breads {
     margin-top: 10px;
     display: grid;
@@ -34,23 +44,30 @@
   }
 </style>
 
-<div class="wrapper">
+<div class="wrapper" style="border-color: {getColor(type)}">
   <H2 {type} />
 
-  <div class="breads">
-    {#each items as item}
-      <Summary
-        title={item.title}
-        id={item.id}
-        userId={item.userId}
-        {type}
-        on:click />
-    {/each}
+  {#if items.length > 0}
+    <div class="breads">
+      {#each items as item}
+        <Summary
+          title={item.title}
+          id={item.id}
+          userId={item.userId}
+          {type}
+          on:click />
+      {/each}
 
-    {#if !isLast}
-      <div class="read-more">
-        <Action text="もっと見る" color={getColor(type)} on:click={readMore} />
-      </div>
-    {/if}
-  </div>
+      {#if showReadMore}
+        <div class="read-more">
+          <Action
+            text="もっと見る"
+            color={getColor(type)}
+            on:click={readMore} />
+        </div>
+      {/if}
+
+    </div>
+  {/if}
+
 </div>
