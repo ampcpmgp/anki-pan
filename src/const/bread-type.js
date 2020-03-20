@@ -1,6 +1,6 @@
 export default {
   NEW: 0,
-  FAVORITE: 1,
+  FAVORITES: 1,
   SELF_MADE: 2,
   CACHE: 3,
 }

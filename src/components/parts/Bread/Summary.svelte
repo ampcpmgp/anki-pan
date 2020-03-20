@@ -4,14 +4,14 @@
 
   export let title = ''
   export let userId = 0
-  export let breadId = ''
+  export let id = ''
   export let type = 0
 
   const dispatch = createEventDispatcher()
 
   function onClick() {
     dispatch('click', {
-      breadId,
+      id,
     })
   }
 </script>
@@ -22,9 +22,10 @@
     display: inline-grid;
     justify-content: center;
     grid-row-gap: 30px;
-    width: 240px;
-    height: 240px;
+    width: 200px;
+    height: 200px;
     padding: 20px;
+    cursor: pointer;
   }
 
   .title {

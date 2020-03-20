@@ -27,7 +27,14 @@
     display: grid;
     grid-auto-flow: column;
     justify-content: space-between;
-    padding: 8px 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+      to right,
+      lightskyblue 0%,
+      hotpink 100%
+    );
   }
 
   .right-side {

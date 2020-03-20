@@ -7,7 +7,6 @@
 <style>
   h1 {
     color: green;
-    border-bottom: solid 1px green;
     display: inline-grid;
     align-items: end;
     grid-auto-flow: column;
