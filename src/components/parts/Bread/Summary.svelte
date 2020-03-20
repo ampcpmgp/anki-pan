@@ -1,10 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import svgNew from '../../../images/一覧パン_new.svg'
-  import svgFavorite from '../../../images/一覧パン_favorite.svg'
-  import svgSelfMade from '../../../images/一覧パン_self_made.svg'
-  import svgCache from '../../../images/一覧パン_cache.svg'
-  import BreadType from '../../../const/BreadType'
+  import { getFrameBase64 } from '../../../utils/bread-summary'
 
   export let title
   export let userId
@@ -17,21 +13,6 @@
     dispatch('click', {
       breadId,
     })
-  }
-
-  function getSvg() {
-    switch (type) {
-      case BreadType.NEW:
-        return svgNew
-      case BreadType.FAVORITE:
-        return svgFavorite
-      case BreadType.SELF_MADE:
-        return svgSelfMade
-      case BreadType.CACHE:
-        return svgCache
-      default:
-        console.error(`not found BreadType: ${type}`)
-    }
   }
 </script>
 
@@ -59,7 +40,10 @@
   }
 </style>
 
-<div class="bread" on:click={onClick} style="background-image: url({getSvg()})">
+<div
+  class="bread"
+  on:click={onClick}
+  style="background-image: url({getFrameBase64(type)})">
   <div class="title">{title}</div>
   <div class="author">@{userId}</div>
 </div>
