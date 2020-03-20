@@ -1,6 +1,6 @@
 import { withKnobs, text, select } from '@storybook/addon-knobs'
 import Footer from './Footer.svelte'
-import Lisense from '../../../../const/License'
+import Lisense from '../../../../const/license'
 
 export default {
   title: 'Bread Footer',

@@ -1,5 +1,5 @@
 import { stringify } from 'query-string'
-import { API_ROOT } from '../../const/Url'
+import { API_ROOT } from '../../const/url'
 
 export function get(endpoint, params = {}) {
   const url = `${API_ROOT}${endpoint}${stringify(params)}`

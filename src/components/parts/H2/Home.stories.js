@@ -1,6 +1,6 @@
 import { withKnobs, select } from '@storybook/addon-knobs'
 import Home from './Home.svelte'
-import BreadType from '../../../const/BreadType'
+import BreadType from '../../../const/bread-type'
 
 export default {
   title: 'H2 Home',

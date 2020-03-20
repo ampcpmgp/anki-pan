@@ -1,5 +1,5 @@
 <script>
-  import BreadType from '../../../const/BreadType'
+  import BreadType from '../../../const/bread-type'
   export let type = 0
 
   function getText() {

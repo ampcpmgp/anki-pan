@@ -1,6 +1,6 @@
 import { withKnobs, select } from '@storybook/addon-knobs'
 import Selectbox from './Selectbox.svelte'
-import License from '../../../../const/License'
+import License from '../../../../const/license'
 import { objToArr } from '../../../utils/data'
 
 export default {

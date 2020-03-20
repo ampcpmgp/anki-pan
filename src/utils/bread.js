@@ -1,4 +1,4 @@
-import BreadType from '../const/BreadType'
+import BreadType from '../const/bread-type'
 import { Base64 } from 'js-base64'
 
 export function getColor(type) {

@@ -1,6 +1,6 @@
 import { withKnobs, text, select } from '@storybook/addon-knobs'
 import Summary from './Summary.svelte'
-import BreadType from '../../../const/BreadType'
+import BreadType from '../../../const/bread-type'
 
 export default {
   title: 'Bread Summary',
