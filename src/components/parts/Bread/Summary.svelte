@@ -2,10 +2,10 @@
   import { createEventDispatcher } from 'svelte'
   import { getFrameBase64 } from '../../../utils/bread-summary'
 
-  export let title
-  export let userId
-  export let breadId
-  export let type
+  export let title = ''
+  export let userId = 0
+  export let breadId = ''
+  export let type = 0
 
   const dispatch = createEventDispatcher()
 
