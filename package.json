@@ -12,7 +12,7 @@
     "lint": "eslint --ignore-path .gitignore **/*.{js,svelte}",
     "format": "prettier --ignore-path .gitignore --write **/*.{js,svelte}",
     "screenshot": "am-mocktimes--screenshot",
-    "storybook": "start-storybook -p 6006 -s ./node_modules",
+    "storybook": "start-storybook -p 6006 -s ./node_modules --ci",
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
@@ -51,6 +51,7 @@
     "faunadb": "^2.11.1",
     "feather-icons": "^4.26.0",
     "file-drop-element": "^0.2.0",
+    "js-base64": "^2.5.2",
     "modern-css-reset": "^1.1.0",
     "nanoid": "^2.1.11",
     "node-fetch": "^2.6.0",

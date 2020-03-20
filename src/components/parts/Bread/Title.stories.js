@@ -7,7 +7,7 @@ export default {
   decorators: [withKnobs],
 }
 
-export const 編集可能 = () => ({
+export const 編集可能_エラー有 = () => ({
   Component: Title,
   props: {
     name: text('name', ''),
