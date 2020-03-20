@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { getFrameBase64 } from '../../../utils/bread-summary'
+  import { getFrameBase64 } from '../../../utils/bread'
 
   export let title = ''
   export let userId = 0
