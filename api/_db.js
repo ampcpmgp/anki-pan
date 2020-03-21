@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 async function create() {
   var response = await client
     .query(
-      q.Create(q.Collection('users'), { data: { id: `user-id-${Date.now()}` } })
+      q.Create(q.Collection('Users'), { data: { id: `user-id-${Date.now()}` } })
     )
     .catch(error => console.info(error))
 

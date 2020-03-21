@@ -1,7 +1,7 @@
 require('dotenv').config()
 const faunadb = require('faunadb')
 const q = faunadb.query
-const client = new faunadb.Client({ secret: process.env.FAUNA_DB_PROD_SECRET })
+const client = new faunadb.Client({ secret: process.env.FAUNA_DB_SECRET })
 
 async function setup() {
   // 各DB作成
