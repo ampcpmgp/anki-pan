@@ -1,0 +1,7 @@
+Foreach(
+  Paginate(
+    Documents(Collection("Breads")),
+    {size: 1000}
+  ),
+  Lambda("ref", Delete(Var("ref")))
+)
