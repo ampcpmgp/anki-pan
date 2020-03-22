@@ -32,22 +32,20 @@ NODE_ENV=local
 FAUNA_DB_SECRET=<staging_fauna_db_secret>
 ```
 
-Setup FaunaDB (Only once if success)
-
-```shell
-node ./faunadb/setup
-```
+Setup FaunaDB
+* Enter contents of `./faunadb/setup-db.fql` on FaunaDB Shell.
+* Enter contents of `./faunadb/setup-index.fql` on FaunaDB Shell.
 
 Execute below.
 
 ```shell
 npm run start-dev
-# Then open other tab
+# Then open other console
 now dev
-# Aceess http://localhost:3000, And ppen file `./dist/index.html`
+# Aceess http://localhost:3000, And open file `./dist/index.html`
 ```
 
-## Other Settings
+## Staging & Production env
 
 ```shell
 now secrets add staging_fauna_db_secret <staging_fauna_db_secret>
