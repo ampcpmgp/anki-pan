@@ -6,7 +6,7 @@ module.exports = async (_, res) => {
       q.Map(
         q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc')), { size: 10 }),
         q.Lambda(['ts', 'ref'], {
-          id: q.Select(['data', 'id'], q.Get(q.Var('ref'))),
+          nanoId: q.Select(['data', 'nanoId'], q.Get(q.Var('ref'))),
           title: q.Select(['data', 'title'], q.Get(q.Var('ref'))),
           userId: q.Select(['data', 'userId'], q.Get(q.Var('ref'))),
         })

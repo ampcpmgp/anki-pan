@@ -5,7 +5,7 @@ import NotFound from './NotFound'
 
 export default {
   '/': Home,
-  '/breads/detail/:id': BreadsDetail,
-  '/breads/edit/:id': BreadsEdit,
+  '/breads/detail/:nanoId': BreadsDetail,
+  '/breads/edit/:nanoId': BreadsEdit,
   '*': NotFound,
 }

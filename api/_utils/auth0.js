@@ -4,11 +4,9 @@ const fetch = require('node-fetch')
 exports.getUserInfo = async function(req) {
   const url = `https://${config.domain}/userinfo`
 
-  const response = await fetch(url, {
+  return fetch(url, {
     headers: {
       Authorization: req.headers.authorization,
     },
   })
-
-  return response
 }

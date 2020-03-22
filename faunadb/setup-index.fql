@@ -1,24 +1,24 @@
 Do(
   // パンインデックス
   CreateIndex({
-    name: 'breads_by_id',
+    name: 'breads_by_nano_id',
     source: Collection('Breads'),
     unique: true,
     serialized: true,
     terms: [
       {
-        field: ['data', 'id'],
+        field: ['data', 'nanoId'],
       },
     ],
   }),
   CreateIndex({
-    name: 'breads_by_sub',
+    name: 'breads_by_user_nano_id',
     source: Collection('Breads'),
     unique: false,
     serialized: true,
     terms: [
       {
-        field: ['data', 'subjectClaim'],
+        field: ['data', 'userNanoId'],
       },
     ],
   }),
@@ -45,6 +45,19 @@ Do(
   // ユーザーインデックス
   (
     CreateIndex({
+      name: 'users_by_nano_id',
+      source: Collection('Users'),
+      unique: true,
+      serialized: true,
+      terms: [
+        {
+          field: ['data', 'nanoId'],
+        },
+      ],
+    })
+  ),
+  (
+    CreateIndex({
       name: 'users_by_id',
       source: Collection('Users'),
       unique: true,
@@ -58,13 +71,39 @@ Do(
   ),
   (
     CreateIndex({
-      name: 'users_by_sub',
+      name: 'users_by_sub_github',
       source: Collection('Users'),
       unique: true,
       serialized: true,
       terms: [
         {
-          field: ['data', 'subjectClaim'],
+          field: ['data', 'sub', 'github'],
+        },
+      ],
+    })
+  ),
+  (
+    CreateIndex({
+      name: 'users_by_sub_google',
+      source: Collection('Users'),
+      unique: true,
+      serialized: true,
+      terms: [
+        {
+          field: ['data', 'sub', 'google'],
+        },
+      ],
+    })
+  ),
+  (
+    CreateIndex({
+      name: 'users_by_sub_twitter',
+      source: Collection('Users'),
+      unique: true,
+      serialized: true,
+      terms: [
+        {
+          field: ['data', 'sub', 'twitter'],
         },
       ],
     })
