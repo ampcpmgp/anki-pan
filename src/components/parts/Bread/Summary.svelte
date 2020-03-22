@@ -4,14 +4,14 @@
 
   export let title = ''
   export let userId = 0
-  export let id = ''
+  export let nanoId = ''
   export let type = 0
 
   const dispatch = createEventDispatcher()
 
   function onClick() {
     dispatch('click', {
-      id,
+      nanoId,
     })
   }
 </script>

@@ -6,7 +6,7 @@ import nanoid from 'nanoid'
 const items = Array.from({ length: 10 }).map((_, i) => ({
   title: `細胞の秘密 ${i}`,
   userId: 'ampcpmgp',
-  id: nanoid(),
+  nanoId: nanoid(),
 }))
 
 export default {

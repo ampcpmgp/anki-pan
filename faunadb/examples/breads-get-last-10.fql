@@ -8,7 +8,7 @@ Map(
   Lambda(
     ["ts", "ref"],
     {
-      id: Select(["data", "id"], Get(Var("ref"))),
+      nanoId: Select(["data", "nanoId"], Get(Var("ref"))),
       title: Select(["data", "title"], Get(Var("ref"))),
       userId: Select(["data", "userId"], Get(Var("ref"))),
     }

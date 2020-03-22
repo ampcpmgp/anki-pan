@@ -12,9 +12,7 @@
   const dispatch = createEventDispatcher()
 
   function readMore() {
-    dispatch('readMore', {
-      id: items[items.length - 1].id,
-    })
+    dispatch('readMore')
   }
 </script>
 
@@ -46,7 +44,7 @@
       {#each items as item}
         <Summary
           title={item.title}
-          id={item.id}
+          nanoId={item.nanoId}
           userId={item.userId}
           {type}
           on:click />

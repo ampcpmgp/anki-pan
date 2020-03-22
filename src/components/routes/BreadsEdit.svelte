@@ -4,5 +4,5 @@
 </script>
 
 <Frame>
-  <p>Bread Edit {params.id}</p>
+  <p>Bread Edit {params.nanoId}</p>
 </Frame>

@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
           ],
         }),
         q.Lambda(['ts', 'ref'], {
-          id: q.Select(['data', 'id'], q.Get(q.Var('ref'))),
+          nanoId: q.Select(['data', 'nanoId'], q.Get(q.Var('ref'))),
           title: q.Select(['data', 'title'], q.Get(q.Var('ref'))),
           userId: q.Select(['data', 'userId'], q.Get(q.Var('ref'))),
         })
