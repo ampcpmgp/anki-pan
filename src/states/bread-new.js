@@ -11,7 +11,6 @@ export const afterInfo = derived(after, $after => ({
 }))
 
 export async function fetch() {
-  console.log(get(fetched))
   if (get(fetched)) return
 
   try {

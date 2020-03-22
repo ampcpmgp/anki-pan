@@ -33,14 +33,14 @@ FAUNA_DB_SECRET=<staging_fauna_db_secret>
 ```
 
 Setup FaunaDB
-* Enter contents of `./faunadb/setup-db.fql` on FaunaDB Shell.
-* Enter contents of `./faunadb/setup-index.fql` on FaunaDB Shell.
+* Run `./faunadb/setup-db.fql` on FaunaDB Shell.
+* Run `./faunadb/setup-index.fql` on FaunaDB Shell.
 
 Execute below.
 
 ```shell
 npm run start-dev
-# Then open other console
+# Then open other console tab
 now dev
 # Aceess http://localhost:3000, And open file `./dist/index.html`
 ```
