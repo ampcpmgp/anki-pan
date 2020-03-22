@@ -50,10 +50,10 @@ export const 自作_３０文字 = () => ({
   },
 })
 
-export const ダウンロード済み = () => ({
+export const 閲覧済み = () => ({
   Component: Summary,
   props: {
-    title: text('title', 'ダウンロード済み'),
+    title: text('title', '閲覧済み'),
     type: select('type', BreadType, BreadType.CACHE),
     userId: text('userId', 'downloaded'),
     id: text('id', 'dummy-bread-id'),
