@@ -1,0 +1,72 @@
+Do(
+  // パンインデックス
+  CreateIndex({
+    name: 'breads_by_id',
+    source: Collection('Breads'),
+    unique: true,
+    serialized: true,
+    terms: [
+      {
+        field: ['data', 'id'],
+      },
+    ],
+  }),
+  CreateIndex({
+    name: 'breads_by_sub',
+    source: Collection('Breads'),
+    unique: false,
+    serialized: true,
+    terms: [
+      {
+        field: ['data', 'subjectClaim'],
+      },
+    ],
+  }),
+  CreateIndex({
+    name: 'breads_sort_by_ts_desc',
+    source: Collection('Breads'),
+    values: [
+      { field: ['ts'], reverse: true },
+      { field: ['ref'] }
+    ],
+  }),
+  CreateIndex({
+    name: 'breads_sort_by_ts_desc_with_ref',
+    source: Collection('Breads'),
+    terms: [
+      { field: ["ref"] }
+    ],
+    values: [
+      { field: ['ts'], reverse: true },
+      { field: ['ref'] }
+    ],
+  }),
+
+  // ユーザーインデックス
+  (
+    CreateIndex({
+      name: 'users_by_id',
+      source: Collection('Users'),
+      unique: true,
+      serialized: true,
+      terms: [
+        {
+          field: ['data', 'id'],
+        },
+      ],
+    })
+  ),
+  (
+    CreateIndex({
+      name: 'users_by_sub',
+      source: Collection('Users'),
+      unique: true,
+      serialized: true,
+      terms: [
+        {
+          field: ['data', 'subjectClaim'],
+        },
+      ],
+    })
+  )
+)
