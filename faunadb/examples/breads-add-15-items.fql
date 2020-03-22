@@ -1,0 +1,30 @@
+Foreach(
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+  Lambda(
+    'num',
+    Create(
+      Collection('Breads'),
+      {
+        data: {
+          id: Add(TimeDiff(Epoch(0, 'second'), Now(), 'milliseconds'), Var('num')),
+          subjectClaim: 'dummy-sub-id:1234567890',
+          title: Concat(['細胞の秘密 ', ToString(Var('num'))]),
+          userId: 'dummy-user-id',
+          image: 'https://via.placeholder.com/150',
+          answers: [
+            {
+              left: 0.1,
+              top: 0.1,
+              width: 0.2,
+              height: 0.3,
+              name: 'ゴルジ体',
+              reading: ''
+            }
+          ],
+          license: 'OTHER',
+          source: 'https://via.placeholder.com/'
+        }
+      }
+    )
+  )
+)

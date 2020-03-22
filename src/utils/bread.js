@@ -5,12 +5,12 @@ export function getColor(type) {
   switch (type) {
     case BreadType.NEW:
       return 'rgb(255,81,0)'
-    case BreadType.FAVORITE:
+    case BreadType.FAVORITES:
       return 'hotpink'
     case BreadType.SELF_MADE:
       return 'deepskyblue'
     case BreadType.CACHE:
-      return 'bisque'
+      return 'orange'
     default:
       console.warn(`BreadType: ${type}, not found`)
   }

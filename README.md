@@ -29,7 +29,13 @@ npm run storybook
 Required `now login`, then set local env vars in  `.env` file on repository root.
 ```env
 NODE_ENV=local
-FAUNA_DB_SECRET=<fauna_db_secret>
+FAUNA_DB_SECRET=<staging_fauna_db_secret>
+```
+
+Setup FaunaDB (Only once if success)
+
+```shell
+node ./faunadb/setup
 ```
 
 Execute below.
@@ -38,7 +44,7 @@ Execute below.
 npm run start-dev
 # Then open other tab
 now dev
-# Open file `./dist/index.html`
+# Aceess http://localhost:3000, And ppen file `./dist/index.html`
 ```
 
 ## Other Settings

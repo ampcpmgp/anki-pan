@@ -1,0 +1,12 @@
+Map(
+  Paginate(
+    Documents(Collection("Breads")),
+    {
+      size: 20
+    }
+  ),
+  Lambda(
+    "ref",
+    Select(["ts"], Get(Var("ref"))),
+  )
+)

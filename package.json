@@ -1,9 +1,9 @@
 {
   "name": "anki-pan",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.0",
   "scripts": {
     "start": "cross-env NODE_ENV=mock parcel mock/testbed/*.html",
-    "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html  --public-url ./",
+    "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html --public-url ./",
     "test": "ava",
     "test:watch": "npm run test -- --watch",
     "dist": "run-s dist:*",
@@ -43,11 +43,13 @@
     "prettier": "^1.19.1",
     "prettier-plugin-svelte": "^0.7.0",
     "rimraf": "^3.0.1",
-    "svelte-loader": "^2.13.6"
+    "svelte-loader": "^2.13.6",
+    "testdouble": "^3.13.1"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.4",
     "compressorjs": "^1.0.6",
+    "dotenv": "^8.2.0",
     "faunadb": "^2.11.1",
     "feather-icons": "^4.26.0",
     "file-drop-element": "^0.2.0",

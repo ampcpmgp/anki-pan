@@ -1,0 +1,16 @@
+Map(
+  Paginate(
+    Match(Index("breads_sort_by_ts_desc")),
+    {
+      size: 10
+    }
+  ),
+  Lambda(
+    ["ts", "ref"],
+    {
+      id: Select(["data", "id"], Get(Var("ref"))),
+      title: Select(["data", "title"], Get(Var("ref"))),
+      userId: Select(["data", "userId"], Get(Var("ref"))),
+    }
+  )
+)
