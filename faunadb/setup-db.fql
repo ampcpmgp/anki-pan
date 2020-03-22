@@ -1,0 +1,4 @@
+Do(
+  CreateCollection({ name: 'Breads' }),
+  CreateCollection({ name: 'Users' })
+)
