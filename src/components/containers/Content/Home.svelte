@@ -9,7 +9,7 @@
   .content {
     margin: 20px 0;
     display: grid;
-    grid-row-gap: 20px;
+    grid-row-gap: 40px;
   }
 </style>
 

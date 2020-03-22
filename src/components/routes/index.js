@@ -1,9 +1,11 @@
 import Home from './Home'
-import Test from './Test'
+import BreadsDetail from './BreadsDetail'
+import BreadsEdit from './BreadsEdit'
 import NotFound from './NotFound'
 
 export default {
   '/': Home,
-  '/test': Test,
+  '/breads/detail/:id': BreadsDetail,
+  '/breads/edit/:id': BreadsEdit,
   '*': NotFound,
 }
