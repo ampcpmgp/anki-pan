@@ -32,7 +32,7 @@ NODE_ENV=local
 FAUNA_DB_SECRET=<staging_fauna_db_secret>
 ```
 
-Setup FaunaDB (Only once if successful)
+Setup FaunaDB (Only once if success)
 
 ```shell
 node ./faunadb/setup
