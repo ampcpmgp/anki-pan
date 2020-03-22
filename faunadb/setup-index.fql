@@ -25,7 +25,21 @@ Do(
   CreateIndex({
     name: 'breads_sort_by_ts_desc',
     source: Collection('Breads'),
-    values: [{ field: ['ts'], reverse: true }, { field: ['ref'] }],
+    values: [
+      { field: ['ts'], reverse: true },
+      { field: ['ref'] }
+    ],
+  }),
+  CreateIndex({
+    name: 'breads_sort_by_ts_desc_with_ref',
+    source: Collection('Breads'),
+    terms: [
+      { field: ["ref"] }
+    ],
+    values: [
+      { field: ['ts'], reverse: true },
+      { field: ['ref'] }
+    ],
   }),
 
   // ユーザーインデックス

@@ -1,27 +1,8 @@
 Map(
   Paginate(
-    Union(
-      Match(Index("breads_sort_by_ts_desc"))
-    ),
-    {
-      size: 10
-    }
-  ),
-  Lambda(
-    ["ts", "ref"],
-    {
-      id: Select(["data", "id"], Get(Var("ref"))),
-      title: Select(["data", "title"], Get(Var("ref"))),
-      userId: Select(["data", "userId"], Get(Var("ref"))),
-    }
-  )
-)
-
-Map(
-  Paginate(
-    Union(
-      Match(Index("breads_by_sub"), "dummy-sub-id:1234567890"),
-      Match(Index("breads_sort_by_ts_desc"))
+    Join(
+      Match(Index("breads_by_sub"), "dummy-sub-id:0000"),
+      Index("breads_sort_by_ts_desc_with_ref")
     ),
     {
       size: 10
