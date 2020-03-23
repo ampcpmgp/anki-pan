@@ -8,6 +8,7 @@
   export let type = 0
   export let items = []
   export let showReadMore = true
+  export let description = ''
 
   const dispatch = createEventDispatcher()
 
@@ -30,6 +31,7 @@
   }
 
   .read-more {
+    padding: 40px;
     display: grid;
     justify-content: center;
     align-items: center;
@@ -38,6 +40,8 @@
 
 <div class="wrapper">
   <H2 {type} />
+
+  <p style="color: {getColor(type)}">{description}</p>
 
   {#if items.length > 0}
     <div class="breads">

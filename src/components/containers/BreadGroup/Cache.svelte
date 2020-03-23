@@ -3,4 +3,4 @@
   import Group from '../../parts/Bread/Group'
 </script>
 
-<Group type={BreadType.CACHE} />
+<Group type={BreadType.CACHE} description="最終閲覧から30日後に削除されます" />
