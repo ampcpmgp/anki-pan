@@ -24,12 +24,12 @@
     grid-row-gap: 30px;
     width: 200px;
     height: 200px;
-    padding: 20px;
+    padding: 40px 20px 20px;
     cursor: pointer;
   }
 
   .title {
-    align-self: end;
+    align-self: start;
     font-weight: bold;
     color: #333;
     margin: 0 auto;

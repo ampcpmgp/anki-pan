@@ -12,7 +12,7 @@
       case BreadType.SELF_MADE:
         return '自作'
       case BreadType.CACHE:
-        return '閲覧済み'
+        return 'キャッシュ'
       default:
         console.error(`getText type: ${type}`)
         break
