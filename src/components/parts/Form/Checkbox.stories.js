@@ -11,11 +11,6 @@ export const Main = () => ({
   Component: Checkbox,
   props: {
     label: text('label', 'dummy-text'),
-    isChecked: boolean('isChecked', true),
-  },
-  on: {
-    change(e) {
-      console.info(e.target.checked)
-    },
+    checked: boolean('checked', true),
   },
 })

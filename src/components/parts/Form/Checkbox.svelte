@@ -1,6 +1,6 @@
 <script>
   export let label
-  export let isChecked
+  export let checked
 </script>
 
 <style>
@@ -13,6 +13,6 @@
 </style>
 
 <label>
-  <input type="checkbox" bind:checked={isChecked} on:change />
+  <input type="checkbox" bind:checked />
   {label}
 </label>

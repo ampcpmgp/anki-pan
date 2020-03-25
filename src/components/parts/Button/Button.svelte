@@ -12,6 +12,8 @@
     display: inline-grid;
     padding: 2px 8px;
     user-select: none;
+    text-align: center;
+    border-radius: 4px;
   }
 
   .button:hover {
@@ -35,6 +37,10 @@
     border-color: orange;
     color: orangered;
   }
+  .button.passive {
+    border-color: darkgray;
+    color: dimgray;
+  }
 </style>
 
 <div
@@ -42,6 +48,7 @@
   class:hot={type === 'hot'}
   class:calm={type === 'calm'}
   class:active={type === 'active'}
+  class:passive={type === 'passive'}
   on:click>
   {text}
 </div>

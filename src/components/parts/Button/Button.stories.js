@@ -30,3 +30,11 @@ export const Active = () => ({
     click: console.info,
   },
 })
+
+export const Passive = () => ({
+  Component: Button,
+  props: { text: text('text', 'キャンセル'), type: 'passive' },
+  on: {
+    click: console.info,
+  },
+})

@@ -13,11 +13,6 @@ export const Main = () => ({
   Component: Selectbox,
   props: {
     options: objToArr(License),
-    selected: select('selected', License, License.CC0),
-  },
-  on: {
-    change(e) {
-      console.info(e.target.value)
-    },
+    value: select('value', License, License.CC0),
   },
 })
