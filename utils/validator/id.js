@@ -12,6 +12,10 @@ exports.validate = value => {
   return Validation.NO_ERROR
 }
 
+exports.isValid = value => {
+  return exports.validate(value) === Validation.NO_ERROR
+}
+
 exports.getErrMsg = value => {
   const result = exports.validate(value)
 

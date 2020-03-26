@@ -1,13 +1,22 @@
 <script>
-  import { getErrMsg } from '../../../../utils/validator/id'
+  import { createEventDispatcher } from 'svelte'
+  import { getErrMsg, isValid } from '../../../../utils/validator/id'
   import Frame from './Frame'
   import Text from '../Form/Text'
   import Button from '../Button/Button'
 
   export let value = ''
-  let errMsg = ''
-  $: {
-    errMsg = value && getErrMsg(value)
+  export let connecting = false
+  const dispatch = createEventDispatcher()
+  $: errMsg = value && getErrMsg(value)
+  $: disabledRegister = !value || !isValid(value) || connecting
+
+  function onCancel() {
+    dispatch('cancel')
+  }
+
+  function onRegister() {
+    dispatch('register', value)
   }
 </script>
 
@@ -18,10 +27,11 @@
     background-color: white;
 
     display: grid;
-    grid-row-gap: 12px;
+    grid-row-gap: 112px;
   }
 
   .buttons {
+    grid-row: 2 / span 1;
     justify-self: end;
     display: inline-grid;
     grid-auto-flow: column;
@@ -31,10 +41,19 @@
 
 <Frame>
   <div class="content">
-    <Text label="ユーザーID" bind:value {errMsg} />
     <div class="buttons">
-      <Button text="キャンセル" type="passive" on:logout />
-      <Button text="登録" type="active" />
+      <Button
+        disabled={connecting}
+        text="キャンセル"
+        type="passive"
+        on:click={onCancel} />
+      <Button
+        disabled={disabledRegister}
+        text="登録"
+        type="active"
+        on:click={onRegister} />
     </div>
+
+    <Text label="ユーザーID" bind:value {errMsg} />
   </div>
 </Frame>

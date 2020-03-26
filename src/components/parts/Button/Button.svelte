@@ -1,6 +1,7 @@
 <script>
-  export let text
-  export let type
+  export let text = ''
+  export let type = ''
+  export let disabled = false
 </script>
 
 <style>
@@ -23,21 +24,27 @@
   .button:active {
     transform: translate(1px, 1px);
   }
-  .button.hot {
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  .hot {
     border-color: red;
     color: red;
   }
 
-  .button.calm {
+  .calm {
     border-color: dodgerblue;
     color: dodgerblue;
   }
 
-  .button.active {
+  .active {
     border-color: orange;
     color: orangered;
   }
-  .button.passive {
+  .passive {
     border-color: darkgray;
     color: dimgray;
   }
@@ -45,6 +52,7 @@
 
 <div
   class="button"
+  class:disabled
   class:hot={type === 'hot'}
   class:calm={type === 'calm'}
   class:active={type === 'active'}
