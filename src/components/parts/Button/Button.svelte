@@ -1,6 +1,7 @@
 <script>
-  export let text
-  export let type
+  export let text = ''
+  export let type = ''
+  export let disabled = false
 </script>
 
 <style>
@@ -12,6 +13,8 @@
     display: inline-grid;
     padding: 2px 8px;
     user-select: none;
+    text-align: center;
+    border-radius: 4px;
   }
 
   .button:hover {
@@ -21,27 +24,39 @@
   .button:active {
     transform: translate(1px, 1px);
   }
-  .button.hot {
+
+  .disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  .hot {
     border-color: red;
     color: red;
   }
 
-  .button.calm {
+  .calm {
     border-color: dodgerblue;
     color: dodgerblue;
   }
 
-  .button.active {
+  .active {
     border-color: orange;
     color: orangered;
+  }
+  .passive {
+    border-color: darkgray;
+    color: dimgray;
   }
 </style>
 
 <div
   class="button"
+  class:disabled
   class:hot={type === 'hot'}
   class:calm={type === 'calm'}
   class:active={type === 'active'}
+  class:passive={type === 'passive'}
   on:click>
   {text}
 </div>

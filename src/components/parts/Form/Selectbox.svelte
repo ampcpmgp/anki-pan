@@ -1,6 +1,6 @@
 <script>
   export let options
-  export let selected
+  export let value
 </script>
 
 <style>
@@ -13,7 +13,7 @@
 
 <label>
   ライセンス
-  <select on:change bind:value={selected}>
+  <select bind:value>
     {#each options as option}
       <option value={option.key}>{option.value}</option>
     {/each}

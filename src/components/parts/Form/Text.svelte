@@ -1,20 +1,42 @@
 <script>
-  export let label
-  export let value
-  export let placeholder
+  import Error from '../Text/Error'
+  export let label = ''
+  export let value = ''
+  export let placeholder = ''
+  export let errMsg = ''
 </script>
 
 <style>
   label {
     display: inline-grid;
     align-items: center;
-    grid-auto-flow: column;
     grid-column-gap: 8px;
     grid-template-columns: auto 1fr;
+  }
+
+  .wrapper {
+    position: relative;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .error {
+    position: absolute;
+    right: 0;
+    width: 100%;
   }
 </style>
 
 <label>
-  {label}
-  <input type="text" bind:value on:input {placeholder} />
+  <span class="term">{label}</span>
+
+  <div class="wrapper">
+    <input type="text" bind:value {placeholder} />
+
+    <div class="error">
+      <Error message={errMsg} />
+    </div>
+  </div>
 </label>
