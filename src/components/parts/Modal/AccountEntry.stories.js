@@ -2,7 +2,7 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import AccountEntry from './AccountEntry.svelte'
 
 export default {
-  title: 'Modal AccountEntry',
+  title: 'Modal/AccountEntry',
   component: AccountEntry,
   decorators: [withKnobs],
 }

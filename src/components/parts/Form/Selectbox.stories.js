@@ -4,7 +4,7 @@ import License from '../../../../const/license'
 import { objToArr } from '../../../utils/data'
 
 export default {
-  title: 'Form Selectbox',
+  title: 'Form/Selectbox',
   component: Selectbox,
   decorators: [withKnobs],
 }

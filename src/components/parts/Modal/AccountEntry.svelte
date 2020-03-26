@@ -3,7 +3,7 @@
   import { getErrMsg, isValid } from '../../../../utils/validator/id'
   import Frame from './Frame'
   import Text from '../Form/Text'
-  import Button from '../Button/Button'
+  import Button from '../Form/Button'
 
   export let value = ''
   export let connecting = false

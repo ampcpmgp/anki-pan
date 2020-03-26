@@ -3,7 +3,7 @@ import Footer from './Footer.svelte'
 import Lisense from '../../../../const/license'
 
 export default {
-  title: 'Bread Footer',
+  title: 'Bread/Footer',
   component: Footer,
   decorators: [withKnobs],
 }

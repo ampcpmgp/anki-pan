@@ -3,7 +3,7 @@ import Home from './Home.svelte'
 import BreadType from '../../../const/bread-type'
 
 export default {
-  title: 'H2 Home',
+  title: 'H2/Home',
   component: Home,
   decorators: [withKnobs],
 }

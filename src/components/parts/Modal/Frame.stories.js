@@ -2,7 +2,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import Frame from './Frame.svelte'
 
 export default {
-  title: 'Modal Frame',
+  title: 'Modal/Frame',
   component: Frame,
   decorators: [withKnobs],
 }

@@ -1,15 +1,15 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import Error from './Error.svelte'
+import Setting from './Setting.svelte'
 
 export default {
-  title: 'Text/Error',
-  component: Error,
+  title: 'Modal/Setting',
+  component: Setting,
   decorators: [withKnobs],
 }
 
 export const Main = () => ({
-  Component: Error,
+  Component: Setting,
   props: {
-    message: text('message', '30文字までです'),
+    message: text('message', 'dummy-text'),
   },
 })
