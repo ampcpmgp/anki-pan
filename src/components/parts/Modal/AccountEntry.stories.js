@@ -10,7 +10,7 @@ export default {
 export const Main = () => ({
   Component: AccountEntry,
   props: {
-    message: text('message', 'dummy-text'),
+    value: text('value', 'dummy-id'),
     connecting: boolean('connecting', false),
   },
   on: {
