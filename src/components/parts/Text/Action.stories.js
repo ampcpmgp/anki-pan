@@ -2,7 +2,7 @@ import { withKnobs, text, color } from '@storybook/addon-knobs'
 import Action from './Action.svelte'
 
 export default {
-  title: 'Text Action',
+  title: 'Text/Action',
   component: Action,
   decorators: [withKnobs],
 }

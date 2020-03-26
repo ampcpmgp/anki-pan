@@ -7,7 +7,7 @@ import landScapeMini from '../../../images/stories/Rheinfall_Panorama_revised_mi
 import landScapeBig from '../../../images/stories/Rheinfall_Panorama_revised_big.jpg'
 
 export default {
-  title: 'Bread Image',
+  title: 'Bread/Image',
   component: Image,
   decorators: [withKnobs],
 }

@@ -2,7 +2,7 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import Title from './Title.svelte'
 
 export default {
-  title: 'Bread Title',
+  title: 'Bread/Title',
   component: Title,
   decorators: [withKnobs],
 }

@@ -3,7 +3,7 @@ import Detail from './Detail.svelte'
 import svg from '../../../images/stories/Prefectures_of_Japan_nallow_gray_labeled_Jp.svg'
 
 export default {
-  title: 'Bread Detail',
+  title: 'Bread/Detail',
   component: Detail,
   decorators: [withKnobs],
 }

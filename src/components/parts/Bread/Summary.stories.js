@@ -3,7 +3,7 @@ import Summary from './Summary.svelte'
 import BreadType from '../../../const/bread-type'
 
 export default {
-  title: 'Bread Summary',
+  title: 'Bread/Summary',
   component: Summary,
   decorators: [withKnobs],
 }

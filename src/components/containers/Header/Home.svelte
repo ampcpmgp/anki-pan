@@ -7,7 +7,7 @@
     login,
   } from '../../../states/auth'
   import H1 from '../../parts/H1/Home'
-  import Button from '../../parts/Button/Button'
+  import Button from '../../parts/Form/Button'
   import { version } from '../../../../package.json'
 
   const svg = {

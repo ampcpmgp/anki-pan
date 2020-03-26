@@ -2,7 +2,7 @@ import { withKnobs, text } from '@storybook/addon-knobs'
 import Text from './Text.svelte'
 
 export default {
-  title: 'Form Text',
+  title: 'Form/Text',
   component: Text,
   decorators: [withKnobs],
 }

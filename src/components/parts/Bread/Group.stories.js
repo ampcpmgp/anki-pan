@@ -12,7 +12,7 @@ function getItems(num) {
 }
 
 export default {
-  title: 'Bread Group',
+  title: 'Bread/Group',
   component: Group,
   decorators: [withKnobs],
 }

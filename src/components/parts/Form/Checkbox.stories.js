@@ -2,7 +2,7 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import Checkbox from './Checkbox.svelte'
 
 export default {
-  title: 'Form Checkbox',
+  title: 'Form/Checkbox',
   component: Checkbox,
   decorators: [withKnobs],
 }

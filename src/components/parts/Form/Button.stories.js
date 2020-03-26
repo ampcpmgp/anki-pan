@@ -2,7 +2,7 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import Button from './Button.svelte'
 
 export default {
-  title: 'Button',
+  title: 'Form/Button',
   component: Button,
   decorators: [withKnobs],
 }
