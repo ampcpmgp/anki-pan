@@ -27,7 +27,7 @@
     background-color: white;
 
     display: grid;
-    grid-row-gap: 112px;
+    grid-row-gap: 12px;
   }
 
   .buttons {
