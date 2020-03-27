@@ -12,6 +12,7 @@ export const Main = () => ({
   props: {
     value: text('value', 'dummy-id'),
     connecting: boolean('connecting', false),
+    errMsg: text('errMsg', '通信エラー'),
   },
   on: {
     cancel: console.info,

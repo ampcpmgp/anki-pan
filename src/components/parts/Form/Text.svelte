@@ -1,5 +1,5 @@
 <script>
-  import Error from '../Text/Error'
+  import ErrorBalloon from '../Text/ErrorBalloon'
   export let label = ''
   export let value = ''
   export let placeholder = ''
@@ -36,7 +36,7 @@
     <input type="text" bind:value {placeholder} />
 
     <div class="error">
-      <Error message={errMsg} />
+      <ErrorBalloon message={errMsg} />
     </div>
   </div>
 </label>

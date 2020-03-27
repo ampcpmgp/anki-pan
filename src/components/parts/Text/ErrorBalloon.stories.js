@@ -1,14 +1,14 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import Error from './Error.svelte'
+import ErrorBalloon from './ErrorBalloon.svelte'
 
 export default {
-  title: 'Text/Error',
-  component: Error,
+  title: 'Text/ErrorBalloon',
+  component: ErrorBalloon,
   decorators: [withKnobs],
 }
 
 export const Main = () => ({
-  Component: Error,
+  Component: ErrorBalloon,
   props: {
     message: text('message', '30文字までです'),
   },
