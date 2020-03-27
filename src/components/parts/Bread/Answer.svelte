@@ -12,7 +12,7 @@
   $: answserErrMsg = breadAnswerName.getErrMsg(name)
   $: readingErrMsg = breadReading.getErrMsg(reading)
   $: existsReading = !!reading
-  $: disabledOk = name
+  $: disabledOk = !name
 
   const BALLOON_WIDTH = '30px'
   const dispatch = createEventDispatcher()
@@ -36,7 +36,6 @@
   .answer {
     display: inline-grid;
     grid-template-columns: 1fr auto;
-    align-items: center;
     grid-column-gap: 12px;
     grid-row-gap: 12px;
     padding: 30px;
@@ -76,6 +75,8 @@
 
   .speak {
     cursor: pointer;
+    display: grid;
+    align-items: center;
   }
   .speak._name {
     grid-row: 1;
