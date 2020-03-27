@@ -36,8 +36,7 @@
   .answer {
     display: inline-grid;
     grid-template-columns: 1fr auto;
-    grid-column-gap: 12px;
-    grid-row-gap: 12px;
+    grid-gap: 12px;
     padding: 30px;
     font-size: 0.9em;
     border: solid 1px green;
@@ -65,11 +64,11 @@
     border-bottom: calc(var(--width) / 2) solid #fff;
   }
 
-  .name-wrapper {
+  .name {
     grid-row: 1;
   }
 
-  .reading-wrapper {
+  .reading {
     grid-row: 2;
   }
 
@@ -77,12 +76,6 @@
     cursor: pointer;
     display: grid;
     align-items: center;
-  }
-  .speak._name {
-    grid-row: 1;
-  }
-  .speak._reading {
-    grid-row: 2;
   }
 
   .buttons {
@@ -105,7 +98,7 @@
     <Button type="active" text="OK" disabled={disabledOk} on:click={onOk} />
   </div>
 
-  <div class="reading-wrapper">
+  <div class="reading">
     <Text
       label="読み"
       bind:value={reading}
@@ -113,13 +106,13 @@
       errMsg={readingErrMsg} />
   </div>
 
-  <div class="speak _reading" on:click={() => speak(reading)}>
-    {#if existsReading}
+  {#if existsReading}
+    <div class="speak reading" on:click={() => speak(reading)}>
       {@html svg.volume2}
-    {/if}
-  </div>
+    </div>
+  {/if}
 
-  <div class="name-wrapper">
+  <div class="name">
     <Text
       label="答え"
       bind:value={name}
@@ -127,9 +120,9 @@
       errMsg={answserErrMsg} />
   </div>
 
-  <div class="speak _name" on:click={() => speak(name)}>
-    {#if !existsReading}
+  {#if !existsReading}
+    <div class="speak name" on:click={() => speak(name)}>
       {@html svg.volume2}
-    {/if}
-  </div>
+    </div>
+  {/if}
 </div>
