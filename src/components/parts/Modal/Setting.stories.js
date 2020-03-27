@@ -10,6 +10,6 @@ export default {
 export const Main = () => ({
   Component: Setting,
   props: {
-    message: text('message', 'dummy-text'),
+    userId: text('userId', 'dummy-id'),
   },
 })

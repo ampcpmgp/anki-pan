@@ -14,9 +14,9 @@ export function speak(text) {
   speechSynthesis.speak(utterance)
 
   return new Promise(resolve => {
-    utterance.onend(event => {
+    utterance.onend = event => {
       resolve(event)
-    })
+    }
   })
 }
 
