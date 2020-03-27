@@ -1,11 +1,11 @@
 <script>
   import { onMount } from 'svelte'
   import AccountEntry from '../../parts/Modal/AccountEntry'
-  import { getUserProfile } from '../../../states/auth'
+  import { fetchAccount } from '../../../states/user'
 
   onMount(async () => {
-    const userProfile = await getUserProfile()
-    console.log(userProfile)
+    const account = await fetchAccount()
+    console.log(account)
   })
 </script>
 

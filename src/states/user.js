@@ -2,6 +2,9 @@ import { writable } from 'svelte/store'
 import { loginUser } from '../utils/api'
 import { getAuthorization } from './auth'
 
+export const nanoId = writable('')
+export const id = writable('')
+
 export async function fetchAccount() {
   try {
     const Authorization = await getAuthorization()
@@ -11,7 +14,7 @@ export async function fetchAccount() {
       Authorization,
     })
 
-    if (response.status !== 200) {
+    if (response.status === 503) {
       throw new Error('ユーザー情報取得エラー')
     }
 
@@ -22,8 +25,3 @@ export async function fetchAccount() {
     console.info(error)
   }
 }
-
-export const account = writable({
-  userName: '',
-  breads: [],
-})

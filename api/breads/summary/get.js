@@ -15,8 +15,9 @@ module.exports = async (_, res) => {
 
     res.json(response)
   } catch (error) {
-    console.error(error)
     res.statusCode = 503
-    res.json({})
+    res.json({
+      message: 'DB Error',
+    })
   }
 }
