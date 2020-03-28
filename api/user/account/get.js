@@ -16,7 +16,7 @@ async function get(subjectClaim) {
       throw new ApiError('Not Found', 404)
     }
 
-    throw new ApiError('Other Error', 503)
+    throw new Error(error)
   }
 }
 

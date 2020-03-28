@@ -59,6 +59,7 @@ export async function register(id) {
 
     registrationErrMsg.set('')
     hasNoId.set(false)
+    fetchAccount()
   } catch (error) {
     registrationErrMsg.set('通信エラー')
   }

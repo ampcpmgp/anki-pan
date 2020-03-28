@@ -41,7 +41,7 @@ async function post({ id, subjectClaim }) {
       throw new ApiError('Id Duplicate', 409)
     }
 
-    throw new ApiError('Other Error', 503)
+    throw new Error(error)
   }
 }
 

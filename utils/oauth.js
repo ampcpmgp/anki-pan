@@ -7,21 +7,25 @@ exports.getSubInfo = subjectClaim => {
     throw new Error(`provider: ${provider}, id: ${id}`)
   }
 
+  if (!exports.isValidProvider(provider)) {
+    throw new Error(`provider: ${provider}`)
+  }
+
   return {
-    provider: exports.getProvider(provider),
+    provider,
     id,
   }
 }
 
-exports.getProvider = provider => {
+exports.isValidProvider = provider => {
   switch (provider) {
     case Provider.GITHUB:
-      return Provider.GITHUB
+      return true
     case Provider.TWITTER:
-      return Provider.TWITTER
+      return true
     case Provider.GOOGLE:
-      return Provider.GOOGLE
+      return true
     default:
-      console.warn(`provider: ${provider}`)
+      return false
   }
 }
