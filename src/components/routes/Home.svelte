@@ -4,6 +4,7 @@
   import Content from '../containers/Content/Home'
   import Footer from '../parts/Footer/Footer'
   import AccountEntry from '../containers/Modal/AccountEntry'
+  import Settings from '../containers/Modal/Settings'
 </script>
 
 <Frame>
@@ -11,4 +12,5 @@
   <Content />
   <Footer />
   <AccountEntry />
+  <Settings />
 </Frame>

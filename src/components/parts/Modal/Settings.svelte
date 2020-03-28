@@ -60,7 +60,7 @@
   }
 </style>
 
-<Frame>
+<Frame on:click>
   <div class="wrapper">
     <header>設定</header>
 
