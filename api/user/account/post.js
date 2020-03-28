@@ -1,7 +1,7 @@
 const nanoid = require('nanoid')
 const Provider = require('../../../const/provider')
 const { getSubInfo } = require('../../../utils/oauth')
-const ApiError = require('../../_utils/api-error')
+const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { getUserInfo } = require('../../_utils/auth0')
 const { q, client } = require('../../_utils/faunadb')
 
@@ -45,30 +45,18 @@ async function post({ id, subjectClaim }) {
   }
 }
 
-module.exports = async (req, res) => {
-  try {
-    const response = await getUserInfo(req)
+module.exports = handleApiError(async (req, res) => {
+  const response = await getUserInfo(req)
 
-    if (response.status !== 200) {
-      throw new ApiError('Authorization Error', 503)
-    }
+  const { sub: subjectClaim } = await response.json()
+  const { id } = req.body
 
-    const { sub: subjectClaim } = await response.json()
-    const { id } = req.body
+  await post({
+    id,
+    subjectClaim,
+  })
 
-    await post({
-      id,
-      subjectClaim,
-    })
-
-    res.json({
-      success: true,
-    })
-  } catch (error) {
-    res.statusCode = error.status
-
-    res.json({
-      message: error.message,
-    })
-  }
-}
+  res.json({
+    success: true,
+  })
+})

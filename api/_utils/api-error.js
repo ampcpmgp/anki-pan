@@ -11,4 +11,27 @@ class ApiError extends Error {
   }
 }
 
-module.exports = ApiError
+exports.ApiError = ApiError
+
+exports.handleApiError = handler => async (req, res) => {
+  try {
+    await handler(req, res)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      res.statusCode = error.status
+
+      res.json({
+        message: error.message,
+      })
+
+      return
+    }
+
+    console.info(error)
+
+    res.statusCode = 503
+    res.json({
+      message: 'Server Error',
+    })
+  }
+}

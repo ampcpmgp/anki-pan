@@ -1,5 +1,5 @@
 const { getUserInfo } = require('../../_utils/auth0')
-const ApiError = require('../../_utils/api-error')
+const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { q, client, getSubIndex } = require('../../_utils/faunadb')
 const { getSubInfo } = require('../../../utils/oauth')
 
@@ -20,28 +20,16 @@ async function get(subjectClaim) {
   }
 }
 
-module.exports = async (req, res) => {
-  try {
-    const response = await getUserInfo(req)
+module.exports = handleApiError(async (req, res) => {
+  const response = await getUserInfo(req)
 
-    if (response.status !== 200) {
-      throw new ApiError('Authorization Error', 503)
-    }
+  const { sub: subjectClaim } = await response.json()
+  const {
+    data: { id, nanoId },
+  } = await get(subjectClaim)
 
-    const { sub: subjectClaim } = await response.json()
-    const {
-      data: { id, nanoId },
-    } = await get(subjectClaim)
-
-    res.json({
-      id,
-      nanoId,
-    })
-  } catch (error) {
-    res.statusCode = error.status
-
-    res.json({
-      message: error.message,
-    })
-  }
-}
+  res.json({
+    id,
+    nanoId,
+  })
+})

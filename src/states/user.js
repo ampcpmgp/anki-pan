@@ -53,7 +53,7 @@ export async function register(id) {
     }
 
     if (response.status === 409) {
-      registrationErrMsg.set('IDが重複しています')
+      registrationErrMsg.set('IDが使用されています')
       return
     }
 
