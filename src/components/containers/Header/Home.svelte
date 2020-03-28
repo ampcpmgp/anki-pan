@@ -56,6 +56,7 @@
     {:else}
       {@html svg.plusCircle}
       <Button text="ログアウト" type="calm" on:click={logout} />
+
       {@html svg.settings}
     {/if}
   </div>
