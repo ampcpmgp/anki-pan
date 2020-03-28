@@ -9,6 +9,7 @@
   export let items = []
   export let showReadMore = true
   export let description = ''
+  export let isReading = false
 
   const dispatch = createEventDispatcher()
 
@@ -57,8 +58,9 @@
       {#if showReadMore}
         <div class="read-more">
           <Action
-            text="もっと見る"
+            text={isReading ? '読み込み中..' : 'もっと見る'}
             color={getColor(type)}
+            disabled={isReading}
             on:click={readMore} />
         </div>
       {/if}

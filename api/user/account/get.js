@@ -3,7 +3,7 @@ const ApiError = require('../../_utils/api-error')
 const { q, client, getSubIndex } = require('../../_utils/faunadb')
 const { getSubInfo } = require('../../../utils/oauth')
 
-async function getAccount(subjectClaim) {
+async function get(subjectClaim) {
   const { provider, id } = getSubInfo(subjectClaim)
   const index = getSubIndex(provider)
 
@@ -12,7 +12,7 @@ async function getAccount(subjectClaim) {
 
     return response
   } catch (error) {
-    if (error.requestResult.statusCode === 404) {
+    if (error.requestResult && error.requestResult.statusCode === 404) {
       throw new ApiError('Not Found', 404)
     }
 
@@ -29,9 +29,14 @@ module.exports = async (req, res) => {
     }
 
     const { sub: subjectClaim } = await response.json()
-    const accountInfo = await getAccount(subjectClaim)
+    const {
+      data: { id, nanoId },
+    } = await get(subjectClaim)
 
-    res.json(accountInfo)
+    res.json({
+      id,
+      nanoId,
+    })
   } catch (error) {
     res.statusCode = error.status
 

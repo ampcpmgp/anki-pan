@@ -24,6 +24,7 @@ export const パン10個_最新 = () => ({
     items: getItems(10),
     showReadMore: boolean('showReadMore', true),
     description: text('description', ''),
+    isReading: boolean('isReading', false),
   },
   on: {
     click: e => console.info(e.detail),
@@ -31,13 +32,14 @@ export const パン10個_最新 = () => ({
   },
 })
 
-export const パン3個_お気に入り = () => ({
+export const パン3個_お気に入り_読込中 = () => ({
   Component: Group,
   props: {
     type: select('type', BreadType, BreadType.FAVORITES),
     items: getItems(3),
     showReadMore: boolean('showReadMore', true),
     description: text('description', ''),
+    isReading: boolean('isReading', true),
   },
   on: {
     click: e => console.info(e.detail),
@@ -52,6 +54,7 @@ export const パン0個_自作 = () => ({
     items: getItems(0),
     showReadMore: boolean('showReadMore', false),
     description: text('description', ''),
+    isReading: boolean('isReading', false),
   },
   on: {
     click: e => console.info(e.detail),
@@ -66,6 +69,7 @@ export const パン5個_キャッシュ = () => ({
     items: getItems(5),
     showReadMore: boolean('showReadMore', true),
     description: text('description', '最終閲覧から30日後に削除されます'),
+    isReading: boolean('isReading', false),
   },
   on: {
     click: e => console.info(e.detail),

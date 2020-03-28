@@ -12,11 +12,11 @@ export function get({ endpoint, Authorization, params = {} }) {
   })
 }
 
-export function post({ method, endpoint, Authorization, data = {} }) {
+export function post({ endpoint, Authorization, data = {} }) {
   const url = `${API_ROOT}${endpoint}`
 
   return fetch(url, {
-    method,
+    method: 'POST',
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
