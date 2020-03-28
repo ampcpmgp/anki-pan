@@ -1,4 +1,4 @@
-import { withKnobs, text, color } from '@storybook/addon-knobs'
+import { withKnobs, text, color, boolean } from '@storybook/addon-knobs'
 import Action from './Action.svelte'
 
 export default {
@@ -12,6 +12,7 @@ export const Main = () => ({
   props: {
     text: text('text', 'もっと見る'),
     color: color('color', '#555'),
+    disabled: boolean('disabled', false),
   },
   on: {
     click: console.info,

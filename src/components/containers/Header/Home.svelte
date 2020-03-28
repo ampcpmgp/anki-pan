@@ -6,6 +6,7 @@
     logout,
     login,
   } from '../../../states/auth'
+  import { openModal } from '../../../states/settings'
   import H1 from '../../parts/H1/Home'
   import Button from '../../parts/Form/Button'
   import { version } from '../../../../package.json'
@@ -43,6 +44,13 @@
     align-items: center;
     grid-column-gap: 8px;
   }
+
+  .settings {
+    cursor: pointer;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 
 <header>
@@ -56,7 +64,10 @@
     {:else}
       {@html svg.plusCircle}
       <Button text="ログアウト" type="calm" on:click={logout} />
-      {@html svg.settings}
+
+      <div class="settings" on:click={openModal}>
+        {@html svg.settings}
+      </div>
     {/if}
   </div>
 </header>

@@ -1,6 +1,7 @@
 <script>
   export let text = ''
   export let color = 'black'
+  export let disabled = false
 </script>
 
 <style>
@@ -9,6 +10,11 @@
     text-decoration: underline;
     cursor: pointer;
   }
+
+  p.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
 </style>
 
-<p style="color: {color};" on:click>{text}</p>
+<p class:disabled style="color: {color};" on:click>{text}</p>

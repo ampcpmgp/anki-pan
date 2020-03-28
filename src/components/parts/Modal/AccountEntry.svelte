@@ -4,11 +4,13 @@
   import Frame from './Frame'
   import Text from '../Form/Text'
   import Button from '../Form/Button'
+  import Alert from '../Text/Alert'
 
   export let value = ''
   export let connecting = false
+  export let errMsg = ''
   const dispatch = createEventDispatcher()
-  $: errMsg = value && getErrMsg(value)
+  $: idErrMsg = value && getErrMsg(value)
   $: disabledRegister = !value || !isValid(value) || connecting
 
   function onCancel() {
@@ -31,11 +33,16 @@
   }
 
   .buttons {
-    grid-row: 2 / span 1;
+    grid-row: 2;
     justify-self: end;
     display: inline-grid;
     grid-auto-flow: column;
     grid-column-gap: 8px;
+  }
+
+  .alert {
+    grid-row: 3;
+    justify-self: end;
   }
 </style>
 
@@ -54,6 +61,10 @@
         on:click={onRegister} />
     </div>
 
-    <Text label="ユーザーID" bind:value {errMsg} />
+    <div class="alert">
+      <Alert message={errMsg} />
+    </div>
+
+    <Text label="ユーザーID" bind:value errMsg={idErrMsg} />
   </div>
 </Frame>

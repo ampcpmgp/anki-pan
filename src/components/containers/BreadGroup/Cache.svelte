@@ -5,4 +5,5 @@
 
 <Group
   type={BreadType.CACHE}
-  description="最終閲覧から30日後に削除されます。" />
+  description="IndexedDB
+  を通してブラウザに保存されます。共有端末をご利用の方で、閲覧済みキャッシュを見られて困る方は、プライベートウィンドウでご利用ください。" />

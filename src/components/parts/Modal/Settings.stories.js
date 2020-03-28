@@ -1,15 +1,18 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import Setting from './Setting.svelte'
+import Settings from './Settings.svelte'
 
 export default {
-  title: 'Modal/Setting',
-  component: Setting,
+  title: 'Modal/Settings',
+  component: Settings,
   decorators: [withKnobs],
 }
 
 export const Main = () => ({
-  Component: Setting,
+  Component: Settings,
   props: {
     userId: text('userId', 'dummy-id'),
+  },
+  on: {
+    click: console.info,
   },
 })
