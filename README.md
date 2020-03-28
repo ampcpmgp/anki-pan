@@ -31,6 +31,4 @@ npm run storybook
 
 ```shell
 npm test
-# OR
-npm run test:watch
 ```
