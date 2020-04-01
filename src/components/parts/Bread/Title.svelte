@@ -1,8 +1,8 @@
 <script>
-  export let name
-  export let userId
-  export let readonly
-  export let errMsg
+  export let name = ''
+  export let userId = ''
+  export let readonly = false
+  export let errMsg = ''
 </script>
 
 <style>

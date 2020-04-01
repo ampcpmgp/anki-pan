@@ -5,10 +5,10 @@
   import { speak } from '../../../utils/speech'
   import { MAX_IMAGE_SIZE } from '../../../const/file'
 
-  export let imgSrc
-  export let editable
-  export let answers
-  export let playbackIndex
+  export let imgSrc = ''
+  export let editable = false
+  export let answers = []
+  export let playbackIndex = -1
 
   const dispatch = createEventDispatcher()
 

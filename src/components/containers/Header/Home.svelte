@@ -10,6 +10,7 @@
   import H1 from '../../parts/H1/Home'
   import Button from '../../parts/Form/Button'
   import { version } from '../../../../package.json'
+  import { push } from 'svelte-spa-router'
 
   const svg = {
     plusCircle: feather.icons['plus-circle'].toSvg({
@@ -20,6 +21,10 @@
     settings: feather.icons.settings.toSvg({
       stroke: '#2f363d',
     }),
+  }
+
+  export function newBread() {
+    push(`/breads/new`)
   }
 </script>
 
@@ -45,6 +50,7 @@
     grid-column-gap: 8px;
   }
 
+  .new-bread,
   .settings {
     cursor: pointer;
     display: grid;
@@ -62,7 +68,10 @@
     {:else if !$isAuthenticated}
       <Button text="ログイン" type="hot" on:click={login} />
     {:else}
-      {@html svg.plusCircle}
+      <div class="new-bread" on:click={newBread}>
+        {@html svg.plusCircle}
+      </div>
+
       <Button text="ログアウト" type="calm" on:click={logout} />
 
       <div class="settings" on:click={openModal}>
