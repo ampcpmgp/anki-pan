@@ -2,6 +2,10 @@
   import { createEventDispatcher } from 'svelte'
   import feather from 'feather-icons'
 
+  export let noBack = false
+  export let noPlay = false
+  export let noNext = false
+
   const dispatch = createEventDispatcher()
 
   function onBack() {
@@ -49,6 +53,12 @@
     padding: 0 4px;
   }
 
+  .icon.disabled {
+    pointer-events: none;
+    cursor: initial;
+    opacity: 0.1;
+  }
+
   .icon:hover {
     transform: translate(1px, 1px);
   }
@@ -59,13 +69,13 @@
 </style>
 
 <div class="wrapper">
-  <div on:click={onBack} class="icon">
+  <div on:click={onBack} class="icon" class:disabled={noBack}>
     {@html svg.chevronsLeft}
   </div>
-  <div on:click={onPlay} class="icon">
+  <div on:click={onPlay} class="icon" class:disabled={noPlay}>
     {@html svg.play}
   </div>
-  <div on:click={onNext} class="icon">
+  <div on:click={onNext} class="icon" class:disabled={noNext}>
     {@html svg.chevronsRight}
   </div>
 </div>
