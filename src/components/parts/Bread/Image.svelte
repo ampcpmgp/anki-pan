@@ -1,9 +1,8 @@
 <script>
   import { createEventDispatcher, beforeUpdate } from 'svelte'
-  import { getImageSize, readFile, compressImage } from '../../../utils/file'
+  import { getImageSize } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
-  import { MAX_IMAGE_SIZE } from '../../../const/file'
 
   export let imgSrc = ''
   export let editable = false
@@ -12,7 +11,7 @@
 
   const dispatch = createEventDispatcher()
 
-  let fileDrop
+  let wrapper
   let bread
   let isPlay = false
   let pin = initialPos()
@@ -22,7 +21,7 @@
   let speakingIndex = -1
   // DOMや画像の縦横幅を設定する
   const size = {
-    fileDrop: { width: 0, height: 0 },
+    wrapper: { width: 0, height: 0 },
     image: { width: 0, height: 0 },
     bread: { width: 0, height: 0 },
   }
@@ -33,9 +32,9 @@
     BEFORE_SPEAKING_MSEC: 500,
   }
 
-  $: fileDropAspectoRatio = size.fileDrop.width / size.fileDrop.height
-  $: imageAspectoRatio = size.image.width / size.image.height
-  $: isLandScape = imageAspectoRatio > fileDropAspectoRatio
+  $: wrapperAspectRatio = size.wrapper.width / size.wrapper.height
+  $: imageAspectRatio = size.image.width / size.image.height
+  $: isLandScape = imageAspectRatio > wrapperAspectRatio
   $: {
     currentRectangle.left =
       (pin.x > mousePos.x ? mousePos.x : pin.x) / size.bread.width
@@ -88,8 +87,8 @@
   function getOffset(event, element) {
     // 参考 - https://www.geeksforgeeks.org/how-to-get-relative-click-coordinates-on-the-target-element-using-jquery/
     return {
-      x: event.pageX - element.offsetLeft,
-      y: event.pageY - element.offsetTop,
+      x: event.pageX - element.offsetLeft - wrapper.offsetLeft,
+      y: event.pageY - element.offsetTop - wrapper.offsetTop,
     }
   }
 
@@ -135,46 +134,13 @@
     size.image.width = width
     size.image.height = height
   }
-
-  async function onFileDrop(e) {
-    if (!editable && !window.confirm('本当に変更しても良いですか?😳')) {
-      return
-    }
-
-    const file = e.files[0]
-
-    if (file.size > MAX_IMAGE_SIZE) {
-      alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
-      return
-    }
-
-    const result = await compressImage(file)
-    imgSrc = await readFile(result)
-    await setImageSize()
-  }
 </script>
 
 <style>
-  file-drop {
+  .wrapper {
     display: grid;
     width: 100%;
     height: 100%;
-  }
-
-  :global(.bread-image-file-drop.drop-valid) {
-    background-color: rgba(0, 255, 0, 0.3);
-  }
-  :global(.bread-image-file-drop.drop-invalid) {
-    background-color: rgba(255, 0, 0, 0.3);
-  }
-  .invalid {
-    display: none;
-  }
-  :global(.bread-image-file-drop.drop-invalid) .invalid {
-    display: grid;
-  }
-  :global(.bread-image-file-drop.drop-invalid) .valid {
-    display: none;
   }
 
   .bread {
@@ -229,60 +195,39 @@
     height: 100%;
     max-height: 100%;
   }
-
-  .message {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #555;
-    color: #333;
-    font-weight: bold;
-    width: 100%;
-    height: 100%;
-  }
 </style>
 
-<file-drop
-  disabled
-  class="bread-image-file-drop"
-  accept="image/*"
-  bind:this={fileDrop}
-  bind:clientWidth={size.fileDrop.width}
-  bind:clientHeight={size.fileDrop.height}
-  on:filedrop={onFileDrop}>
-  {#if imgSrc}
-    {#await setImageSize()}
-      読込中...
-    {:then value}
-      <div
-        class="bread"
-        class:is-editable={editable}
-        class:landscape={isLandScape}
-        style="background-image: url({imgSrc})"
-        bind:this={bread}
-        bind:clientWidth={size.bread.width}
-        bind:clientHeight={size.bread.height}
-        on:mousedown={onBreadMouseDown}
-        on:mouseup={onBreadMouseUp}
-        on:mousemove={onBreadMouseMove}
-        on:mouseleave={onBreadMouseLeave}>
-        <img src={imgSrc} alt="" />
+{#await setImageSize()}
+  読込中...
+{:then value}
+  <div
+    class="wrapper"
+    bind:this={wrapper}
+    bind:clientWidth={size.wrapper.width}
+    bind:clientHeight={size.wrapper.height}>
+    <div
+      class="bread"
+      class:is-editable={editable}
+      class:landscape={isLandScape}
+      style="background-image: url({imgSrc})"
+      bind:this={bread}
+      bind:clientWidth={size.bread.width}
+      bind:clientHeight={size.bread.height}
+      on:mousedown={onBreadMouseDown}
+      on:mouseup={onBreadMouseUp}
+      on:mousemove={onBreadMouseMove}
+      on:mouseleave={onBreadMouseLeave}>
+      <img src={imgSrc} alt="" />
 
-        <div class="rectangle current" style={currentRectangleStyle} />
-        {#each answers as answer, i}
-          <div
-            class="rectangle"
-            class:is-active={i === playbackIndex}
-            class:is-speaking={i === speakingIndex}
-            class:is-complete={i < playbackIndex}
-            style={getRectangleStyle(answer)} />
-        {/each}
-      </div>
-    {/await}
-  {:else}
-    <div class="message">
-      <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
-      <p class="invalid">このファイルは指定できません</p>
+      <div class="rectangle current" style={currentRectangleStyle} />
+      {#each answers as answer, i}
+        <div
+          class="rectangle"
+          class:is-active={i === playbackIndex}
+          class:is-speaking={i === speakingIndex}
+          class:is-complete={i < playbackIndex}
+          style={getRectangleStyle(answer)} />
+      {/each}
     </div>
-  {/if}
-</file-drop>
+  </div>
+{/await}
