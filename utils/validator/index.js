@@ -1,5 +1,4 @@
-import * as breadAnswerName from './bread-answer-name'
-import * as breadReading from './bread-reading'
+import * as bread from './bread'
 import * as id from './id'
 
-export { breadAnswerName, breadReading, id }
+export { bread, id }

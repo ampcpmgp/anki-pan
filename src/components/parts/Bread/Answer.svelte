@@ -2,15 +2,15 @@
   import { createEventDispatcher } from 'svelte'
   import fether from 'feather-icons'
   import { slide } from 'svelte/transition'
-  import { breadAnswerName, breadReading } from '../../../../utils/validator'
+  import { bread } from '../../../../utils/validator'
   import { speak } from '../../../utils/speech'
   import Text from '../Form/Text'
   import Button from '../Form/Button'
 
   export let name = ''
   export let reading = ''
-  $: answserErrMsg = breadAnswerName.getErrMsg(name)
-  $: readingErrMsg = breadReading.getErrMsg(reading)
+  $: answserErrMsg = bread.answerName.getErrMsg(name)
+  $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
   $: disabledOk = !name
 

@@ -1,4 +1,4 @@
-const Validation = require('../../const/validation')
+const Validation = require('../../../const/validation')
 
 exports.validate = value => {
   if (value.length > 30) {
