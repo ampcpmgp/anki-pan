@@ -1,6 +1,6 @@
 Map(
   Paginate(
-    Match(Index("breads_sort_by_ts_desc")),
+    Match(Index("breads_sort_by_ts_desc"), true),
     {
       size: 10
     }
