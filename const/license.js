@@ -9,5 +9,5 @@ module.exports = {
   PDM: 'PDM',
   PERMISSION: '著作者の許可取得済み',
   NO_LICENSE: '無し',
-  OTHER: 'その他',
+  OTHER: '不明・その他',
 }

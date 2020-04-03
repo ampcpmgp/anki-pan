@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 import { loginUser } from '../utils/api'
 import { getAuthorization } from './auth'
 
@@ -8,6 +8,10 @@ export const hasNoId = writable(false)
 export const registrationErrMsg = writable('')
 
 export async function fetchAccount() {
+  if (get(id)) {
+    return
+  }
+
   try {
     const Authorization = await getAuthorization()
 

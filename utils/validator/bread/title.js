@@ -1,5 +1,5 @@
 const Validation = require('../../../const/validation')
-const MAX_VALUE = 50
+const MAX_VALUE = 30
 
 exports.validate = value => {
   if (value.length > MAX_VALUE) {

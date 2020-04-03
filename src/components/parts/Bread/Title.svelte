@@ -1,5 +1,5 @@
 <script>
-  export let name = ''
+  export let value = ''
   export let userId = ''
   export let readonly = false
   export let errMsg = ''
@@ -40,12 +40,7 @@
 </style>
 
 <div class="wrapper">
-  <input
-    type="text"
-    placeholder="タイトル名"
-    on:input
-    value={name}
-    {readonly} />
+  <input type="text" placeholder="タイトル名" bind:value {readonly} />
   <div class="user-id">@{userId}</div>
 
   {#if errMsg}

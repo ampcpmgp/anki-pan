@@ -1,4 +1,4 @@
-import * as answerName from './answer-name'
-import * as reading from './reading'
-
-export { answerName, reading }
+exports.answerName = require('./answer-name')
+exports.reading = require('./reading')
+exports.source = require('./source')
+exports.title = require('./title')
