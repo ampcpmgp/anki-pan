@@ -22,17 +22,17 @@
     play: feather.icons['play'].toSvg({
       stroke: '#555',
       width: 26,
-      height: 'auto',
+      height: 26,
     }),
     chevronsLeft: feather.icons['chevrons-left'].toSvg({
       stroke: '#555',
       width: 26,
-      height: 'auto',
+      height: 26,
     }),
     chevronsRight: feather.icons['chevrons-right'].toSvg({
       stroke: '#555',
       width: 26,
-      height: 'auto',
+      height: 26,
     }),
   }
 </script>

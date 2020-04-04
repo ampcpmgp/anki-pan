@@ -197,14 +197,14 @@
   }
 </style>
 
-{#await setImageSize()}
-  読込中...
-{:then value}
-  <div
-    class="wrapper"
-    bind:this={wrapper}
-    bind:clientWidth={size.wrapper.width}
-    bind:clientHeight={size.wrapper.height}>
+<div
+  class="wrapper"
+  bind:this={wrapper}
+  bind:clientWidth={size.wrapper.width}
+  bind:clientHeight={size.wrapper.height}>
+  {#await setImageSize()}
+    読込中...
+  {:then value}
     <div
       class="bread"
       class:is-editable={editable}
@@ -229,5 +229,5 @@
           style={getRectangleStyle(answer)} />
       {/each}
     </div>
-  </div>
-{/await}
+  {/await}
+</div>

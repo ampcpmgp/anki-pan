@@ -1,8 +1,9 @@
-const License = require('../../const/license')
+import License from '../../const/license'
+import { getName } from '../../utils/license'
 
 export function getList() {
-  return Object.keys(License).map(key => ({
-    key,
-    value: License[key],
+  return Object.values(License).map(license => ({
+    key: license,
+    value: getName(license),
   }))
 }

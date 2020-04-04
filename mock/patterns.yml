@@ -10,4 +10,9 @@ Home:
   ログイン済み:
     - [sleep, 0]
     - [auth.isAuthenticated.set, true]
+パン作成画面:
+  funcs:
+    - [user.id.set, dummy-id]
+    - [page, /breads/new]
+  パン画像設定有り: [setBreadsImage]
 404 page: [page, /404]
