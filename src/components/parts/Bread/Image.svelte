@@ -1,8 +1,10 @@
 <script>
+  import { createPopper } from '@popperjs/core'
   import { createEventDispatcher, beforeUpdate } from 'svelte'
   import { getImageSize } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
+  import Answer from './Answer'
 
   export let imgSrc = ''
   export let editable = false
@@ -13,12 +15,16 @@
 
   let wrapper
   let bread
+  let answerWrapper
+  let currentRectangleElm
   let isPlay = false
   let pin = initialPos()
   let mousePos = initialPos()
-  let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
+  let currentRectangle = { top: 0, left: 0, width: 0, height: 0 }
   let currentRectangleStyle = ''
   let speakingIndex = -1
+  let isSelecting = false
+  let answerLoc = { top: 0, left: 0 }
   // DOMや画像の縦横幅を設定する
   const size = {
     wrapper: { width: 0, height: 0 },
@@ -44,6 +50,9 @@
     currentRectangle.height = Math.abs(pin.y - mousePos.y) / size.bread.height
 
     currentRectangleStyle = getRectangleStyle(currentRectangle)
+
+    answerLoc.top = currentRectangle.top + currentRectangle.height
+    answerLoc.left = currentRectangle.left + currentRectangle.width
   }
 
   beforeUpdate(() => {
@@ -102,6 +111,7 @@
 
   function onBreadMouseDown(e) {
     if (!editable) return
+    if (isSelecting) return
 
     const { x, y } = getOffset(e, bread)
     mousePos.x = pin.x = x
@@ -109,14 +119,28 @@
   }
 
   function onBreadMouseUp() {
-    dispatch('generateRectangle', { ...currentRectangle })
+    if (!existsPinned()) return
+    if (isSelecting) return
 
-    pin = initialPos()
-    mousePos = initialPos()
+    isSelecting = true
+    setTimeout(() => {
+      createPopper(currentRectangleElm, answerWrapper, {
+        placement: 'bottom-end',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 15],
+            },
+          },
+        ],
+      })
+    }, 0)
   }
 
   function onBreadMouseMove(e) {
     if (!existsPinned()) return
+    if (isSelecting) return
 
     const { x, y } = getOffset(e, bread)
     mousePos.x = x
@@ -124,6 +148,8 @@
   }
 
   function onBreadMouseLeave() {
+    if (isSelecting) return
+
     pin = initialPos()
     mousePos = initialPos()
   }
@@ -134,6 +160,15 @@
     size.image.width = width
     size.image.height = height
   }
+
+  function onPopupCancel() {
+    isSelecting = false
+
+    pin = initialPos()
+    mousePos = initialPos()
+  }
+
+  function onPopupOk() {}
 </script>
 
 <style>
@@ -219,7 +254,11 @@
       on:mouseleave={onBreadMouseLeave}>
       <img src={imgSrc} alt="" />
 
-      <div class="rectangle current" style={currentRectangleStyle} />
+      <div
+        class="rectangle current"
+        bind:this={currentRectangleElm}
+        style={currentRectangleStyle} />
+
       {#each answers as answer, i}
         <div
           class="rectangle"
@@ -231,3 +270,15 @@
     </div>
   {/await}
 </div>
+
+{#if isSelecting}
+  <div bind:this={answerWrapper}>
+    <Answer
+      name={''}
+      reading={''}
+      top={answerLoc.top}
+      left={answerLoc.left}
+      on:cancel={onPopupCancel}
+      on:ok={onPopupOk} />
+  </div>
+{/if}

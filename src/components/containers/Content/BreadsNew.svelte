@@ -35,8 +35,6 @@
   onMount(async () => {
     await fetchAccount()
 
-    console.log($id)
-
     if (!$id) {
       replace('/')
     }

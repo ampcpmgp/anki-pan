@@ -41,7 +41,6 @@
     font-size: 0.9em;
     border: solid 1px green;
     border-radius: 4px;
-    position: absolute;
     top: calc(var(--width) / 2);
     background-color: white;
   }
@@ -87,7 +86,7 @@
 
 <div
   class="answer"
-  style="--width: {BALLOON_WIDTH}"
+  style="--width: {BALLOON_WIDTH};"
   transition:slide={{ duration: 100 }}>
   <div class="buttons">
     <Button
