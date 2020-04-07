@@ -22,6 +22,7 @@
   let mousePos = initialPos()
   let currentRectangle = { top: 0, left: 0, width: 0, height: 0 }
   let currentRectangleStyle = ''
+  let answerIndex = -1
   let speakingIndex = -1
   let isSelecting = false
   let answerLoc = { top: 0, left: 0 }
@@ -103,6 +104,16 @@
     }
   }
 
+  function init() {
+    answerName = ''
+    answerReading = ''
+
+    isSelecting = false
+
+    pin = initialPos()
+    mousePos = initialPos()
+  }
+
   function initialPos() {
     return { x: -1, y: -1 }
   }
@@ -114,19 +125,16 @@
   function onBreadMouseDown(e) {
     if (!editable) return
     if (isSelecting) return
+    if (e.target !== bread) return
 
     const { x, y } = getOffset(e, bread)
     mousePos.x = pin.x = x
     mousePos.y = pin.y = y
   }
 
-  function onBreadMouseUp() {
-    if (!existsPinned()) return
-    if (isSelecting) return
-
-    isSelecting = true
+  function locatePopper(target) {
     setTimeout(() => {
-      createPopper(currentRectangleElm, answerWrapper, {
+      createPopper(target, answerWrapper, {
         placement: 'bottom-end',
         modifiers: [
           {
@@ -138,6 +146,15 @@
         ],
       })
     }, 0)
+  }
+
+  function onBreadMouseUp() {
+    if (!existsPinned()) return
+    if (isSelecting) return
+
+    answerIndex = answers.length
+    isSelecting = true
+    locatePopper(currentRectangleElm)
   }
 
   function onBreadMouseMove(e) {
@@ -163,24 +180,29 @@
     size.image.height = height
   }
 
-  function onPopupCancel() {
-    isSelecting = false
-
-    pin = initialPos()
-    mousePos = initialPos()
-  }
-
-  function onPopupOk() {
+  function popupOk() {
     dispatch('popupOk', {
-      answerName,
-      answerReading,
-      currentRectangle: JSON.parse(JSON.stringify(currentRectangle)),
+      ...currentRectangle,
+      name: answerName,
+      reading: answerReading,
+      index: answerIndex,
     })
 
-    answerName = ''
-    answerReading = ''
+    init()
+  }
 
-    isSelecting = false
+  function openAnswer(e, answer, i) {
+    isSelecting = true
+    pin.x = answer.left
+    pin.y = answer.top
+    mousePos.x = answer.left + answer.width
+    mousePos.y = answer.top + answer.height
+    answerName = answer.name
+    answerReading = answer.reading
+
+    answerIndex = i
+
+    locatePopper(e.target)
   }
 </script>
 
@@ -212,6 +234,7 @@
     position: absolute;
     background-color: white;
     border: solid 1px #555;
+    cursor: pointer;
   }
   .rectangle.current {
     opacity: 0.8;
@@ -278,7 +301,8 @@
           class:is-active={i === playbackIndex}
           class:is-speaking={i === speakingIndex}
           class:is-complete={i < playbackIndex}
-          style={getRectangleStyle(answer)} />
+          style={getRectangleStyle(answer)}
+          on:click={e => openAnswer(e, answer, i)} />
       {/each}
     </div>
   {/await}
@@ -291,7 +315,7 @@
       bind:reading={answerReading}
       top={answerLoc.top}
       left={answerLoc.left}
-      on:cancel={onPopupCancel}
-      on:ok={onPopupOk} />
+      on:cancel={init}
+      on:ok={popupOk} />
   </div>
 {/if}
