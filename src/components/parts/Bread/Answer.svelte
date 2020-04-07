@@ -12,7 +12,7 @@
   $: answserErrMsg = bread.answerName.getErrMsg(name)
   $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
-  $: disabledOk = !name
+  $: disabledOk = !name || answserErrMsg || readingErrMsg
 
   const BALLOON_WIDTH = '30px'
   const dispatch = createEventDispatcher()
@@ -94,6 +94,7 @@
       text="キャンセル"
       disabled={false}
       on:click={onCancel} />
+
     <Button type="active" text="OK" disabled={disabledOk} on:click={onOk} />
   </div>
 

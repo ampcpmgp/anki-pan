@@ -25,6 +25,8 @@
   let speakingIndex = -1
   let isSelecting = false
   let answerLoc = { top: 0, left: 0 }
+  let answerName = ''
+  let answerReading = ''
   // DOMや画像の縦横幅を設定する
   const size = {
     wrapper: { width: 0, height: 0 },
@@ -130,7 +132,7 @@
           {
             name: 'offset',
             options: {
-              offset: [0, 15],
+              offset: [20, 15],
             },
           },
         ],
@@ -168,7 +170,18 @@
     mousePos = initialPos()
   }
 
-  function onPopupOk() {}
+  function onPopupOk() {
+    dispatch('popupOk', {
+      answerName,
+      answerReading,
+      currentRectangle: JSON.parse(JSON.stringify(currentRectangle)),
+    })
+
+    answerName = ''
+    answerReading = ''
+
+    isSelecting = false
+  }
 </script>
 
 <style>
@@ -274,8 +287,8 @@
 {#if isSelecting}
   <div bind:this={answerWrapper}>
     <Answer
-      name={''}
-      reading={''}
+      bind:name={answerName}
+      bind:reading={answerReading}
       top={answerLoc.top}
       left={answerLoc.left}
       on:cancel={onPopupCancel}

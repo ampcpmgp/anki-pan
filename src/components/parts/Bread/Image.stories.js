@@ -40,7 +40,7 @@ export const 画像未設定 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -55,7 +55,7 @@ export const 地球小型200 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -70,7 +70,7 @@ export const 地球大型1023 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -85,7 +85,7 @@ export const 横長画像_小型 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -100,7 +100,7 @@ export const 横長画像_大型 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -115,7 +115,7 @@ export const 編集不可 = () => ({
     playbackIndex: number('playbackIndex', -1),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
@@ -130,7 +130,7 @@ export const 都道府県_再生 = () => ({
     playbackIndex: number('playbackIndex', 0),
   },
   on: {
-    generateRectangle: console.info,
+    popupOk: e => console.info(e.detail),
     next: console.info,
     end: console.info,
   },
