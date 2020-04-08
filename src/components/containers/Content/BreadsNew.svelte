@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
+  import arrayMove from 'array-move'
   import { bread } from '../../../../utils/validator'
   import License from '../../../../const/license'
   import { id, fetchAccount } from '../../../states/user'
@@ -20,6 +21,8 @@
   let isPublic = false
   let source = ''
   let license = License.OTHER
+  let answers = []
+  let playbackIndex = -1
   $: titleErrMsg = bread.title.getErrMsg(name)
   $: sourceErrMsg = source && bread.source.getErrMsg(source)
 
@@ -42,6 +45,37 @@
 
   function onDrop(e) {
     $imgSrc = e.detail
+  }
+
+  function onPlay() {
+    console.log(playbackIndex)
+    playbackIndex = 0
+  }
+
+  function onAnswerUpdate(e) {
+    const { answer, index, newIndex } = e.detail
+
+    answers[index] = answer
+
+    arrayMove(answers, index, newIndex)
+    answers = answers.filter(answer => answer)
+  }
+  function onAnswerCreate(e) {
+    const { answer, newIndex } = e.detail
+
+    answers[newIndex] = answer
+
+    answers = answers.filter(answer => answer)
+  }
+  function onAnswerDelete(e) {
+    const { index } = e.detail
+    answers.splice(index, 1)
+  }
+  function onAnswerNext() {
+    ++playbackIndex
+  }
+  function onAnswerEnd() {
+    playbackIndex = -1
   }
 </script>
 
@@ -96,9 +130,9 @@
         noBack={true}
         noPlay={false}
         noNext={true}
-        back={console.info}
-        play={console.info}
-        next={console.info} />
+        on:back={console.info}
+        on:play={onPlay}
+        on:next={console.info} />
     </div>
 
     {#if !$imgSrc}
@@ -112,8 +146,13 @@
         <Image
           imgSrc={$imgSrc}
           editable={true}
-          answers={[]}
-          playbackIndex={-1} />
+          {answers}
+          {playbackIndex}
+          on:answerUpdate={onAnswerUpdate}
+          on:answerCreate={onAnswerCreate}
+          on:answerDelete={onAnswerDelete}
+          on:next={onAnswerNext}
+          on:end={onAnswerEnd} />
       </div>
     {/if}
   </div>

@@ -32,8 +32,11 @@
     grid-row-gap: 12px;
   }
 
+  .userid-wrapper {
+    z-index: 1;
+  }
+
   .buttons {
-    grid-row: 2;
     justify-self: end;
     display: inline-grid;
     grid-auto-flow: column;
@@ -41,30 +44,31 @@
   }
 
   .alert {
-    grid-row: 3;
     justify-self: end;
   }
 </style>
 
 <Frame>
   <div class="content">
+    <div class="userid-wrapper">
+      <Text label="ユーザーID" bind:value errMsg={idErrMsg} />
+    </div>
+
     <div class="buttons">
       <Button
         disabled={connecting}
         text="キャンセル"
-        type="passive"
+        passive
         on:click={onCancel} />
       <Button
         disabled={disabledRegister}
         text="登録"
-        type="active"
+        active
         on:click={onRegister} />
     </div>
 
     <div class="alert">
       <Alert message={errMsg} />
     </div>
-
-    <Text label="ユーザーID" bind:value errMsg={idErrMsg} />
   </div>
 </Frame>

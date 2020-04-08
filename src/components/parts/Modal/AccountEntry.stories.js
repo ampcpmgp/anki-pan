@@ -20,6 +20,19 @@ export const 初期状態 = () => ({
   },
 })
 
+export const 文字エラー = () => ({
+  Component: AccountEntry,
+  props: {
+    value: text('value', '@'),
+    connecting: boolean('connecting', false),
+    errMsg: text('errMsg', ''),
+  },
+  on: {
+    cancel: console.info,
+    register: e => console.info(e.detail),
+  },
+})
+
 export const 通信エラー = () => ({
   Component: AccountEntry,
   props: {

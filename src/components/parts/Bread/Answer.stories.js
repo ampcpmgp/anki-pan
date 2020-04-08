@@ -16,8 +16,10 @@ export const エラー無し = () => ({
     index: number('index', 0),
   },
   on: {
-    ok: console.info,
     cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
   },
 })
 
@@ -33,8 +35,10 @@ export const エラー有り = () => ({
     index: number('index', 0),
   },
   on: {
-    ok: console.info,
     cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
   },
 })
 
@@ -47,7 +51,9 @@ export const 編集可能 = () => ({
     index: number('index', 2),
   },
   on: {
-    ok: console.info,
     cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
   },
 })

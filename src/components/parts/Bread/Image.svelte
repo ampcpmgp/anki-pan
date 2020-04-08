@@ -23,6 +23,7 @@
   let currentRectangle = { top: 0, left: 0, width: 0, height: 0 }
   let currentRectangleStyle = ''
   let answerIndex = -1
+  let answerNewIndex = -1
   let speakingIndex = -1
   let isSelecting = false
   let answerLoc = { top: 0, left: 0 }
@@ -44,6 +45,7 @@
   $: wrapperAspectRatio = size.wrapper.width / size.wrapper.height
   $: imageAspectRatio = size.image.width / size.image.height
   $: isLandScape = imageAspectRatio > wrapperAspectRatio
+  $: isAnswerEdit = answerIndex !== answers.length
   $: {
     currentRectangle.left =
       (pin.x > mousePos.x ? mousePos.x : pin.x) / size.bread.width
@@ -63,8 +65,7 @@
     if (isPlay) return
 
     const answer = answers[playbackIndex]
-    if (!answers) {
-      playbackIndex = -1
+    if (!answer) {
       dispatch('end')
       return
     }
@@ -152,7 +153,7 @@
     if (!existsPinned()) return
     if (isSelecting) return
 
-    answerIndex = answers.length
+    answerNewIndex = answerIndex = answers.length
     isSelecting = true
     locatePopper(currentRectangleElm)
   }
@@ -180,11 +181,35 @@
     size.image.height = height
   }
 
-  function popupOk() {
-    dispatch('popupOk', {
-      ...currentRectangle,
-      name: answerName,
-      reading: answerReading,
+  function onAnswerUpdate() {
+    dispatch('answerUpdate', {
+      answer: {
+        ...currentRectangle,
+        name: answerName,
+        reading: answerReading,
+      },
+      index: answerIndex,
+      newIndex: answerNewIndex,
+    })
+
+    init()
+  }
+
+  function onAnswerCreate() {
+    dispatch('answerCreate', {
+      answer: {
+        ...currentRectangle,
+        name: answerName,
+        reading: answerReading,
+      },
+      newIndex: answerNewIndex,
+    })
+
+    init()
+  }
+
+  function onAnswerDelete() {
+    dispatch('answerDelete', {
       index: answerIndex,
     })
 
@@ -200,7 +225,7 @@
     answerName = answer.name
     answerReading = answer.reading
 
-    answerIndex = i
+    answerNewIndex = answerIndex = i
 
     locatePopper(e.target)
   }
@@ -313,9 +338,13 @@
     <Answer
       bind:name={answerName}
       bind:reading={answerReading}
+      bind:index={answerNewIndex}
+      isEdit={isAnswerEdit}
       top={answerLoc.top}
       left={answerLoc.left}
       on:cancel={init}
-      on:ok={popupOk} />
+      on:delete={onAnswerDelete}
+      on:create={onAnswerCreate}
+      on:update={onAnswerUpdate} />
   </div>
 {/if}

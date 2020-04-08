@@ -73,14 +73,17 @@
   }
 
   .name {
+    z-index: 3;
     grid-row: 1;
   }
 
   .reading {
+    z-index: 2;
     grid-row: 2;
   }
 
   .index {
+    z-index: 1;
     grid-row: 3;
     width: 90px;
   }
@@ -102,20 +105,19 @@
   class="answer"
   style="--width: {BALLOON_WIDTH};"
   transition:slide={{ duration: 100 }}>
-  <div class="buttons">
-    <Button passive text="キャンセル" disabled={false} on:click={onCancel} />
-
-    {#if isEdit}
-      <Button negative text="削除" disabled={false} on:click={onDelete} />
-      <Button positive text="更新" disabled={disabledOk} on:click={onUpdate} />
-    {:else}
-      <Button active text="作成" disabled={disabledOk} on:click={onCreate} />
-    {/if}
+  <div class="name">
+    <Text
+      label="答え"
+      bind:value={name}
+      placeholder=""
+      errMsg={answserErrMsg} />
   </div>
 
-  <div class="index">
-    <Number label="順番" bind:value={index} />
-  </div>
+  {#if !existsReading}
+    <div class="speak name" on:click={() => speak(name)}>
+      {@html svg.volume2}
+    </div>
+  {/if}
 
   <div class="reading">
     <Text
@@ -131,17 +133,18 @@
     </div>
   {/if}
 
-  <div class="name">
-    <Text
-      label="答え"
-      bind:value={name}
-      placeholder=""
-      errMsg={answserErrMsg} />
+  <div class="index">
+    <Number label="順番" bind:value={index} />
   </div>
 
-  {#if !existsReading}
-    <div class="speak name" on:click={() => speak(name)}>
-      {@html svg.volume2}
-    </div>
-  {/if}
+  <div class="buttons">
+    <Button passive text="キャンセル" disabled={false} on:click={onCancel} />
+
+    {#if isEdit}
+      <Button negative text="削除" disabled={false} on:click={onDelete} />
+      <Button positive text="更新" disabled={disabledOk} on:click={onUpdate} />
+    {:else}
+      <Button active text="作成" disabled={disabledOk} on:click={onCreate} />
+    {/if}
+  </div>
 </div>
