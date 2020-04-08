@@ -66,13 +66,13 @@
     {#if !$isExistsClient}
       <p>...認証確認中</p>
     {:else if !$isAuthenticated}
-      <Button text="ログイン" type="hot" on:click={login} />
+      <Button text="ログイン" hot on:click={login} />
     {:else}
       <div class="new-bread" on:click={newBread}>
         {@html svg.plusCircle}
       </div>
 
-      <Button text="ログアウト" type="calm" on:click={logout} />
+      <Button text="ログアウト" calm on:click={logout} />
 
       <div class="settings" on:click={openModal}>
         {@html svg.settings}

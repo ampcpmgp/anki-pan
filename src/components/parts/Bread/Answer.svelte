@@ -6,9 +6,12 @@
   import { speak } from '../../../utils/speech'
   import Text from '../Form/Text'
   import Button from '../Form/Button'
+  import Number from '../Form/Number'
 
   export let name = ''
   export let reading = ''
+  export let index = -1
+  export let isEdit = false
   $: answserErrMsg = bread.answerName.getErrMsg(name)
   $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
@@ -27,8 +30,14 @@
   function onCancel() {
     dispatch('cancel')
   }
-  function onOk() {
-    dispatch('ok')
+  function onDelete() {
+    dispatch('delete')
+  }
+  function onCreate() {
+    dispatch('create')
+  }
+  function onUpdate() {
+    dispatch('update')
   }
 </script>
 
@@ -71,6 +80,11 @@
     grid-row: 2;
   }
 
+  .index {
+    grid-row: 3;
+    width: 90px;
+  }
+
   .speak {
     cursor: pointer;
     display: grid;
@@ -79,7 +93,7 @@
 
   .buttons {
     justify-self: end;
-    grid-row: 3;
+    grid-row: 4;
     grid-column: span 2;
   }
 </style>
@@ -89,13 +103,18 @@
   style="--width: {BALLOON_WIDTH};"
   transition:slide={{ duration: 100 }}>
   <div class="buttons">
-    <Button
-      type="passive"
-      text="キャンセル"
-      disabled={false}
-      on:click={onCancel} />
+    <Button passive text="キャンセル" disabled={false} on:click={onCancel} />
 
-    <Button type="active" text="OK" disabled={disabledOk} on:click={onOk} />
+    {#if isEdit}
+      <Button negative text="削除" disabled={false} on:click={onDelete} />
+      <Button positive text="更新" disabled={disabledOk} on:click={onUpdate} />
+    {:else}
+      <Button active text="作成" disabled={disabledOk} on:click={onCreate} />
+    {/if}
+  </div>
+
+  <div class="index">
+    <Number label="順番" bind:value={index} />
   </div>
 
   <div class="reading">

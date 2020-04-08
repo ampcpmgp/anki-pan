@@ -11,7 +11,7 @@ export const Hot = () => ({
   Component: Button,
   props: {
     text: text('text', 'ログイン'),
-    type: 'hot',
+    hot: true,
     disabled: boolean('disabled', false),
   },
   on: {
@@ -23,7 +23,7 @@ export const Calm = () => ({
   Component: Button,
   props: {
     text: text('text', 'ログアウト'),
-    type: 'calm',
+    calm: true,
     disabled: boolean('disabled', false),
   },
   on: {
@@ -35,7 +35,7 @@ export const Active = () => ({
   Component: Button,
   props: {
     text: text('text', 'パンを焼く'),
-    type: 'active',
+    active: true,
     disabled: boolean('disabled', false),
   },
   on: {
@@ -47,7 +47,31 @@ export const Passive = () => ({
   Component: Button,
   props: {
     text: text('text', 'キャンセル'),
-    type: 'passive',
+    passive: true,
+    disabled: boolean('disabled', false),
+  },
+  on: {
+    click: console.info,
+  },
+})
+
+export const Negative = () => ({
+  Component: Button,
+  props: {
+    text: text('text', '削除'),
+    negative: true,
+    disabled: boolean('disabled', false),
+  },
+  on: {
+    click: console.info,
+  },
+})
+
+export const Positive = () => ({
+  Component: Button,
+  props: {
+    text: text('text', 'OK'),
+    positive: true,
     disabled: boolean('disabled', false),
   },
   on: {

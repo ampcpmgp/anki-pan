@@ -1,6 +1,11 @@
 <script>
   export let text = ''
-  export let type = ''
+  export let hot = false
+  export let calm = false
+  export let active = false
+  export let passive = false
+  export let positive = false
+  export let negative = false
   export let disabled = false
 </script>
 
@@ -48,15 +53,28 @@
     border-color: darkgray;
     color: dimgray;
   }
+
+  .positive {
+    border-color: tomato;
+    background-color: tomato;
+    color: white;
+  }
+  .negative {
+    border-color: dimgray;
+    background-color: dimgray;
+    color: white;
+  }
 </style>
 
 <div
   class="button"
   class:disabled
-  class:hot={type === 'hot'}
-  class:calm={type === 'calm'}
-  class:active={type === 'active'}
-  class:passive={type === 'passive'}
+  class:hot
+  class:calm
+  class:active
+  class:passive
+  class:positive
+  class:negative
   on:click>
   {text}
 </div>

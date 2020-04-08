@@ -135,10 +135,6 @@
   </div>
 
   <div class="justify-end">
-    <Button
-      text="パン作成"
-      type="active"
-      disabled={false}
-      on:click={console.info} />
+    <Button text="パン作成" active disabled={false} on:click={console.info} />
   </div>
 </div>
