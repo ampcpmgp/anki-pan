@@ -3,4 +3,5 @@ module.exports = {
   COUNT_OVER: 1,
   UNAVAILABLE_CHAR: 2,
   MALFORMED: 3,
+  ARRAY_LENGTH_OVER: 4,
 }

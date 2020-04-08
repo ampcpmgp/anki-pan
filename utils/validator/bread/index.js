@@ -1,4 +1,5 @@
 exports.answerName = require('./answer-name')
+exports.answer = require('./answer')
 exports.reading = require('./reading')
 exports.source = require('./source')
 exports.title = require('./title')

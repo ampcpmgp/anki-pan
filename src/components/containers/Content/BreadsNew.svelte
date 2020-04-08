@@ -18,13 +18,14 @@
   import Button from '../../parts/Form/Button'
 
   let name = ''
+  let answers = []
   let isPublic = false
   let source = ''
   let license = License.OTHER
-  let answers = []
   let playbackIndex = -1
   $: titleErrMsg = bread.title.getErrMsg(name)
   $: sourceErrMsg = source && bread.source.getErrMsg(source)
+  $: answersErrMsg = bread.answer.getErrMsg(answers)
 
   // Firefox では、画像に1frを指定しても、そこにきちんとおさまりきらない画像
   // ( 240px-The_Earth_seen_from_Apollo_17.jpg 等) があったため、高さを
@@ -48,7 +49,6 @@
   }
 
   function onPlay() {
-    console.log(playbackIndex)
     playbackIndex = 0
   }
 
@@ -76,6 +76,40 @@
   }
   function onAnswerEnd() {
     playbackIndex = -1
+  }
+
+  function createBread() {
+    if (!name) {
+      window.alert('タイトル名が入力されていません。')
+      return
+    }
+
+    if (titleErrMsg) {
+      window.alert('タイトル名にエラーが出ています。')
+      return
+    }
+
+    if (!$imgSrc) {
+      window.alert('画像が設定されていません。')
+      return
+    }
+
+    if (answers.length === 0) {
+      window.alert('回答が入力されていません。')
+      return
+    }
+
+    if (answersErrMsg) {
+      window.alert(answersErrMsg)
+      return
+    }
+
+    if (sourceErrMsg) {
+      window.alert('出典元URLにエラーが出ています。')
+      return
+    }
+
+    console.log(name, $imgSrc, answers, isPublic, source, license)
   }
 </script>
 
@@ -174,6 +208,6 @@
   </div>
 
   <div class="justify-end">
-    <Button text="パン作成" active disabled={false} on:click={console.info} />
+    <Button text="パン作成" active disabled={false} on:click={createBread} />
   </div>
 </div>
