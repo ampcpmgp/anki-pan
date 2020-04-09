@@ -8,7 +8,7 @@ module.exports = handleApiError(async (req, res) => {
 
   const response = await client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc')), {
+      q.Paginate(q.Match('breads_sort_by_ts_desc', true), {
         size: 10,
         after: [req.query.ts - 0, q.Ref(q.Collection('Breads'), req.query.ref)],
       }),
