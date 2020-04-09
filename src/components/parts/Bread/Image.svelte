@@ -1,28 +1,37 @@
 <script>
+  import { createPopper } from '@popperjs/core'
   import { createEventDispatcher, beforeUpdate } from 'svelte'
-  import { getImageSize, readFile, compressImage } from '../../../utils/file'
+  import { getImageSize } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
-  import { MAX_IMAGE_SIZE } from '../../../const/file'
+  import Answer from './Answer'
 
-  export let imgSrc
-  export let editable
-  export let answers
-  export let playbackIndex
+  export let imgSrc = ''
+  export let editable = false
+  export let answers = []
+  export let playbackIndex = -1
 
   const dispatch = createEventDispatcher()
 
-  let fileDrop
+  let wrapper
   let bread
+  let answerWrapper
+  let currentRectangleElm
   let isPlay = false
   let pin = initialPos()
   let mousePos = initialPos()
-  let currentRectangle = { left: 0, top: 0, width: 0, height: 0 }
+  let currentRectangle = { top: 0, left: 0, width: 0, height: 0 }
   let currentRectangleStyle = ''
+  let answerIndex = -1
+  let answerNewIndex = -1
   let speakingIndex = -1
+  let isSelecting = false
+  let answerLoc = { top: 0, left: 0 }
+  let answerName = ''
+  let answerReading = ''
   // DOMや画像の縦横幅を設定する
   const size = {
-    fileDrop: { width: 0, height: 0 },
+    wrapper: { width: 0, height: 0 },
     image: { width: 0, height: 0 },
     bread: { width: 0, height: 0 },
   }
@@ -33,9 +42,10 @@
     BEFORE_SPEAKING_MSEC: 500,
   }
 
-  $: fileDropAspectoRatio = size.fileDrop.width / size.fileDrop.height
-  $: imageAspectoRatio = size.image.width / size.image.height
-  $: isLandScape = imageAspectoRatio > fileDropAspectoRatio
+  $: wrapperAspectRatio = size.wrapper.width / size.wrapper.height
+  $: imageAspectRatio = size.image.width / size.image.height
+  $: isLandScape = imageAspectRatio > wrapperAspectRatio
+  $: isAnswerEdit = answerIndex !== answers.length
   $: {
     currentRectangle.left =
       (pin.x > mousePos.x ? mousePos.x : pin.x) / size.bread.width
@@ -45,6 +55,9 @@
     currentRectangle.height = Math.abs(pin.y - mousePos.y) / size.bread.height
 
     currentRectangleStyle = getRectangleStyle(currentRectangle)
+
+    answerLoc.top = currentRectangle.top + currentRectangle.height
+    answerLoc.left = currentRectangle.left + currentRectangle.width
   }
 
   beforeUpdate(() => {
@@ -52,8 +65,7 @@
     if (isPlay) return
 
     const answer = answers[playbackIndex]
-    if (!answers) {
-      playbackIndex = -1
+    if (!answer) {
       dispatch('end')
       return
     }
@@ -88,9 +100,19 @@
   function getOffset(event, element) {
     // 参考 - https://www.geeksforgeeks.org/how-to-get-relative-click-coordinates-on-the-target-element-using-jquery/
     return {
-      x: event.pageX - element.offsetLeft,
-      y: event.pageY - element.offsetTop,
+      x: event.pageX - element.offsetLeft - wrapper.offsetLeft,
+      y: event.pageY - element.offsetTop - wrapper.offsetTop,
     }
+  }
+
+  function init() {
+    answerName = ''
+    answerReading = ''
+
+    isSelecting = false
+
+    pin = initialPos()
+    mousePos = initialPos()
   }
 
   function initialPos() {
@@ -103,21 +125,42 @@
 
   function onBreadMouseDown(e) {
     if (!editable) return
+    if (isSelecting) return
+    if (e.target !== bread) return
 
     const { x, y } = getOffset(e, bread)
     mousePos.x = pin.x = x
     mousePos.y = pin.y = y
   }
 
-  function onBreadMouseUp() {
-    dispatch('generateRectangle', { ...currentRectangle })
+  function locatePopper(target) {
+    setTimeout(() => {
+      createPopper(target, answerWrapper, {
+        placement: 'bottom-end',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [20, 15],
+            },
+          },
+        ],
+      })
+    }, 0)
+  }
 
-    pin = initialPos()
-    mousePos = initialPos()
+  function onBreadMouseUp() {
+    if (!existsPinned()) return
+    if (isSelecting) return
+
+    answerNewIndex = answerIndex = answers.length
+    isSelecting = true
+    locatePopper(currentRectangleElm)
   }
 
   function onBreadMouseMove(e) {
     if (!existsPinned()) return
+    if (isSelecting) return
 
     const { x, y } = getOffset(e, bread)
     mousePos.x = x
@@ -125,6 +168,8 @@
   }
 
   function onBreadMouseLeave() {
+    if (isSelecting) return
+
     pin = initialPos()
     mousePos = initialPos()
   }
@@ -136,45 +181,61 @@
     size.image.height = height
   }
 
-  async function onFileDrop(e) {
-    if (!editable && !window.confirm('本当に変更しても良いですか?😳')) {
-      return
-    }
+  function onAnswerUpdate() {
+    dispatch('answerUpdate', {
+      answer: {
+        ...currentRectangle,
+        name: answerName,
+        reading: answerReading,
+      },
+      index: answerIndex,
+      newIndex: answerNewIndex,
+    })
 
-    const file = e.files[0]
+    init()
+  }
 
-    if (file.size > MAX_IMAGE_SIZE) {
-      alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
-      return
-    }
+  function onAnswerCreate() {
+    dispatch('answerCreate', {
+      answer: {
+        ...currentRectangle,
+        name: answerName,
+        reading: answerReading,
+      },
+      newIndex: answerNewIndex,
+    })
 
-    const result = await compressImage(file)
-    imgSrc = await readFile(result)
-    await setImageSize()
+    init()
+  }
+
+  function onAnswerDelete() {
+    dispatch('answerDelete', {
+      index: answerIndex,
+    })
+
+    init()
+  }
+
+  function openAnswer(e, answer, i) {
+    isSelecting = true
+    pin.x = answer.left
+    pin.y = answer.top
+    mousePos.x = answer.left + answer.width
+    mousePos.y = answer.top + answer.height
+    answerName = answer.name
+    answerReading = answer.reading
+
+    answerNewIndex = answerIndex = i
+
+    locatePopper(e.target)
   }
 </script>
 
 <style>
-  file-drop {
+  .wrapper {
     display: grid;
     width: 100%;
     height: 100%;
-  }
-
-  :global(.bread-image-file-drop.drop-valid) {
-    background-color: rgba(0, 255, 0, 0.3);
-  }
-  :global(.bread-image-file-drop.drop-invalid) {
-    background-color: rgba(255, 0, 0, 0.3);
-  }
-  .invalid {
-    display: none;
-  }
-  :global(.bread-image-file-drop.drop-invalid) .invalid {
-    display: grid;
-  }
-  :global(.bread-image-file-drop.drop-invalid) .valid {
-    display: none;
   }
 
   .bread {
@@ -198,6 +259,7 @@
     position: absolute;
     background-color: white;
     border: solid 1px #555;
+    cursor: pointer;
   }
   .rectangle.current {
     opacity: 0.8;
@@ -229,60 +291,60 @@
     height: 100%;
     max-height: 100%;
   }
-
-  .message {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #555;
-    color: #333;
-    font-weight: bold;
-    width: 100%;
-    height: 100%;
-  }
 </style>
 
-<file-drop
-  disabled
-  class="bread-image-file-drop"
-  accept="image/*"
-  bind:this={fileDrop}
-  bind:clientWidth={size.fileDrop.width}
-  bind:clientHeight={size.fileDrop.height}
-  on:filedrop={onFileDrop}>
-  {#if imgSrc}
-    {#await setImageSize()}
-      読込中...
-    {:then value}
-      <div
-        class="bread"
-        class:is-editable={editable}
-        class:landscape={isLandScape}
-        style="background-image: url({imgSrc})"
-        bind:this={bread}
-        bind:clientWidth={size.bread.width}
-        bind:clientHeight={size.bread.height}
-        on:mousedown={onBreadMouseDown}
-        on:mouseup={onBreadMouseUp}
-        on:mousemove={onBreadMouseMove}
-        on:mouseleave={onBreadMouseLeave}>
-        <img src={imgSrc} alt="" />
+<div
+  class="wrapper"
+  bind:this={wrapper}
+  bind:clientWidth={size.wrapper.width}
+  bind:clientHeight={size.wrapper.height}>
+  {#await setImageSize()}
+    読込中...
+  {:then value}
+    <div
+      class="bread"
+      class:is-editable={editable}
+      class:landscape={isLandScape}
+      style="background-image: url({imgSrc})"
+      bind:this={bread}
+      bind:clientWidth={size.bread.width}
+      bind:clientHeight={size.bread.height}
+      on:mousedown={onBreadMouseDown}
+      on:mouseup={onBreadMouseUp}
+      on:mousemove={onBreadMouseMove}
+      on:mouseleave={onBreadMouseLeave}>
+      <img src={imgSrc} alt="" />
 
-        <div class="rectangle current" style={currentRectangleStyle} />
-        {#each answers as answer, i}
-          <div
-            class="rectangle"
-            class:is-active={i === playbackIndex}
-            class:is-speaking={i === speakingIndex}
-            class:is-complete={i < playbackIndex}
-            style={getRectangleStyle(answer)} />
-        {/each}
-      </div>
-    {/await}
-  {:else}
-    <div class="message">
-      <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
-      <p class="invalid">このファイルは指定できません</p>
+      <div
+        class="rectangle current"
+        bind:this={currentRectangleElm}
+        style={currentRectangleStyle} />
+
+      {#each answers as answer, i}
+        <div
+          class="rectangle"
+          class:is-active={i === playbackIndex}
+          class:is-speaking={i === speakingIndex}
+          class:is-complete={i < playbackIndex}
+          style={getRectangleStyle(answer)}
+          on:click={e => openAnswer(e, answer, i)} />
+      {/each}
     </div>
-  {/if}
-</file-drop>
+  {/await}
+</div>
+
+{#if isSelecting}
+  <div bind:this={answerWrapper}>
+    <Answer
+      bind:name={answerName}
+      bind:reading={answerReading}
+      bind:index={answerNewIndex}
+      isEdit={isAnswerEdit}
+      top={answerLoc.top}
+      left={answerLoc.left}
+      on:cancel={init}
+      on:delete={onAnswerDelete}
+      on:create={onAnswerCreate}
+      on:update={onAnswerUpdate} />
+  </div>
+{/if}

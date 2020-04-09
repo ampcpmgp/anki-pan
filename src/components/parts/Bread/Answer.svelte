@@ -2,17 +2,20 @@
   import { createEventDispatcher } from 'svelte'
   import fether from 'feather-icons'
   import { slide } from 'svelte/transition'
-  import { breadAnswerName, breadReading } from '../../../../utils/validator'
+  import { bread } from '../../../../utils/validator'
   import { speak } from '../../../utils/speech'
   import Text from '../Form/Text'
   import Button from '../Form/Button'
+  import Number from '../Form/Number'
 
   export let name = ''
   export let reading = ''
-  $: answserErrMsg = breadAnswerName.getErrMsg(name)
-  $: readingErrMsg = breadReading.getErrMsg(reading)
+  export let index = -1
+  export let isEdit = false
+  $: answserErrMsg = bread.answerName.getErrMsg(name)
+  $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
-  $: disabledOk = !name
+  $: disabledOk = !name || answserErrMsg || readingErrMsg
 
   const BALLOON_WIDTH = '30px'
   const dispatch = createEventDispatcher()
@@ -27,8 +30,14 @@
   function onCancel() {
     dispatch('cancel')
   }
-  function onOk() {
-    dispatch('ok')
+  function onDelete() {
+    dispatch('delete')
+  }
+  function onCreate() {
+    dispatch('create')
+  }
+  function onUpdate() {
+    dispatch('update')
   }
 </script>
 
@@ -41,7 +50,6 @@
     font-size: 0.9em;
     border: solid 1px green;
     border-radius: 4px;
-    position: absolute;
     top: calc(var(--width) / 2);
     background-color: white;
   }
@@ -65,11 +73,19 @@
   }
 
   .name {
+    z-index: 3;
     grid-row: 1;
   }
 
   .reading {
+    z-index: 2;
     grid-row: 2;
+  }
+
+  .index {
+    z-index: 1;
+    grid-row: 3;
+    width: 90px;
   }
 
   .speak {
@@ -80,23 +96,28 @@
 
   .buttons {
     justify-self: end;
-    grid-row: 3;
+    grid-row: 4;
     grid-column: span 2;
   }
 </style>
 
 <div
   class="answer"
-  style="--width: {BALLOON_WIDTH}"
+  style="--width: {BALLOON_WIDTH};"
   transition:slide={{ duration: 100 }}>
-  <div class="buttons">
-    <Button
-      type="passive"
-      text="キャンセル"
-      disabled={false}
-      on:click={onCancel} />
-    <Button type="active" text="OK" disabled={disabledOk} on:click={onOk} />
+  <div class="name">
+    <Text
+      label="答え"
+      bind:value={name}
+      placeholder=""
+      errMsg={answserErrMsg} />
   </div>
+
+  {#if !existsReading}
+    <div class="speak name" on:click={() => speak(name)}>
+      {@html svg.volume2}
+    </div>
+  {/if}
 
   <div class="reading">
     <Text
@@ -112,17 +133,18 @@
     </div>
   {/if}
 
-  <div class="name">
-    <Text
-      label="答え"
-      bind:value={name}
-      placeholder=""
-      errMsg={answserErrMsg} />
+  <div class="index">
+    <Number label="順番" bind:value={index} />
   </div>
 
-  {#if !existsReading}
-    <div class="speak name" on:click={() => speak(name)}>
-      {@html svg.volume2}
-    </div>
-  {/if}
+  <div class="buttons">
+    <Button passive text="キャンセル" disabled={false} on:click={onCancel} />
+
+    {#if isEdit}
+      <Button negative text="削除" disabled={false} on:click={onDelete} />
+      <Button positive text="更新" disabled={disabledOk} on:click={onUpdate} />
+    {:else}
+      <Button active text="作成" disabled={disabledOk} on:click={onCreate} />
+    {/if}
+  </div>
 </div>

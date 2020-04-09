@@ -25,9 +25,12 @@ Do(
   CreateIndex({
     name: 'breads_sort_by_ts_desc',
     source: Collection('Breads'),
+    terms: [
+      { field: ['data', 'isPublic'] },
+    ],
     values: [
       { field: ['ts'], reverse: true },
-      { field: ['ref'] }
+      { field: ['ref'] },
     ],
   }),
   CreateIndex({

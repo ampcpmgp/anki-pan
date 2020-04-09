@@ -1,7 +1,12 @@
-const Validation = require('../../const/validation')
+const Validation = require('../../../const/validation')
+const MAX_VALUE = 30
 
 exports.validate = value => {
-  if (value.length > 50) {
+  if (value.length === 0) {
+    return Validation.EMPTY
+  }
+
+  if (value.length > MAX_VALUE) {
     return Validation.COUNT_OVER
   }
 
@@ -17,9 +22,10 @@ exports.getErrMsg = value => {
 
   switch (result) {
     case Validation.NO_ERROR:
+    case Validation.EMPTY:
       return ''
     case Validation.COUNT_OVER:
-      return '最大文字数は50文字です'
+      return `最大文字数は${MAX_VALUE}文字です`
     default:
       console.error(`result: ${result}`)
   }

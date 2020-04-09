@@ -1,16 +1,13 @@
-const Validation = require('../../const/validation')
+const Validation = require('../../../const/validation')
+exports.MAX_IMAGE_SIZE = 1024 * 1024 * 3 // 3MB
 
 exports.validate = value => {
   if (value.length === 0) {
     return Validation.EMPTY
   }
 
-  if (value.length > 20) {
-    return Validation.COUNT_OVER
-  }
-
-  if (!/^[a-z|0-9|\-|_]+$/g.test(value)) {
-    return Validation.UNAVAILABLE_CHAR
+  if (value.length > exports.MAX_IMAGE_SIZE) {
+    return Validation.SIZE_OVER
   }
 
   return Validation.NO_ERROR
@@ -27,10 +24,8 @@ exports.getErrMsg = value => {
     case Validation.NO_ERROR:
     case Validation.EMPTY:
       return ''
-    case Validation.COUNT_OVER:
-      return '最大文字数は20文字です'
-    case Validation.UNAVAILABLE_CHAR:
-      return '使用可能文字は a~z 0~9 - _ です'
+    case Validation.SIZE_OVER:
+      return `ファイルサイズは2MBまでにしてください🙇🙇‍♀`
     default:
       console.error(`result: ${result}`)
   }

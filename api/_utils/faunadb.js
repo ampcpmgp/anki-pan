@@ -1,10 +1,14 @@
 const faunadb = require('faunadb')
 const Provider = require('../../const/provider')
+const { getSubInfo } = require('../../utils/oauth')
+const { ApiError } = require('./api-error')
 
-exports.q = faunadb.query
-exports.client = new faunadb.Client({ secret: process.env.FAUNA_DB_SECRET })
+const q = (exports.q = faunadb.query)
+const client = (exports.client = new faunadb.Client({
+  secret: process.env.FAUNA_DB_SECRET,
+}))
 
-exports.getSubIndex = provider => {
+exports.getSubIndexName = provider => {
   switch (provider) {
     case Provider.TWITTER:
       return 'users_by_sub_twitter'
@@ -14,5 +18,25 @@ exports.getSubIndex = provider => {
       return 'users_by_sub_google'
     default:
       console.warn(`provider: ${provider}`)
+  }
+}
+
+exports.getDBUser = async function(subjectClaim) {
+  const { provider, id } = getSubInfo(subjectClaim)
+  const indexName = exports.getSubIndexName(provider)
+
+  try {
+    const { data } = await client.query(q.Get(q.Match(q.Index(indexName), id)))
+
+    return {
+      id: data.id,
+      nanoId: data.nanoId,
+    }
+  } catch (error) {
+    if (error.requestResult && error.requestResult.statusCode === 404) {
+      throw new ApiError('Not Found', 404)
+    }
+
+    throw new Error(error)
   }
 }

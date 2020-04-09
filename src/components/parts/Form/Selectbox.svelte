@@ -1,6 +1,6 @@
 <script>
-  export let options
-  export let value
+  export let options = []
+  export let value = ''
 </script>
 
 <style>

@@ -1,5 +1,5 @@
 import { get, writable, derived } from 'svelte/store'
-import { guestUser } from '../utils/api'
+import { guestUser } from '../../utils/api'
 
 export const items = writable([])
 export const after = writable([])
@@ -9,6 +9,12 @@ export const afterInfo = derived(after, $after => ({
   ts: $after[0],
   ref: $after[1]['@ref'].id,
 }))
+
+export function reset() {
+  items.set([])
+  after.set([])
+  fetched.set(false)
+}
 
 export async function fetch() {
   if (get(fetched)) return

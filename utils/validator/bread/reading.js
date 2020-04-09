@@ -1,16 +1,9 @@
-const Validation = require('../../const/validation')
+const Validation = require('../../../const/validation')
+const MAX_VALUE = 50
 
 exports.validate = value => {
-  if (value.length === 0) {
-    return Validation.EMPTY
-  }
-
-  if (value.length > 20) {
+  if (value.length > MAX_VALUE) {
     return Validation.COUNT_OVER
-  }
-
-  if (!/^[a-z|0-9|\-|_]+$/g.test(value)) {
-    return Validation.UNAVAILABLE_CHAR
   }
 
   return Validation.NO_ERROR
@@ -25,12 +18,9 @@ exports.getErrMsg = value => {
 
   switch (result) {
     case Validation.NO_ERROR:
-    case Validation.EMPTY:
       return ''
     case Validation.COUNT_OVER:
-      return '最大文字数は20文字です'
-    case Validation.UNAVAILABLE_CHAR:
-      return '使用可能文字は a~z 0~9 - _ です'
+      return `最大文字数は${MAX_VALUE}文字です`
     default:
       console.error(`result: ${result}`)
   }
