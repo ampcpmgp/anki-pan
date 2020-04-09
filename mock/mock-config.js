@@ -5,6 +5,7 @@ import sleep from '../src/utils/sleep'
 import * as auth from '../src/states/auth'
 import * as user from '../src/states/user'
 import * as userInput from '../src/states/user-input'
+import * as userBread from '../src/states/user-bread'
 import * as images from '../src/images/stories'
 
 fetchMock.mock('/api/user/account/get', {})
@@ -15,6 +16,7 @@ mock({
   auth,
   user,
   userInput,
+  userBread,
 
   page(name) {
     replace(name)

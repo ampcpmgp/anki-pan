@@ -5,7 +5,7 @@
     fetchReadMore,
     existsAfter,
     items,
-  } from '../../../states/bread-new'
+  } from '../../../states/breads-summary/latest'
   import { moveBreadDetail } from '../../../utils/router'
   import Group from '../../parts/Bread/Group'
 

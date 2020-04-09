@@ -6,6 +6,7 @@
   import License from '../../../../const/license'
   import { id, fetchAccount } from '../../../states/user'
   import { imgSrc } from '../../../states/user-input/bread-new'
+  import { bake, bakedErrMsg } from '../../../states/user-bread'
   import { getList } from '../../../utils/license'
   import Size from '../../../const/size'
   import Title from '../../parts/Bread/Title'
@@ -17,15 +18,16 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
-  let name = ''
+  let title = ''
   let answers = []
   let isPublic = false
   let source = ''
   let license = License.OTHER
   let playbackIndex = -1
-  $: titleErrMsg = bread.title.getErrMsg(name)
-  $: sourceErrMsg = source && bread.source.getErrMsg(source)
-  $: answersErrMsg = bread.answer.getErrMsg(answers)
+  let buttonDisabled = false
+  $: titleErrMsg = bread.title.getErrMsg(title)
+  $: sourceErrMsg = bread.source.getErrMsg(source)
+  $: answersErrMsg = bread.answers.getErrMsg(answers)
 
   // Firefox では、画像に1frを指定しても、そこにきちんとおさまりきらない画像
   // ( 240px-The_Earth_seen_from_Apollo_17.jpg 等) があったため、高さを
@@ -78,8 +80,8 @@
     playbackIndex = -1
   }
 
-  function createBread() {
-    if (!name) {
+  async function createBread() {
+    if (!title) {
       window.alert('タイトル名が入力されていません。')
       return
     }
@@ -109,7 +111,22 @@
       return
     }
 
-    console.log(name, $imgSrc, answers, isPublic, source, license)
+    buttonDisabled = true
+
+    await bake({
+      title,
+      image: $imgSrc,
+      answers,
+      isPublic,
+      source,
+      license,
+    })
+
+    buttonDisabled = false
+
+    if (!$bakedErrMsg) {
+      // TODO: HOMEに戻してアラートを表示する。
+    }
   }
 </script>
 
@@ -145,6 +162,10 @@
         var(--padding-bottom) - 2 * var(--row-gap)
     );
   }
+
+  .error {
+    color: red;
+  }
 </style>
 
 <div class="breads-new">
@@ -154,7 +175,7 @@
     --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
     ">
     <Title
-      bind:value={name}
+      bind:value={title}
       userId={$id}
       readOnly={true}
       errMsg={titleErrMsg} />
@@ -208,6 +229,14 @@
   </div>
 
   <div class="justify-end">
-    <Button text="パン作成" active disabled={false} on:click={createBread} />
+    <Button
+      text="パン作成"
+      active
+      disabled={buttonDisabled}
+      on:click={createBread} />
+
+    {#if $bakedErrMsg}
+      <p class="error">{$bakedErrMsg}</p>
+    {/if}
   </div>
 </div>

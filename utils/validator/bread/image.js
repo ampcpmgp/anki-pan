@@ -1,9 +1,13 @@
 const Validation = require('../../../const/validation')
-const MAX_LENGTH = 1000
+export const MAX_IMAGE_SIZE = 1024 * 1024 * 3 // 3MB
 
 exports.validate = value => {
-  if (value.length > MAX_LENGTH) {
-    return Validation.ARRAY_LENGTH_OVER
+  if (value.length === 0) {
+    return Validation.EMPTY
+  }
+
+  if (value.length > MAX_IMAGE_SIZE) {
+    return Validation.SIZE_OVER
   }
 
   return Validation.NO_ERROR
@@ -18,9 +22,10 @@ exports.getErrMsg = value => {
 
   switch (result) {
     case Validation.NO_ERROR:
+    case Validation.EMPTY:
       return ''
-    case Validation.COUNT_OVER:
-      return `最大回答数は${MAX_LENGTH}個です`
+    case Validation.SIZE_OVER:
+      return `ファイルサイズは2MBまでにしてください🙇🙇‍♀`
     default:
       console.error(`result: ${result}`)
   }

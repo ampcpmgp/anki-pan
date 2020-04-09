@@ -3,6 +3,10 @@ const Validation = require('../../../const/validation')
 const MAX_LENGTH = 2000
 
 exports.validate = value => {
+  if (value === '') {
+    return Validation.NO_ERROR
+  }
+
   if (value.length > MAX_LENGTH) {
     return Validation.COUNT_OVER
   }

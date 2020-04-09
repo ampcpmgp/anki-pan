@@ -15,4 +15,5 @@ Home:
     - [user.id.set, dummy-id]
     - [page, /breads/new]
   パン画像設定有り: [setBreadsImage]
+  作成エラー: [userBread.bakedErrMsg.set, 'サーバーエラー']
 404 page: [page, /404]

@@ -11,7 +11,7 @@
   export let errMsg = ''
   const dispatch = createEventDispatcher()
   $: idErrMsg = value && getErrMsg(value)
-  $: disabledRegister = !value || !isValid(value) || connecting
+  $: disabledRegister = !isValid(value) || connecting
 
   function onCancel() {
     dispatch('cancel')

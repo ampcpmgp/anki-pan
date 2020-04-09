@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte'
-  import { MAX_IMAGE_SIZE } from '../../../const/file'
+  import Validation from '../../../../const/validation'
+  import { bread } from '../../../../utils/validator'
   import { readFile, compressImage } from '../../../utils/file'
 
   const dispatch = createEventDispatcher()
@@ -8,13 +9,13 @@
   async function onFileDrop(e) {
     const file = e.files[0]
 
-    if (file.size > MAX_IMAGE_SIZE) {
+    const result = await compressImage(file)
+    const imgSrc = await readFile(result)
+
+    if (bread.image.validate(imgSrc) === Validation.SIZE_OVER) {
       alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
       return
     }
-
-    const result = await compressImage(file)
-    const imgSrc = await readFile(result)
 
     dispatch('drop', imgSrc)
   }

@@ -1,5 +1,5 @@
 import { get, writable, derived } from 'svelte/store'
-import { guestUser } from '../utils/api'
+import { guestUser } from '../../utils/api'
 
 export const items = writable([])
 export const after = writable([])
