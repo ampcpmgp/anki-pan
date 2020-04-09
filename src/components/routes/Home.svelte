@@ -5,6 +5,7 @@
   import Footer from '../parts/Footer/Footer'
   import AccountEntry from '../containers/Modal/AccountEntry'
   import Settings from '../containers/Modal/Settings'
+  import Alert from '../containers/Alert/Alert'
 </script>
 
 <Frame>
@@ -13,4 +14,5 @@
   <Footer />
   <AccountEntry />
   <Settings />
+  <Alert />
 </Frame>

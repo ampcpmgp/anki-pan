@@ -7,6 +7,8 @@
   import { id, fetchAccount } from '../../../states/user'
   import { imgSrc } from '../../../states/user-input/bread-new'
   import { bake, bakedErrMsg } from '../../../states/user-bread'
+  import { success } from '../../../states/alert'
+  import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
   import Size from '../../../const/size'
   import Title from '../../parts/Bread/Title'
@@ -125,7 +127,9 @@
     buttonDisabled = false
 
     if (!$bakedErrMsg) {
-      // TODO: HOMEに戻してアラートを表示する。
+      replace('/')
+      $success = 'パン作成成功!!'
+      reset()
     }
   }
 </script>
@@ -213,7 +217,7 @@
   </div>
 
   <div class="justify-start">
-    <Checkbox label="公開する" checked={isPublic} />
+    <Checkbox label="公開する" bind:checked={isPublic} />
   </div>
 
   <div class="justify-start">

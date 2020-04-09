@@ -10,6 +10,12 @@ export const afterInfo = derived(after, $after => ({
   ref: $after[1]['@ref'].id,
 }))
 
+export function reset() {
+  items.set([])
+  after.set([])
+  fetched.set(false)
+}
+
 export async function fetch() {
   if (get(fetched)) return
 

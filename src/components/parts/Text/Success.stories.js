@@ -1,16 +1,15 @@
 import { withKnobs, text } from '@storybook/addon-knobs'
-import Alert from './Alert.svelte'
+import Success from './Success.svelte'
 
 export default {
-  title: 'Alert',
-  component: Alert,
+  title: 'Text/Success',
+  component: Success,
   decorators: [withKnobs],
 }
 
-export const Success = () => ({
-  Component: Alert,
+export const Main = () => ({
+  Component: Success,
   props: {
     message: text('message', 'dummy-text'),
-    success: true,
   },
 })
