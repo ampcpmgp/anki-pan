@@ -8,7 +8,7 @@ const client = (exports.client = new faunadb.Client({
   secret: process.env.FAUNA_DB_SECRET,
 }))
 
-exports.getSubIndex = provider => {
+exports.getSubIndexName = provider => {
   switch (provider) {
     case Provider.TWITTER:
       return 'users_by_sub_twitter'
@@ -23,10 +23,10 @@ exports.getSubIndex = provider => {
 
 exports.getDBUser = async function(subjectClaim) {
   const { provider, id } = getSubInfo(subjectClaim)
-  const index = exports.getSubIndex(provider)
+  const indexName = exports.getSubIndexName(provider)
 
   try {
-    const { data } = await client.query(q.Get(q.Match(q.Index(index), id)))
+    const { data } = await client.query(q.Get(q.Match(q.Index(indexName), id)))
 
     return {
       id: data.id,

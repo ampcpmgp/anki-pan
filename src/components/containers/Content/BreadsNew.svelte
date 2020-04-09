@@ -67,8 +67,7 @@
   function onAnswerCreate(e) {
     const { answer, newIndex } = e.detail
 
-    answers[newIndex] = answer
-
+    answers.splice(newIndex, 0, answer)
     answers = answers.filter(answer => answer)
   }
   function onAnswerDelete(e) {
@@ -175,13 +174,13 @@
 <div class="breads-new">
   <div
     class="first-view"
-    style="; --title-height: {LocalSize.TITLE}px; --controller-height: {LocalSize.CONTROLLER}px;
+    style="--title-height: {LocalSize.TITLE}px; --controller-height: {LocalSize.CONTROLLER}px;
     --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
     ">
     <Title
       bind:value={title}
       userId={$id}
-      readOnly={true}
+      readonly={false}
       errMsg={titleErrMsg} />
 
     <div class="justify-center">
@@ -189,9 +188,9 @@
         noBack={true}
         noPlay={false}
         noNext={true}
-        on:back={console.info}
+        on:back={console.error}
         on:play={onPlay}
-        on:next={console.info} />
+        on:next={console.error} />
     </div>
 
     {#if !$imgSrc}
