@@ -8,7 +8,7 @@ export const hasNoId = writable(false)
 export const registrationErrMsg = writable('')
 
 export async function fetchAccount() {
-  if (get(id)) {
+  if (get(nanoId)) {
     return
   }
 

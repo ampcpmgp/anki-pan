@@ -1,12 +1,14 @@
-module.exports = (req, res) => {
+const { handleApiError } = require('../../_utils/api-error')
+const { client, q } = require('../../_utils/faunadb')
+
+module.exports = handleApiError(async (req, res) => {
   const {
-    query: { breadId },
+    query: { nanoId },
   } = req
 
-  const bread = {}
+  const response = await client.query(
+    q.Get(q.Match(q.Index('breads_by_nano_id'), nanoId))
+  )
 
-  res.json({
-    breadId,
-    bread,
-  })
-}
+  res.json(response.data)
+})

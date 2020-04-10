@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
   import { getBread, setBread } from '../../../utils/db'
-  import { id, fetchAccount } from '../../../states/user'
+  import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
   import { get } from '../../../states/bread-detail'
   import {
     title,
@@ -16,12 +16,14 @@
   import Edit from './Edit'
 
   export let nanoId = ''
+
   let editMode = false
   let viewMode = false
+
   onMount(async () => {
     await fetchAccount()
 
-    if (!$id) {
+    if (!$userNanoId) {
       replace('/')
     }
 
@@ -32,7 +34,7 @@
       setBread(bread)
     }
 
-    if ($id === bread.userNanoId) {
+    if ($userNanoId === bread.userNanoId) {
       editMode = true
 
       $title = bread.title

@@ -119,7 +119,7 @@
 
     if (!$updatedErrMsg) {
       replace('/')
-      $success = 'パン作成成功!!'
+      $success = 'パン更新成功'
       reset()
     }
   }

@@ -37,7 +37,6 @@ module.exports = handleApiError(async (req, res) => {
   }
 
   try {
-    const breadNanoId = nanoId()
     await client.query(
       q.Update(
         q.Select(
@@ -50,19 +49,21 @@ module.exports = handleApiError(async (req, res) => {
           )
         ),
         {
-          nanoId,
-          title,
-          answers,
-          isPublic,
-          source,
-          license,
+          data: {
+            nanoId,
+            title,
+            answers,
+            isPublic,
+            source,
+            license,
+          },
         }
       )
     )
 
     res.json({
       message: 'success',
-      nanoId: breadNanoId,
+      nanoId,
     })
   } catch (error) {
     throw new Error(error)

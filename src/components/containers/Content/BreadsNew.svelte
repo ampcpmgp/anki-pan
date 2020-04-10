@@ -4,7 +4,7 @@
   import arrayMove from 'array-move'
   import { bread } from '../../../../utils/validator'
   import License from '../../../../const/license'
-  import { id, fetchAccount } from '../../../states/user'
+  import { id, nanoId, fetchAccount } from '../../../states/user'
   import { image } from '../../../states/user-input/bread-new'
   import { bake, bakedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
@@ -43,7 +43,7 @@
   onMount(async () => {
     await fetchAccount()
 
-    if (!$id) {
+    if (!$nanoId) {
       replace('/')
     }
   })

@@ -19,7 +19,7 @@ export async function getBread(nanoId) {
     .first()
 }
 
-export async function removeBread(nanoId) {
+export async function deleteBread(nanoId) {
   return await db.breads
     .where('nanoId')
     .equals(nanoId)
