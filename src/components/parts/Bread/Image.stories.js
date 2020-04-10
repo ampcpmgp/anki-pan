@@ -34,7 +34,7 @@ const answers = [
 export const 画像未設定 = () => ({
   Component: Image,
   props: {
-    imgSrc: '',
+    image: '',
     editable: boolean('editable', true),
     answers: [],
     playbackIndex: number('playbackIndex', -1),
@@ -51,7 +51,7 @@ export const 画像未設定 = () => ({
 export const 地球小型200 = () => ({
   Component: Image,
   props: {
-    imgSrc: earthMini,
+    image: earthMini,
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
@@ -68,7 +68,7 @@ export const 地球小型200 = () => ({
 export const 地球大型1023 = () => ({
   Component: Image,
   props: {
-    imgSrc: earthBig,
+    image: earthBig,
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
@@ -85,7 +85,7 @@ export const 地球大型1023 = () => ({
 export const 横長画像_小型 = () => ({
   Component: Image,
   props: {
-    imgSrc: landScapeMini,
+    image: landScapeMini,
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
@@ -102,7 +102,7 @@ export const 横長画像_小型 = () => ({
 export const 横長画像_大型 = () => ({
   Component: Image,
   props: {
-    imgSrc: landScapeBig,
+    image: landScapeBig,
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
@@ -119,7 +119,7 @@ export const 横長画像_大型 = () => ({
 export const 編集不可 = () => ({
   Component: Image,
   props: {
-    imgSrc: landScapeBig,
+    image: landScapeBig,
     editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', -1),
@@ -136,7 +136,7 @@ export const 編集不可 = () => ({
 export const 都道府県_再生 = () => ({
   Component: Image,
   props: {
-    imgSrc: 都道府県svg,
+    image: 都道府県svg,
     editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', 0),

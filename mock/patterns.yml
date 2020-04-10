@@ -17,4 +17,13 @@ Home:
     - [page, /breads/new]
   パン画像設定有り: [setBreadsImage]
   作成エラー: [userBread.bakedErrMsg.set, 'サーバーエラー']
+パン詳細画面:
+  パン編集モード:
+    funcs:
+      - [user.id.set, dummy-user-nanoid]
+    ローカルにパン不所持:
+      - [page, /breads/detail/no-bread-nanoid]
+    ローカルにパン所持:
+      - [setBreadOnDB]
+      - [page, /breads/detail/has-bread-nanoid]
 404 page: [page, /404]

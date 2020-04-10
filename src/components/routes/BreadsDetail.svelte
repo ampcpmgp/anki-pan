@@ -1,8 +1,10 @@
 <script>
   import Frame from '../containers/Frame/Frame'
+  import Branch from '../containers/BreadsDetail/Branch'
+
   export let params = {}
 </script>
 
 <Frame>
-  <p>Bread Detail {params.nanoId}</p>
+  <Branch nanoId={params.nanoId} />
 </Frame>

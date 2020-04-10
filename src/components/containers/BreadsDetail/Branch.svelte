@@ -1,0 +1,56 @@
+<script>
+  import { onMount } from 'svelte'
+  import { replace } from 'svelte-spa-router'
+  import { getBread, setBread } from '../../../utils/db'
+  import { id, fetchAccount } from '../../../states/user'
+  import { get } from '../../../states/bread-detail'
+  import {
+    title,
+    image,
+    answers,
+    isPublic,
+    license,
+    source,
+  } from '../../../states/user-input/bread-edit'
+  import View from './View'
+  import Edit from './Edit'
+
+  export let nanoId = ''
+  let editMode = false
+  let viewMode = false
+  onMount(async () => {
+    await fetchAccount()
+
+    if (!$id) {
+      replace('/')
+    }
+
+    let bread = await getBread(nanoId)
+
+    if (!bread) {
+      bread = await get(nanoId)
+      setBread(bread)
+    }
+
+    if ($id === bread.userNanoId) {
+      editMode = true
+
+      $title = bread.title
+      $image = bread.image
+      $answers = bread.answers
+      $isPublic = bread.isPublic
+      $license = bread.license
+      $source = bread.source
+    } else {
+      viewMode = true
+    }
+  })
+</script>
+
+{#if editMode}
+  <Edit {nanoId} />
+{/if}
+
+{#if viewMode}
+  <View />
+{/if}

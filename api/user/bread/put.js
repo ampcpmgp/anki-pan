@@ -1,10 +1,70 @@
-module.exports = (req, res) => {
-  const {
-    body: { bread, breadId },
-  } = req
+const { getUserInfo } = require('../../_utils/auth0')
+const { ApiError, handleApiError } = require('../../_utils/api-error')
+const { getDBUser, client, q } = require('../../_utils/faunadb')
+const { bread } = require('../../../utils/validator')
+const { getName } = require('../../../utils/license')
 
-  res.json({
-    breadId,
-    bread,
-  })
-}
+module.exports = handleApiError(async (req, res) => {
+  const response = await getUserInfo(req)
+
+  const { sub: subjectClaim } = await response.json()
+  const user = await getDBUser(subjectClaim)
+
+  const { nanoId, title, answers, isPublic, source, license } = req.body
+
+  if (!bread.nanoId.isValid(nanoId)) {
+    throw new ApiError('NanoId Error', 400)
+  }
+
+  if (!bread.title.isValid(title)) {
+    throw new ApiError('Title Error', 400)
+  }
+
+  if (!bread.answers.isValid(answers)) {
+    throw new ApiError('Answers Error', 400)
+  }
+
+  if (typeof isPublic !== 'boolean') {
+    throw new ApiError('isPublic Error', 400)
+  }
+
+  if (!bread.source.isValid(source)) {
+    throw new ApiError('Source Error', 400)
+  }
+
+  if (!getName(license)) {
+    throw new ApiError('License Error', 400)
+  }
+
+  try {
+    const breadNanoId = nanoId()
+    await client.query(
+      q.Update(
+        q.Select(
+          'ref',
+          q.Get(
+            q.Intersection(
+              q.Match(q.Index('breads_by_nano_id'), nanoId),
+              q.Match(q.Index('breads_by_user_nano_id'), user.nanoId)
+            )
+          )
+        ),
+        {
+          nanoId,
+          title,
+          answers,
+          isPublic,
+          source,
+          license,
+        }
+      )
+    )
+
+    res.json({
+      message: 'success',
+      nanoId: breadNanoId,
+    })
+  } catch (error) {
+    throw new Error(error)
+  }
+})

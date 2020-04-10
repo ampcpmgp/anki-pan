@@ -1,12 +1,17 @@
 <script>
-  import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
   import arrayMove from 'array-move'
   import { bread } from '../../../../utils/validator'
-  import License from '../../../../const/license'
-  import { id, fetchAccount } from '../../../states/user'
-  import { image } from '../../../states/user-input/bread-new'
-  import { bake, bakedErrMsg } from '../../../states/user-bread'
+  import { id } from '../../../states/user'
+  import {
+    title,
+    image,
+    answers,
+    isPublic,
+    license,
+    source,
+  } from '../../../states/user-input/bread-edit'
+  import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
@@ -20,16 +25,13 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
-  let title = ''
-  let answers = []
-  let isPublic = false
-  let source = ''
-  let license = License.OTHER
+  export let nanoId = ''
+
   let playbackIndex = -1
   let buttonDisabled = false
-  $: titleErrMsg = bread.title.getErrMsg(title)
-  $: sourceErrMsg = bread.source.getErrMsg(source)
-  $: answersErrMsg = bread.answers.getErrMsg(answers)
+  $: titleErrMsg = bread.title.getErrMsg($title)
+  $: sourceErrMsg = bread.source.getErrMsg($source)
+  $: answersErrMsg = bread.answers.getErrMsg($answers)
 
   // Firefox では、画像に1frを指定しても、そこにきちんとおさまりきらない画像
   // ( 240px-The_Earth_seen_from_Apollo_17.jpg 等) があったため、高さを
@@ -39,14 +41,6 @@
     CONTROLLER: 36,
     FIRST_VIEW_ROW_GAP: 12,
   }
-
-  onMount(async () => {
-    await fetchAccount()
-
-    if (!$id) {
-      replace('/')
-    }
-  })
 
   function onDrop(e) {
     $image = e.detail
@@ -59,28 +53,28 @@
   function onAnswerUpdate(e) {
     const { answer, index, newIndex } = e.detail
 
-    answers[index] = answer
+    $answers[index] = answer
 
-    arrayMove(answers, index, newIndex)
-    answers = answers.filter(answer => answer)
+    arrayMove($answers, index, newIndex)
+    $answers = $answers.filter(answer => answer)
   }
   function onAnswerCreate(e) {
     const { answer, newIndex } = e.detail
 
-    answers.splice(newIndex, 0, answer)
-    answers = answers.filter(answer => answer)
+    $answers.splice(newIndex, 0, answer)
+    $answers = $answers.filter(answer => answer)
   }
   function onAnswerDelete(e) {
     const { index } = e.detail
-    answers.splice(index, 1)
+    $answers.splice(index, 1)
   }
   function onAnswerNext() {
     ++playbackIndex
   }
   function onAnswerEnd() {}
 
-  async function createBread() {
-    if (!title) {
+  async function updateBread() {
+    if (!$title) {
       window.alert('タイトル名が入力されていません。')
       return
     }
@@ -95,7 +89,7 @@
       return
     }
 
-    if (answers.length === 0) {
+    if ($answers.length === 0) {
       window.alert('回答が入力されていません。')
       return
     }
@@ -112,18 +106,18 @@
 
     buttonDisabled = true
 
-    await bake({
-      title,
-      image: $image,
-      answers,
-      isPublic,
-      source,
-      license,
+    await update({
+      nanoId,
+      title: $title,
+      answers: $answers,
+      isPublic: $isPublic,
+      source: $source,
+      license: $license,
     })
 
     buttonDisabled = false
 
-    if (!$bakedErrMsg) {
+    if (!$updatedErrMsg) {
       replace('/')
       $success = 'パン作成成功!!'
       reset()
@@ -176,7 +170,7 @@
     --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
     ">
     <Title
-      bind:value={title}
+      bind:value={$title}
       userId={$id}
       readonly={false}
       errMsg={titleErrMsg} />
@@ -202,7 +196,7 @@
         <Image
           image={$image}
           editable={true}
-          {answers}
+          answers={$answers}
           {playbackIndex}
           on:answerUpdate={onAnswerUpdate}
           on:answerCreate={onAnswerCreate}
@@ -214,30 +208,30 @@
   </div>
 
   <div class="justify-start">
-    <Checkbox label="公開する" bind:checked={isPublic} />
+    <Checkbox label="公開する" bind:checked={$isPublic} />
   </div>
 
   <div class="justify-start">
     <Text
       label="出典元URL"
-      bind:value={source}
+      bind:value={$source}
       placeholder=""
       errMsg={sourceErrMsg} />
   </div>
 
   <div class="justify-start">
-    <Selectbox options={getList()} bind:value={license} />
+    <Selectbox options={getList()} bind:value={$license} />
   </div>
 
   <div class="justify-end">
     <Button
-      text="パン作成"
+      text="パン更新"
       active
       disabled={buttonDisabled}
-      on:click={createBread} />
+      on:click={updateBread} />
 
-    {#if $bakedErrMsg}
-      <p class="error">{$bakedErrMsg}</p>
+    {#if $updatedErrMsg}
+      <p class="error">{$updatedErrMsg}</p>
     {/if}
   </div>
 </div>

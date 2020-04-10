@@ -5,11 +5,12 @@
   import { bread } from '../../../../utils/validator'
   import License from '../../../../const/license'
   import { id, fetchAccount } from '../../../states/user'
-  import { image } from '../../../states/user-input/bread-new'
-  import { bake, bakedErrMsg } from '../../../states/user-bread'
+  import { image } from '../../../states/user-input/bread-edit'
+  import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
+  import { getBread } from '../../../utils/db'
   import Size from '../../../const/size'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
@@ -19,6 +20,8 @@
   import Text from '../../parts/Form/Text'
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
+
+  export let nanoId = ''
 
   let title = ''
   let answers = []
@@ -46,6 +49,14 @@
     if (!$id) {
       replace('/')
     }
+
+    const bread = await getBread(nanoId)
+    title = bread.title
+    $image = bread.image
+    answers = bread.answers
+    isPublic = bread.isPublic
+    license = bread.license
+    source = bread.source
   })
 
   function onDrop(e) {
@@ -79,7 +90,7 @@
   }
   function onAnswerEnd() {}
 
-  async function createBread() {
+  async function updateBread() {
     if (!title) {
       window.alert('タイトル名が入力されていません。')
       return
@@ -112,9 +123,9 @@
 
     buttonDisabled = true
 
-    await bake({
+    await update({
+      nanoId,
       title,
-      image: $image,
       answers,
       isPublic,
       source,
@@ -123,7 +134,7 @@
 
     buttonDisabled = false
 
-    if (!$bakedErrMsg) {
+    if (!$updatedErrMsg) {
       replace('/')
       $success = 'パン作成成功!!'
       reset()
@@ -231,13 +242,13 @@
 
   <div class="justify-end">
     <Button
-      text="パン作成"
+      text="パン更新"
       active
       disabled={buttonDisabled}
-      on:click={createBread} />
+      on:click={updateBread} />
 
-    {#if $bakedErrMsg}
-      <p class="error">{$bakedErrMsg}</p>
+    {#if $updatedErrMsg}
+      <p class="error">{$updatedErrMsg}</p>
     {/if}
   </div>
 </div>

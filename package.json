@@ -51,6 +51,7 @@
     "@popperjs/core": "^2.2.1",
     "array-move": "^2.2.1",
     "compressorjs": "^1.0.6",
+    "dexie": "^2.0.4",
     "faunadb": "^2.11.1",
     "feather-icons": "^4.26.0",
     "file-drop-element": "^0.2.0",

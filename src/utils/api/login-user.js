@@ -24,3 +24,16 @@ export function post({ endpoint, Authorization, data = {} }) {
     },
   })
 }
+
+export function put({ endpoint, Authorization, data = {} }) {
+  const url = `${API_ROOT}${endpoint}`
+
+  return fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization,
+    },
+  })
+}

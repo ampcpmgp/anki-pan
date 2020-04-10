@@ -6,7 +6,7 @@
   import { speak } from '../../../utils/speech'
   import Answer from './Answer'
 
-  export let imgSrc = ''
+  export let image = ''
   export let editable = false
   export let answers = []
   export let playbackIndex = -1
@@ -175,7 +175,7 @@
   }
 
   async function setImageSize() {
-    const { width, height } = await getImageSize(imgSrc)
+    const { width, height } = await getImageSize(image)
 
     size.image.width = width
     size.image.height = height
@@ -305,7 +305,7 @@
       class="bread"
       class:is-editable={editable}
       class:landscape={isLandScape}
-      style="background-image: url({imgSrc})"
+      style="background-image: url({image})"
       bind:this={bread}
       bind:clientWidth={size.bread.width}
       bind:clientHeight={size.bread.height}
@@ -313,7 +313,7 @@
       on:mouseup={onBreadMouseUp}
       on:mousemove={onBreadMouseMove}
       on:mouseleave={onBreadMouseLeave}>
-      <img src={imgSrc} alt="" />
+      <img src={image} alt="" />
 
       <div
         class="rectangle current"
