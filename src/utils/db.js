@@ -26,6 +26,10 @@ export async function deleteBread(nanoId) {
     .delete()
 }
 
+export async function deleteAllBread() {
+  return await db.breads.clear()
+}
+
 export async function showBreadsCount() {
   const count = await db.breads.count()
   console.info(count)

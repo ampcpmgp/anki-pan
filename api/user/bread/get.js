@@ -1,4 +1,4 @@
-const { handleApiError } = require('../../_utils/api-error')
+const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { client, q } = require('../../_utils/faunadb')
 
 module.exports = handleApiError(async (req, res) => {
@@ -6,9 +6,17 @@ module.exports = handleApiError(async (req, res) => {
     query: { nanoId },
   } = req
 
-  const response = await client.query(
-    q.Get(q.Match(q.Index('breads_by_nano_id'), nanoId))
-  )
+  try {
+    const response = await client.query(
+      q.Get(q.Match(q.Index('breads_by_nano_id'), nanoId))
+    )
 
-  res.json(response.data)
+    res.json(response.data)
+  } catch (error) {
+    if (error.name === 'NotFound') {
+      throw new ApiError('NotFound', 404)
+    }
+
+    throw new Error(error)
+  }
 })

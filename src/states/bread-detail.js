@@ -16,6 +16,6 @@ export async function get(nanoId) {
 
     return data
   } catch (error) {
-    errMsg.set('通信エラー')
+    errMsg.set('その他エラー')
   }
 }

@@ -33,12 +33,12 @@ export const 文字エラー = () => ({
   },
 })
 
-export const 通信エラー = () => ({
+export const その他エラー = () => ({
   Component: AccountEntry,
   props: {
     value: text('value', 'dummy-id'),
     connecting: boolean('connecting', false),
-    errMsg: text('errMsg', '通信エラー'),
+    errMsg: text('errMsg', 'その他エラー'),
   },
   on: {
     cancel: console.info,

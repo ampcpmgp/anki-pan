@@ -48,7 +48,7 @@ export async function bake({
 
     bakedErrMsg.set('')
   } catch (error) {
-    bakedErrMsg.set('通信エラー')
+    bakedErrMsg.set('その他エラー')
   }
 }
 
@@ -95,7 +95,6 @@ export async function update({
 
     updatedErrMsg.set('')
   } catch (error) {
-    console.log(error)
-    updatedErrMsg.set('通信エラー')
+    updatedErrMsg.set('その他エラー')
   }
 }

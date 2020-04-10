@@ -66,6 +66,10 @@ module.exports = handleApiError(async (req, res) => {
       nanoId,
     })
   } catch (error) {
+    if (error.name === 'NotFound') {
+      throw new ApiError('NotFound', 404)
+    }
+
     throw new Error(error)
   }
 })
