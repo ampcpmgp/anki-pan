@@ -12,6 +12,11 @@ export async function get(nanoId) {
       nanoId,
     })
 
+    if (response.status === 404) {
+      errMsg.set('該当のパンが見つかりません')
+      return
+    }
+
     const data = await response.json()
 
     return data

@@ -31,6 +31,13 @@
 
     if (!bread) {
       bread = await get(nanoId)
+
+      if (!bread) {
+        window.alert('パン取得エラー')
+        replace('/')
+        return
+      }
+
       setBread(bread)
     }
 

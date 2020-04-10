@@ -28,4 +28,7 @@ Home:
     ローカルにパン所持:
       - [setBreadOnDB]
       - [page, /breads/detail/has-bread-nanoid]
+    パン取得エラー:
+      - [setBreadOnDB]
+      - [page, /breads/detail/error-nanoid]
 404 page: [page, /404]
