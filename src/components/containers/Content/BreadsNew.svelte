@@ -3,9 +3,15 @@
   import { replace } from 'svelte-spa-router'
   import arrayMove from 'array-move'
   import { bread } from '../../../../utils/validator'
-  import License from '../../../../const/license'
   import { id, nanoId, fetchAccount } from '../../../states/user'
-  import { image } from '../../../states/user-input/bread-new'
+  import {
+    title,
+    image,
+    answers,
+    isPublic,
+    license,
+    source,
+  } from '../../../states/user-input/bread-new'
   import { bake, bakedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary/latest'
@@ -20,16 +26,11 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
-  let title = ''
-  let answers = []
-  let isPublic = false
-  let source = ''
-  let license = License.OTHER
   let playbackIndex = -1
   let buttonDisabled = false
-  $: titleErrMsg = bread.title.getErrMsg(title)
-  $: sourceErrMsg = bread.source.getErrMsg(source)
-  $: answersErrMsg = bread.answers.getErrMsg(answers)
+  $: titleErrMsg = bread.title.getErrMsg($title)
+  $: sourceErrMsg = bread.source.getErrMsg($source)
+  $: answersErrMsg = bread.answers.getErrMsg($answers)
 
   // Firefox では、画像に1frを指定しても、そこにきちんとおさまりきらない画像
   // ( 240px-The_Earth_seen_from_Apollo_17.jpg 等) があったため、高さを
@@ -59,20 +60,20 @@
   function onAnswerUpdate(e) {
     const { answer, index, newIndex } = e.detail
 
-    answers[index] = answer
+    $answers[index] = answer
 
-    arrayMove(answers, index, newIndex)
-    answers = answers.filter(answer => answer)
+    arrayMove($answers, index, newIndex)
+    $answers = $answers.filter(answer => answer)
   }
   function onAnswerCreate(e) {
     const { answer, newIndex } = e.detail
 
-    answers.splice(newIndex, 0, answer)
-    answers = answers.filter(answer => answer)
+    $answers.splice(newIndex, 0, answer)
+    $answers = $answers.filter(answer => answer)
   }
   function onAnswerDelete(e) {
     const { index } = e.detail
-    answers.splice(index, 1)
+    $answers.splice(index, 1)
   }
   function onAnswerNext() {
     ++playbackIndex
@@ -80,7 +81,7 @@
   function onAnswerEnd() {}
 
   async function createBread() {
-    if (!title) {
+    if (!$title) {
       window.alert('タイトル名が入力されていません。')
       return
     }
@@ -95,7 +96,7 @@
       return
     }
 
-    if (answers.length === 0) {
+    if ($answers.length === 0) {
       window.alert('回答が入力されていません。')
       return
     }
@@ -113,12 +114,12 @@
     buttonDisabled = true
 
     await bake({
-      title,
+      title: $title,
       image: $image,
-      answers,
-      isPublic,
-      source,
-      license,
+      answers: $answers,
+      isPublic: $isPublic,
+      source: $source,
+      license: $license,
     })
 
     buttonDisabled = false
@@ -158,6 +159,7 @@
   }
 
   .image-wrapper {
+    z-index: 1;
     height: calc(
       100vh - var(--title-height) - var(--controller-height) -
         var(--padding-bottom) - 2 * var(--row-gap)
@@ -176,7 +178,7 @@
     --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
     ">
     <Title
-      bind:value={title}
+      bind:value={$title}
       userId={$id}
       readonly={false}
       errMsg={titleErrMsg} />
@@ -202,7 +204,7 @@
         <Image
           image={$image}
           editable={true}
-          {answers}
+          answers={$answers}
           {playbackIndex}
           on:answerUpdate={onAnswerUpdate}
           on:answerCreate={onAnswerCreate}
@@ -214,19 +216,19 @@
   </div>
 
   <div class="justify-start">
-    <Checkbox label="公開する" bind:checked={isPublic} />
+    <Checkbox label="公開する" bind:checked={$isPublic} />
   </div>
 
   <div class="justify-start">
     <Text
       label="出典元URL"
-      bind:value={source}
+      bind:value={$source}
       placeholder=""
       errMsg={sourceErrMsg} />
   </div>
 
   <div class="justify-start">
-    <Selectbox options={getList()} bind:value={license} />
+    <Selectbox options={getList()} bind:value={$license} />
   </div>
 
   <div class="justify-end">

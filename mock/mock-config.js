@@ -12,6 +12,7 @@ import * as images from '../src/images/stories'
 import bread from './dummy-data/bread'
 
 fetchMock.mock('/api/user/account/get', {})
+fetchMock.mock('/api/user/bread/post', {})
 fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', bread)
 fetchMock.mock('/api/breads/summary/get', {
   data: [],
