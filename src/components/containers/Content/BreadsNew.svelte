@@ -26,20 +26,15 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
+  const {
+    BreadDetail: { FOOTER_HEIGHT, TITLE, CONTROLLER, FIRST_VIEW_ROW_GAP },
+  } = Size
+
   let playbackIndex = -1
   let buttonDisabled = false
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
   $: answersErrMsg = bread.answers.getErrMsg($answers)
-
-  // Firefox では、画像に1frを指定しても、そこにきちんとおさまりきらない画像
-  // ( 240px-The_Earth_seen_from_Apollo_17.jpg 等) があったため、高さを
-  // それぞれ計算し指定する。
-  const LocalSize = {
-    TITLE: 44,
-    CONTROLLER: 36,
-    FIRST_VIEW_ROW_GAP: 12,
-  }
 
   onMount(async () => {
     await fetchAccount()
@@ -174,9 +169,8 @@
 <div class="breads-new">
   <div
     class="first-view"
-    style="--title-height: {LocalSize.TITLE}px; --controller-height: {LocalSize.CONTROLLER}px;
-    --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
-    ">
+    style="--title-height: {TITLE}px; --controller-height: {CONTROLLER}px;
+    --padding-bottom: {FOOTER_HEIGHT}px; --row-gap: {FIRST_VIEW_ROW_GAP}px; ">
     <Title
       bind:value={$title}
       userId={$id}
@@ -198,9 +192,8 @@
     {:else}
       <div
         class="image-wrapper"
-        style=" --title-height: {LocalSize.TITLE}px; --controller-height: {LocalSize.CONTROLLER}px;
-        --padding-bottom: {Size.BREADS_DETAIL_FOOTER_HEIGHT}px; --row-gap: {LocalSize.FIRST_VIEW_ROW_GAP}px;
-        ">
+        style=" --title-height: {TITLE}px; --controller-height: {CONTROLLER}px;
+        --padding-bottom: {FOOTER_HEIGHT}px; --row-gap: {FIRST_VIEW_ROW_GAP}px; ">
         <Image
           image={$image}
           editable={true}
