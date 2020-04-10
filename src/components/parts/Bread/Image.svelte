@@ -218,10 +218,10 @@
 
   function openAnswer(e, answer, i) {
     isSelecting = true
-    pin.x = answer.left
-    pin.y = answer.top
-    mousePos.x = answer.left + answer.width
-    mousePos.y = answer.top + answer.height
+    pin.x = answer.left * size.bread.width
+    pin.y = answer.top * size.bread.height
+    mousePos.x = (answer.left + answer.width) * size.bread.width
+    mousePos.y = (answer.top + answer.height) * size.bread.height
     answerName = answer.name
     answerReading = answer.reading
 

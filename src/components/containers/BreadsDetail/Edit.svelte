@@ -1,6 +1,5 @@
 <script>
   import { replace } from 'svelte-spa-router'
-  import arrayMove from 'array-move'
   import { bread } from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
@@ -15,6 +14,7 @@
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
+  import * as answersUtil from '../../../utils/answers'
   import Size from '../../../const/size'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
@@ -45,24 +45,16 @@
     playbackIndex = 0
   }
 
-  function onAnswerUpdate(e) {
-    const { answer, index, newIndex } = e.detail
-
-    $answers[index] = answer
-
-    arrayMove($answers, index, newIndex)
-    $answers = $answers.filter(answer => answer)
-  }
   function onAnswerCreate(e) {
-    const { answer, newIndex } = e.detail
-
-    $answers.splice(newIndex, 0, answer)
-    $answers = $answers.filter(answer => answer)
+    $answers = answersUtil.create($answers, e.detail)
+  }
+  function onAnswerUpdate(e) {
+    $answers = answersUtil.update($answers, e.detail)
   }
   function onAnswerDelete(e) {
-    const { index } = e.detail
-    $answers.splice(index, 1)
+    $answers = answersUtil.remove($answers, e.detail)
   }
+
   function onAnswerNext() {
     ++playbackIndex
   }
@@ -147,6 +139,7 @@
   }
 
   .image-wrapper {
+    z-index: 1;
     height: calc(
       100vh - var(--title-height) - var(--controller-height) -
         var(--padding-bottom) - 2 * var(--row-gap)
