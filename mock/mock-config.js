@@ -9,14 +9,17 @@ import * as userInput from '../src/states/user-input'
 import * as userBread from '../src/states/user-bread'
 import * as alert from '../src/states/alert'
 import * as images from '../src/images/stories'
-import bread from './dummy-data/bread'
+import * as dummyData from './dummy-data'
 
 fetchMock.mock('/api/user/account/get', {})
 fetchMock.mock('/api/user/bread/post', {})
-fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', bread)
-fetchMock.mock('/api/breads/summary/get', {
-  data: [],
-})
+fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', dummyData.bread)
+fetchMock.mock('/api/breads/summary/get', dummyData.summary)
+fetchMock.mock(
+  '/api/breads/summary/read-more/get?ref=261756579953520129&ts=1585889377480000',
+  dummyData.summaryNoAfter
+)
+fetchMock.mock('/api/user/breads/summary/get', dummyData.summaryNoAfter)
 
 mock({
   sleep,
@@ -36,6 +39,6 @@ mock({
   },
 
   async setBreadOnDB() {
-    await db.setBread(bread)
+    await db.setBread(dummyData.bread)
   },
 })

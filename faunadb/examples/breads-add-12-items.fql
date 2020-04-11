@@ -37,10 +37,12 @@ Foreach(
         Collection('Breads'),
         {
           data: {
-            nanoId: Add(
-              TimeDiff(Epoch(0, 'second'), Now(), 'milliseconds'),
-              Var('num'),
-              100
+            nanoId: ToString(
+              Add(
+                TimeDiff(Epoch(0, 'second'), Now(), 'milliseconds'),
+                Var('num'),
+                100
+              )
             ),
             userNanoId: 'abcde00000',
             userId: 'dummy-account-id-00000',
