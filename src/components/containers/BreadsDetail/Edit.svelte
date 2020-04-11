@@ -25,11 +25,11 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
+  export let nanoId = ''
+
   const {
     BreadDetail: { FOOTER_HEIGHT, TITLE, CONTROLLER, FIRST_VIEW_ROW_GAP },
   } = Size
-
-  export let nanoId = ''
 
   let playbackIndex = -1
   let buttonDisabled = false
