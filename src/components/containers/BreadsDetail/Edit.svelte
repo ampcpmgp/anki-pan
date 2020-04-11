@@ -1,8 +1,7 @@
 <script>
-  import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
   import { bread } from '../../../../utils/validator'
-  import { id, nanoId, fetchAccount } from '../../../states/user'
+  import { id } from '../../../states/user'
   import {
     title,
     image,
@@ -10,8 +9,8 @@
     isPublic,
     license,
     source,
-  } from '../../../states/user-input/bread-new'
-  import { bake, bakedErrMsg } from '../../../states/user-bread'
+  } from '../../../states/user-input/bread-edit'
+  import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
@@ -26,6 +25,8 @@
   import Selectbox from '../../parts/Form/Selectbox'
   import Button from '../../parts/Form/Button'
 
+  export let nanoId = ''
+
   const {
     BreadDetail: { FOOTER_HEIGHT, TITLE, CONTROLLER, FIRST_VIEW_ROW_GAP },
   } = Size
@@ -35,14 +36,6 @@
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
   $: answersErrMsg = bread.answers.getErrMsg($answers)
-
-  onMount(async () => {
-    await fetchAccount()
-
-    if (!$nanoId) {
-      replace('/')
-    }
-  })
 
   function onDrop(e) {
     $image = e.detail
@@ -67,7 +60,7 @@
   }
   function onAnswerEnd() {}
 
-  async function createBread() {
+  async function updateBread() {
     if (!$title) {
       window.alert('タイトル名が入力されていません。')
       return
@@ -100,9 +93,9 @@
 
     buttonDisabled = true
 
-    await bake({
+    await update({
+      nanoId,
       title: $title,
-      image: $image,
       answers: $answers,
       isPublic: $isPublic,
       source: $source,
@@ -111,9 +104,9 @@
 
     buttonDisabled = false
 
-    if (!$bakedErrMsg) {
+    if (!$updatedErrMsg) {
       replace('/')
-      $success = 'パン作成成功!!'
+      $success = 'パン更新成功'
       reset()
     }
   }
@@ -218,13 +211,13 @@
 
   <div class="justify-end">
     <Button
-      text="パン作成"
+      text="パン更新"
       active
       disabled={buttonDisabled}
-      on:click={createBread} />
+      on:click={updateBread} />
 
-    {#if $bakedErrMsg}
-      <p class="error">{$bakedErrMsg}</p>
+    {#if $updatedErrMsg}
+      <p class="error">{$updatedErrMsg}</p>
     {/if}
   </div>
 </div>

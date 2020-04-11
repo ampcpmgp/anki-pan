@@ -3,4 +3,4 @@
   import Group from '../../parts/Bread/Group'
 </script>
 
-<Group type={BreadType.FAVORITES} />
+<Group type={BreadType.FAVORITES} description="工事中" />

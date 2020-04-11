@@ -3,4 +3,4 @@
   import Group from '../../parts/Bread/Group'
 </script>
 
-<Group type={BreadType.SELF_MADE} />
+<Group type={BreadType.SELF_MADE} description="工事中" />

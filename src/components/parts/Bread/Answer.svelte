@@ -46,6 +46,7 @@
     display: inline-grid;
     grid-template-columns: 1fr auto;
     grid-gap: 12px;
+    width: 340px;
     padding: 30px;
     font-size: 0.9em;
     border: solid 1px green;
@@ -75,11 +76,13 @@
   .name {
     z-index: 3;
     grid-row: 1;
+    display: grid;
   }
 
   .reading {
     z-index: 2;
     grid-row: 2;
+    display: grid;
   }
 
   .index {

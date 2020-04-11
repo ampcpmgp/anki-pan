@@ -10,14 +10,14 @@
     const file = e.files[0]
 
     const result = await compressImage(file)
-    const imgSrc = await readFile(result)
+    const image = await readFile(result)
 
-    if (bread.image.validate(imgSrc) === Validation.SIZE_OVER) {
+    if (bread.image.validate(image) === Validation.SIZE_OVER) {
       alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
       return
     }
 
-    dispatch('drop', imgSrc)
+    dispatch('drop', image)
   }
 </script>
 

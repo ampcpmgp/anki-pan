@@ -26,10 +26,10 @@ export async function getBase64FromUrl(url) {
   return base64
 }
 
-export function getImageSize(imgSrc) {
+export function getImageSize(image) {
   return new Promise(resolve => {
     const img = new Image()
-    img.src = imgSrc
+    img.src = image
 
     img.onload = () => {
       const { width, height } = img

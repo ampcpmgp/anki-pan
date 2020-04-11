@@ -8,7 +8,7 @@ export const hasNoId = writable(false)
 export const registrationErrMsg = writable('')
 
 export async function fetchAccount() {
-  if (get(id)) {
+  if (get(nanoId)) {
     return
   }
 
@@ -35,7 +35,7 @@ export async function fetchAccount() {
     nanoId.set(data.nanoId)
     id.set(data.id)
   } catch (error) {
-    throw new Error('通信エラー')
+    throw new Error('その他エラー')
   }
 }
 
@@ -65,6 +65,6 @@ export async function register(id) {
     hasNoId.set(false)
     fetchAccount()
   } catch (error) {
-    registrationErrMsg.set('通信エラー')
+    registrationErrMsg.set('その他エラー')
   }
 }

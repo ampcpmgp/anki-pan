@@ -1,0 +1,16 @@
+Update(
+  Select(
+    "ref",
+    Get(
+      Intersection(
+        Match(Index("breads_by_nano_id"), "__bread_nano_id__"),
+        Match(Index("breads_by_user_nano_id"), "__user_nano_id__"),
+      )
+    )
+  ),
+  {
+    data: {
+      title: "草人4"
+    }
+  }
+)

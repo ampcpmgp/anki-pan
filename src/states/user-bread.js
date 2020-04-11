@@ -3,6 +3,7 @@ import { loginUser } from '../utils/api'
 import { getAuthorization } from './auth'
 
 export const bakedErrMsg = writable('')
+export const updatedErrMsg = writable('')
 
 export async function bake({
   title,
@@ -47,6 +48,53 @@ export async function bake({
 
     bakedErrMsg.set('')
   } catch (error) {
-    bakedErrMsg.set('通信エラー')
+    bakedErrMsg.set('その他エラー')
+  }
+}
+
+export async function update({
+  nanoId,
+  title,
+  answers,
+  isPublic,
+  source,
+  license,
+}) {
+  try {
+    updatedErrMsg.set('')
+
+    const Authorization = await getAuthorization()
+
+    const response = await loginUser.put({
+      endpoint: 'user/bread/put',
+      Authorization,
+      data: {
+        nanoId,
+        title,
+        answers,
+        isPublic,
+        source,
+        license,
+      },
+    })
+
+    if (response.status === 400) {
+      updatedErrMsg.set('入力エラー')
+      return
+    }
+
+    if (response.status === 503) {
+      updatedErrMsg.set('サーバーエラー')
+      return
+    }
+
+    if (response.status === 404) {
+      updatedErrMsg.set('該当のパンが見つかりません')
+      return
+    }
+
+    updatedErrMsg.set('')
+  } catch (error) {
+    updatedErrMsg.set('その他エラー')
   }
 }

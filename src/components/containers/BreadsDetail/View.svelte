@@ -14,6 +14,6 @@
 <div class="breads-detail">
   <Title name="" userId="" readOnly={true} errMsg={''} />
   <Controller back={console.info} play={console.info} next={console.info} />
-  <Image imgSrc="" editable={false} answers={[]} playbackIndex={-1} />
+  <Image image="" editable={false} answers={[]} playbackIndex={-1} />
   <Footer source="" license="" />
 </div>

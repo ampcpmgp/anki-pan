@@ -13,8 +13,22 @@ Home:
   アラート有り: [alert.success.set, 'パン作成成功!!']
 パン作成画面:
   funcs:
-    - [user.id.set, dummy-id]
+    - [user.nanoId.set, dummy-user-nanoid]
+    - [user.id.set, dummy-user-id]
     - [page, /breads/new]
   パン画像設定有り: [setBreadsImage]
   作成エラー: [userBread.bakedErrMsg.set, 'サーバーエラー']
+パン詳細画面:
+  パン編集モード:
+    funcs:
+      - [user.nanoId.set, dummy-user-nanoid]
+      - [user.id.set, dummy-user-id]
+    ローカルにパン不所持:
+      - [page, /breads/detail/no-bread-nanoid]
+    ローカルにパン所持:
+      - [setBreadOnDB]
+      - [page, /breads/detail/has-bread-nanoid]
+    パン取得エラー:
+      - [setBreadOnDB]
+      - [page, /breads/detail/error-nanoid]
 404 page: [page, /404]
