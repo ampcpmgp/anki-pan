@@ -2,7 +2,6 @@ import * as svelte from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
 import { isAuthenticated, getAuthorization } from './auth'
 
-export const bread = svelte.writable({})
 export const errMsg = svelte.writable('')
 
 export async function get(nanoId) {
@@ -25,6 +24,11 @@ export async function get(nanoId) {
       response = await guestUser.get('user/bread/get', {
         nanoId,
       })
+    }
+
+    if (response.status === 403) {
+      errMsg.set('パン情報へのアクセスが禁止されています')
+      return
     }
 
     if (response.status === 404) {

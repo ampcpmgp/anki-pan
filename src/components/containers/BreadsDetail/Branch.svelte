@@ -3,7 +3,7 @@
   import { replace } from 'svelte-spa-router'
   import { getBread, setBread } from '../../../utils/db'
   import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
-  import { get } from '../../../states/bread-detail'
+  import { get, errMsg } from '../../../states/bread-detail'
   import {
     title,
     image,
@@ -33,7 +33,7 @@
       bread = await get(nanoId)
 
       if (!bread) {
-        window.alert('パン取得エラー')
+        window.alert($errMsg)
         replace('/')
         return
       }
