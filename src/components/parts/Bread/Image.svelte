@@ -1,5 +1,4 @@
 <script>
-  import { createPopper } from '@popperjs/core'
   import { createEventDispatcher, beforeUpdate } from 'svelte'
   import { getImageSize } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
@@ -15,7 +14,6 @@
 
   let wrapper
   let bread
-  let answerWrapper
   let currentRectangleElm
   let isPlay = false
   let pin = initialPos()
@@ -133,29 +131,12 @@
     mousePos.y = pin.y = y
   }
 
-  function locatePopper(target) {
-    setTimeout(() => {
-      createPopper(target, answerWrapper, {
-        placement: 'bottom-end',
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [20, 15],
-            },
-          },
-        ],
-      })
-    }, 0)
-  }
-
   function onBreadMouseUp() {
     if (!existsPinned()) return
     if (isSelecting) return
 
     answerNewIndex = answerIndex = answers.length
     isSelecting = true
-    locatePopper(currentRectangleElm)
   }
 
   function onBreadMouseMove(e) {
@@ -226,8 +207,26 @@
     answerReading = answer.reading
 
     answerNewIndex = answerIndex = i
+  }
 
-    locatePopper(e.target)
+  function getAnswerWrapperStyle() {
+    const { top, left, width, height } = currentRectangle
+    const topPercent = 100 * (top + height)
+    const rightPercent = 100 * (1 - (left + width))
+    const leftPercent = 100 * left
+    const topStyle = `top: calc(${topPercent}% + 20px);`
+    const rightStyle = `right: calc(${rightPercent}% - 15px);`
+
+    // 回答が画面左端を超えないようにするため指定。
+    const leftStyle = `left: calc(${leftPercent}% - 30px);`
+
+    const isLeft = left + height < 0.5
+
+    return `
+      ${topStyle}
+      ${rightStyle}
+      ${isLeft ? leftStyle : ''}
+    `
   }
 </script>
 
@@ -291,6 +290,10 @@
     height: 100%;
     max-height: 100%;
   }
+
+  .answer-wrapper {
+    position: absolute;
+  }
 </style>
 
 <div
@@ -329,22 +332,22 @@
           style={getRectangleStyle(answer)}
           on:click={e => openAnswer(e, answer, i)} />
       {/each}
+
+      {#if isSelecting}
+        <div class="answer-wrapper" style={getAnswerWrapperStyle()}>
+          <Answer
+            bind:name={answerName}
+            bind:reading={answerReading}
+            bind:index={answerNewIndex}
+            isEdit={isAnswerEdit}
+            top={answerLoc.top}
+            left={answerLoc.left}
+            on:cancel={init}
+            on:delete={onAnswerDelete}
+            on:create={onAnswerCreate}
+            on:update={onAnswerUpdate} />
+        </div>
+      {/if}
     </div>
   {/await}
 </div>
-
-{#if isSelecting}
-  <div bind:this={answerWrapper}>
-    <Answer
-      bind:name={answerName}
-      bind:reading={answerReading}
-      bind:index={answerNewIndex}
-      isEdit={isAnswerEdit}
-      top={answerLoc.top}
-      left={answerLoc.left}
-      on:cancel={init}
-      on:delete={onAnswerDelete}
-      on:create={onAnswerCreate}
-      on:update={onAnswerUpdate} />
-  </div>
-{/if}
