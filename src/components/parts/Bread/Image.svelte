@@ -219,7 +219,6 @@
 
     // 回答が画面左端を超えないようにするため指定。
     const leftStyle = `left: calc(${leftPercent}% - 30px);`
-
     const isLeft = left + height < 0.5
 
     return `
