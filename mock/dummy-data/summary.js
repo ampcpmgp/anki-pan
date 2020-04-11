@@ -32,12 +32,12 @@ export default {
     },
     { nanoId: 'UGRU4WIqL7K0KZ-DTNQOB', title: '草人', userId: 'abc' },
     {
-      nanoId: 1585889377458,
+      nanoId: '1585889377458',
       title: '細胞の秘密 5',
       userId: 'dummy-account-id-00000',
     },
     {
-      nanoId: 1585889377457,
+      nanoId: '1585889377457',
       title: '細胞の秘密 4',
       userId: 'dummy-account-id-00000',
     },
@@ -49,7 +49,7 @@ export default {
       userId: 'dummy-account-id',
     },
     {
-      nanoId: 1585889377454,
+      nanoId: '1585889377454',
       title: '細胞の秘密 1',
       userId: 'dummy-account-id-00000',
     },
@@ -59,7 +59,7 @@ export default {
       userId: 'dummy-account-id',
     },
     {
-      nanoId: 1585889377456,
+      nanoId: '1585889377456',
       title: '細胞の秘密 3',
       userId: 'dummy-account-id-00000',
     },

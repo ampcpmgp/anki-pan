@@ -16,7 +16,7 @@ module.exports = handleApiError(async (req, res) => {
           q.Index('breads_sort_by_ts_desc_with_ref')
         ),
         {
-          size: 2,
+          size: 10,
         }
       ),
       q.Lambda(['ts', 'ref'], {
