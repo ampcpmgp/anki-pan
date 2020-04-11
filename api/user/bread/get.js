@@ -1,5 +1,6 @@
+const { getUserInfo } = require('../../_utils/auth0')
 const { ApiError, handleApiError } = require('../../_utils/api-error')
-const { client, q } = require('../../_utils/faunadb')
+const { getDBUser, client, q } = require('../../_utils/faunadb')
 
 module.exports = handleApiError(async (req, res) => {
   const {
@@ -11,7 +12,18 @@ module.exports = handleApiError(async (req, res) => {
       q.Get(q.Match(q.Index('breads_by_nano_id'), nanoId))
     )
 
-    // TODO: ユーザー不一致ならisPublicの場合返さない。
+    if (response.data.isPublic) {
+      res.json(response.data)
+      return
+    }
+
+    const responseUserINfo = await getUserInfo(req)
+    const { sub: subjectClaim } = await responseUserINfo.json()
+    const user = await getDBUser(subjectClaim)
+
+    if (user.nanoId !== response.data.userNanoId) {
+      throw new ApiError('Forbidden', 403)
+    }
 
     res.json(response.data)
   } catch (error) {

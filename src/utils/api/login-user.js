@@ -2,7 +2,7 @@ import { stringify } from 'query-string'
 const { API_ROOT } = require('../../const/url')
 
 export function get({ endpoint, Authorization, params = {} }) {
-  const url = `${API_ROOT}${endpoint}${stringify(params)}`
+  const url = `${API_ROOT}${endpoint}?${stringify(params)}`
 
   return fetch(url, {
     method: 'GET',
