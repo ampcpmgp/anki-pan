@@ -1,4 +1,5 @@
 <script>
+  import { isAuthenticated } from '../../../states/auth'
   import New from '../BreadGroup/New'
   import Favorites from '../BreadGroup/Favorites'
   import SelfMade from '../BreadGroup/SelfMade'
@@ -15,7 +16,9 @@
 
 <div class="content">
   <New />
-  <Favorites />
-  <SelfMade />
+  {#if $isAuthenticated}
+    <Favorites />
+    <SelfMade />
+  {/if}
   <Cache />
 </div>
