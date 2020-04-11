@@ -4,11 +4,6 @@
       "NODE_ENV": "staging"
     }
   },
-  "functions": {
-    "api/**/*.js": {
-      "excludeFiles": "*.test.js"
-    }
-  },
   "env": {
     "FAUNA_DB_SECRET": "@staging_fauna_db_secret"
   }
