@@ -143,6 +143,12 @@
 
   .image-wrapper {
     z-index: 1;
+    /* これがあると resize 時にも能動的に調整してくれる。 */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .image-wrapper::-webkit-scrollbar {
+    width: 0;
   }
 
   .error {

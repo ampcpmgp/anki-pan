@@ -1,5 +1,7 @@
 <script>
   import feather from 'feather-icons'
+  import { getName } from '../../../../utils/license'
+
   export let source
   export let license
 
@@ -45,5 +47,5 @@
       {@html svg.externalLink}
     </a>
   {/if}
-  <p>ライセンス: {license}</p>
+  <p>ライセンス: {getName(license)}</p>
 </footer>

@@ -25,6 +25,12 @@
   function onPlay() {
     playbackIndex = 0
   }
+
+  function onAnswerNext() {
+    ++playbackIndex
+  }
+
+  function onAnswerEnd() {}
 </script>
 
 <style>
@@ -40,11 +46,17 @@
 
   .image-wrapper {
     z-index: 1;
+    /* これがあると resize 時にも能動的に調整してくれる。 */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .image-wrapper::-webkit-scrollbar {
+    width: 0;
   }
 </style>
 
 <div class="breads-detail">
-  <Title name={title} {userId} readOnly={true} errMsg="" />
+  <Title value={title} {userId} readOnly={true} errMsg="" />
 
   <div class="justify-center">
     <Controller
@@ -62,7 +74,9 @@
       editable={false}
       {answers}
       {playbackIndex}
-      height={imageHeight} />
+      height={imageHeight}
+      on:next={onAnswerNext}
+      on:end={onAnswerEnd} />
   </div>
 
   <Footer {source} {license} />
