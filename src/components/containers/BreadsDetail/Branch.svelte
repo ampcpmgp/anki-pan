@@ -20,7 +20,6 @@
   let bread
 
   onMount(async () => {
-    const fetchAccountP = fetchAccount()
     bread = await getBread(nanoId)
 
     if (!bread) {
@@ -35,8 +34,6 @@
       setBread(bread)
     }
 
-    await fetchAccountP
-
     if ($userNanoId === bread.userNanoId) {
       $title = bread.title
       $image = bread.image
@@ -48,12 +45,20 @@
   })
 </script>
 
-{#if bread}
-  {#if $userNanoId === bread.userNanoId}
-    <Edit {nanoId} />
-  {:else}
-    <View {bread} />
-  {/if}
-{:else}
+{#await fetchAccount()}
   <p>読み込み中...</p>
-{/if}
+{:then _}
+
+  {#if bread}
+    {#if $userNanoId === bread.userNanoId}
+      <Edit {nanoId} />
+    {:else}
+      <View {bread} />
+    {/if}
+  {:else}
+    <p>読み込み中...</p>
+  {/if}
+
+{:catch _}
+  <View {bread} />
+{/await}

@@ -13,7 +13,11 @@
   let value = ''
 
   onMount(async () => {
-    await fetchAccount()
+    try {
+      await fetchAccount()
+    } catch (error) {
+      return
+    }
   })
 
   async function onRegister() {
