@@ -23,7 +23,7 @@ export async function fetch() {
   try {
     const Authorization = await getAuthorization()
     const response = await loginUser.get({
-      endpoint: 'user/breads/summary/get',
+      endpoint: 'breads-summary/self-made/get',
       Authorization,
     })
 
@@ -56,7 +56,7 @@ export async function fetchReadMore() {
   try {
     const Authorization = await getAuthorization()
     const response = await loginUser.get({
-      endpoint: 'user/breads/summary/read-more/get',
+      endpoint: 'breads-summary/self-made/get',
       Authorization,
       params: $afterInfo,
     })

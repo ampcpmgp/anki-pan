@@ -1,12 +1,14 @@
 <script>
   import feather from 'feather-icons'
+  import { getName } from '../../../../utils/license'
+
   export let source
   export let license
 
   const svg = {
     externalLink: feather.icons['external-link'].toSvg({
       width: '20px',
-      height: 'auto',
+      height: '20px',
     }),
   }
 </script>
@@ -45,5 +47,5 @@
       {@html svg.externalLink}
     </a>
   {/if}
-  <p>ライセンス: {license}</p>
+  <p>ライセンス: {getName(license)}</p>
 </footer>

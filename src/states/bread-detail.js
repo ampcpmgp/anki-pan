@@ -4,7 +4,7 @@ import { isAuthenticated, getAuthorization } from './auth'
 
 export const errMsg = svelte.writable('')
 
-export async function get(nanoId) {
+export async function fetch(nanoId) {
   try {
     errMsg.set('')
 
@@ -17,7 +17,7 @@ export async function get(nanoId) {
         endpoint: 'user/bread/get',
         Authorization,
         params: {
-          nanoId: 'CXtzPvM2EUA30mbumnyid',
+          nanoId,
         },
       })
     } else {

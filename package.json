@@ -1,6 +1,12 @@
 {
   "name": "anki-pan",
   "version": "1.0.0-alpha.0",
+  "license": "MIT",
+  "author": "ampcpmgp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ampcpmgp/anki-pan.git"
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=mock parcel mock/testbed/*.html",
     "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html --public-url ./",

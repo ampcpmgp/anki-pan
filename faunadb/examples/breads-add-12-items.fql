@@ -28,7 +28,7 @@ Foreach(
               }
             ],
             isPublic: If( GT(Var("num"), 3), true, false ),
-            license: 'OTHER',
+            license: 10000,
             source: 'https://via.placeholder.com/'
           }
         }
@@ -59,7 +59,7 @@ Foreach(
               }
             ],
             isPublic: If( GT(Var("num"), 3), false, true ),
-            license: 'OTHER',
+            license: 10000,
             source: 'https://via.placeholder.com/'
           }
         }

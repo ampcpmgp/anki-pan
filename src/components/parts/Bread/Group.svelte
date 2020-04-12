@@ -42,7 +42,9 @@
 <div class="wrapper">
   <H2 {type} />
 
-  <p style="color: {getColor(type)}">{description}</p>
+  <p style="color: {getColor(type)}">
+    {@html description}
+  </p>
 
   {#if items.length > 0}
     <div class="breads">

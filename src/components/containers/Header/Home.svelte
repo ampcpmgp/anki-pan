@@ -15,7 +15,7 @@
   const svg = {
     plusCircle: feather.icons['plus-circle'].toSvg({
       width: '30px',
-      height: 'auto',
+      height: '30px',
       stroke: 'darkorange',
     }),
     settings: feather.icons.settings.toSvg({

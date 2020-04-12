@@ -20,7 +20,7 @@ export async function fetch() {
   if (get(fetched)) return
 
   try {
-    const response = await guestUser.get('breads/summary/get')
+    const response = await guestUser.get('breads-summary/latest/get')
 
     if (response.status === 503) {
       throw new Error('取得エラー')
@@ -50,7 +50,7 @@ export async function fetchReadMore() {
 
   try {
     const response = await guestUser.get(
-      'breads/summary/read-more/get',
+      'breads-summary/latest/get',
       $afterInfo
     )
 

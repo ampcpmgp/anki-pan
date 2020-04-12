@@ -105,6 +105,5 @@ async function updateAuthenticated() {
     isAuthenticated.set(checkAuthenticated)
   } catch (error) {
     console.info(error)
-    window.alert(error)
   }
 }

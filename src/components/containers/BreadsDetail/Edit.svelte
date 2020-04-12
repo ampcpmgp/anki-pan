@@ -15,7 +15,6 @@
   import { reset } from '../../../states/breads-summary/latest'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
-  import Size from '../../../const/size'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -27,11 +26,8 @@
 
   export let nanoId = ''
 
-  const {
-    BreadDetail: { FOOTER_HEIGHT, TITLE, CONTROLLER, FIRST_VIEW_ROW_GAP },
-  } = Size
-
   let playbackIndex = -1
+  let imageHeight = 0
   let buttonDisabled = false
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
@@ -132,18 +128,20 @@
 
   .first-view {
     display: grid;
-    grid-template-rows: var(--title-height) var(--controller-height) 1fr;
-    grid-row-gap: var(--row-gap);
+    grid-template-rows: auto auto 1fr;
+    grid-row-gap: 12px;
     height: 100vh;
-    padding-bottom: var(--padding-bottom);
+    padding-bottom: 40px;
   }
 
   .image-wrapper {
     z-index: 1;
-    height: calc(
-      100vh - var(--title-height) - var(--controller-height) -
-        var(--padding-bottom) - 2 * var(--row-gap)
-    );
+    /* これがあると resize 時にも能動的に調整してくれる。 */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .image-wrapper::-webkit-scrollbar {
+    width: 0;
   }
 
   .error {
@@ -152,10 +150,7 @@
 </style>
 
 <div class="breads-new">
-  <div
-    class="first-view"
-    style="--title-height: {TITLE}px; --controller-height: {CONTROLLER}px;
-    --padding-bottom: {FOOTER_HEIGHT}px; --row-gap: {FIRST_VIEW_ROW_GAP}px; ">
+  <div class="first-view">
     <Title
       bind:value={$title}
       userId={$id}
@@ -175,15 +170,13 @@
     {#if !$image}
       <DragDrop on:drop={onDrop} />
     {:else}
-      <div
-        class="image-wrapper"
-        style=" --title-height: {TITLE}px; --controller-height: {CONTROLLER}px;
-        --padding-bottom: {FOOTER_HEIGHT}px; --row-gap: {FIRST_VIEW_ROW_GAP}px; ">
+      <div class="image-wrapper" bind:clientHeight={imageHeight}>
         <Image
           image={$image}
           editable={true}
           answers={$answers}
           {playbackIndex}
+          height={imageHeight}
           on:answerUpdate={onAnswerUpdate}
           on:answerCreate={onAnswerCreate}
           on:answerDelete={onAnswerDelete}
