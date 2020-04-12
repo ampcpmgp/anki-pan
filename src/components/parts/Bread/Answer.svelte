@@ -23,7 +23,7 @@
   const svg = {
     volume2: fether.icons['volume-2'].toSvg({
       width: '20px',
-      height: 'auto',
+      height: '20px',
     }),
   }
 

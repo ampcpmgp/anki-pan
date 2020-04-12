@@ -6,7 +6,7 @@
   const svg = {
     externalLink: feather.icons['external-link'].toSvg({
       width: '20px',
-      height: 'auto',
+      height: '20px',
     }),
   }
 </script>

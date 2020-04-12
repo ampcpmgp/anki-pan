@@ -17,17 +17,11 @@
 
   export let nanoId = ''
 
-  let editMode = false
-  let viewMode = false
+  let bread
 
   onMount(async () => {
-    await fetchAccount()
-
-    if (!$userNanoId) {
-      replace('/')
-    }
-
-    let bread = await getBread(nanoId)
+    const fetchAccountP = fetchAccount()
+    bread = await getBread(nanoId)
 
     if (!bread) {
       bread = await get(nanoId)
@@ -41,25 +35,25 @@
       setBread(bread)
     }
 
-    if ($userNanoId === bread.userNanoId) {
-      editMode = true
+    await fetchAccountP
 
+    if ($userNanoId === bread.userNanoId) {
       $title = bread.title
       $image = bread.image
       $answers = bread.answers
       $isPublic = bread.isPublic
       $license = bread.license
       $source = bread.source
-    } else {
-      viewMode = true
     }
   })
 </script>
 
-{#if editMode}
-  <Edit {nanoId} />
-{/if}
-
-{#if viewMode}
-  <View />
+{#if bread}
+  {#if $userNanoId === bread.userNanoId}
+    <Edit {nanoId} />
+  {:else}
+    <View {bread} />
+  {/if}
+{:else}
+  <p>読み込み中...</p>
 {/if}
