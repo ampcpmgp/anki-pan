@@ -3,7 +3,7 @@
   import { replace } from 'svelte-spa-router'
   import { getBread, setBread } from '../../../utils/db'
   import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
-  import { get, errMsg } from '../../../states/bread-detail'
+  import { fetch, errMsg } from '../../../states/bread-detail'
   import {
     title,
     image,
@@ -24,7 +24,7 @@
     bread = await getBread(nanoId)
 
     if (!bread) {
-      bread = await get(nanoId)
+      bread = await fetch(nanoId)
 
       if (!bread) {
         window.alert($errMsg)
