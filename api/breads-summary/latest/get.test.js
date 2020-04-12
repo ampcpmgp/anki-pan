@@ -1,5 +1,5 @@
 import test from 'ava'
-import { mockFaunadb } from '../../../_test-helper'
+import { mockFaunadb } from '../../_test-helper'
 import get from './get'
 
 test('400 Error', async t => {
@@ -15,7 +15,7 @@ test('400 Error', async t => {
   }
   await get(req, res)
 
-  t.is(res.statusCode, 400)
+  t.is(res.statusCode, 200)
 })
 
 test('200 Success', async t => {
@@ -47,7 +47,7 @@ test('503 Error', async t => {
   }
 
   mockFaunadb.client.query = () => {
-    throw 'Error!'
+    throw '503 Error'
   }
 
   await get(req, res)

@@ -14,12 +14,12 @@ import * as dummyData from './dummy-data'
 fetchMock.mock('/api/user/account/get', {})
 fetchMock.mock('/api/user/bread/post', {})
 fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', dummyData.bread)
-fetchMock.mock('/api/breads/summary/get', dummyData.summary)
+fetchMock.mock('/api/breads-summary/latest/get', dummyData.summary)
 fetchMock.mock(
-  '/api/breads/summary/read-more/get?ref=261756579953520129&ts=1585889377480000',
+  '/api/breads-summary/latest/get?ref=261756579953520129&ts=1585889377480000',
   dummyData.summaryNoAfter
 )
-fetchMock.mock('/api/user/breads/summary/get', dummyData.summaryNoAfter)
+fetchMock.mock('/api/breads-summary/self-made/get', dummyData.summaryNoAfter)
 
 mock({
   sleep,
