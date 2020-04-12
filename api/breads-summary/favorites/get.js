@@ -1,6 +1,7 @@
 const { q, client } = require('../../../_utils/faunadb')
 const { handleApiError, ApiError } = require('../../../_utils/api-error')
 
+// 未実装
 module.exports = handleApiError(async (req, res) => {
   if (!req.query.ref || !req.query.ts) {
     throw new ApiError('Validation Error', 400)
