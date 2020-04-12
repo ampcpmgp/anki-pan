@@ -27,6 +27,7 @@
   export let nanoId = ''
 
   let playbackIndex = -1
+  let imageHeight = 0
   let buttonDisabled = false
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
@@ -163,12 +164,13 @@
     {#if !$image}
       <DragDrop on:drop={onDrop} />
     {:else}
-      <div class="image-wrapper">
+      <div class="image-wrapper" bind:clientHeight={imageHeight}>
         <Image
           image={$image}
           editable={true}
           answers={$answers}
           {playbackIndex}
+          height={imageHeight}
           on:answerUpdate={onAnswerUpdate}
           on:answerCreate={onAnswerCreate}
           on:answerDelete={onAnswerDelete}

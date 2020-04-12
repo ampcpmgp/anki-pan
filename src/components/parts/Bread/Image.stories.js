@@ -38,6 +38,7 @@ export const 画像未設定 = () => ({
     editable: boolean('editable', true),
     answers: [],
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -55,6 +56,7 @@ export const 地球小型200 = () => ({
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -72,6 +74,7 @@ export const 地球大型1023 = () => ({
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -89,6 +92,7 @@ export const 横長画像_小型 = () => ({
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -106,6 +110,7 @@ export const 横長画像_大型 = () => ({
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -123,6 +128,7 @@ export const 編集不可 = () => ({
     editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -140,6 +146,7 @@ export const 都道府県_再生 = () => ({
     editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', 0),
+    height: number('height', 500),
   },
   on: {
     answerUpdate: e => console.info(e.detail),

@@ -20,6 +20,7 @@
   void (nanoId, userNanoId)
 
   let playbackIndex = -1
+  let imageHeight = 0
 
   function onPlay() {
     playbackIndex = 0
@@ -36,6 +37,10 @@
   .justify-center {
     justify-self: center;
   }
+
+  .image-wrapper {
+    z-index: 1;
+  }
 </style>
 
 <div class="breads-detail">
@@ -51,6 +56,14 @@
       on:next={console.error} />
   </div>
 
-  <Image {image} editable={false} {answers} {playbackIndex} />
+  <div class="image-wrapper" bind:clientHeight={imageHeight}>
+    <Image
+      {image}
+      editable={false}
+      {answers}
+      {playbackIndex}
+      height={imageHeight} />
+  </div>
+
   <Footer {source} {license} />
 </div>

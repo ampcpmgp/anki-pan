@@ -9,6 +9,7 @@
   export let editable = false
   export let answers = []
   export let playbackIndex = -1
+  export let height = 0
 
   const dispatch = createEventDispatcher()
 
@@ -95,11 +96,15 @@
     `
   }
 
-  function getOffset(event, element) {
-    // 参考 - https://www.geeksforgeeks.org/how-to-get-relative-click-coordinates-on-the-target-element-using-jquery/
+  // 参考
+  // - https://stackoverflow.com/questions/48389143/mouse-coordinates-relative-to-currenttarget-in-react-in-event-handler
+  // - https://developer.mozilla.org/ja/docs/Web/API/Window/scrollY
+  function getOffset(event) {
+    const currentTargetRect = event.currentTarget.getBoundingClientRect()
+
     return {
-      x: event.pageX - element.offsetLeft - wrapper.offsetLeft,
-      y: event.pageY - element.offsetTop - wrapper.offsetTop,
+      x: event.pageX - currentTargetRect.left - window.scrollX,
+      y: event.pageY - currentTargetRect.top - window.scrollY,
     }
   }
 
@@ -126,7 +131,7 @@
     if (isSelecting) return
     if (e.target !== bread) return
 
-    const { x, y } = getOffset(e, bread)
+    const { x, y } = getOffset(e)
     mousePos.x = pin.x = x
     mousePos.y = pin.y = y
   }
@@ -143,7 +148,7 @@
     if (!existsPinned()) return
     if (isSelecting) return
 
-    const { x, y } = getOffset(e, bread)
+    const { x, y } = getOffset(e)
     mousePos.x = x
     mousePos.y = y
   }
@@ -233,7 +238,7 @@
   .wrapper {
     display: grid;
     width: 100%;
-    height: 100%;
+    height: var(--height);
   }
 
   .bread {
@@ -297,6 +302,7 @@
 
 <div
   class="wrapper"
+  style="--height: {height}px"
   bind:this={wrapper}
   bind:clientWidth={size.wrapper.width}
   bind:clientHeight={size.wrapper.height}>
