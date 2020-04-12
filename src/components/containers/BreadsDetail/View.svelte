@@ -56,7 +56,7 @@
 </style>
 
 <div class="breads-detail">
-  <Title value={title} {userId} readOnly={true} errMsg="" />
+  <Title value={title} {userId} readonly={true} errMsg="" />
 
   <div class="justify-center">
     <Controller
