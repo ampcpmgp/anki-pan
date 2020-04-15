@@ -1,5 +1,5 @@
 <script>
-  import { replace } from 'svelte-spa-router'
+  import { replace, push } from 'svelte-spa-router'
   import { bread } from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
@@ -106,6 +106,10 @@
       reset()
     }
   }
+
+  function goHome() {
+    push('/')
+  }
 </script>
 
 <style>
@@ -155,7 +159,8 @@
       bind:value={$title}
       userId={$id}
       readonly={false}
-      errMsg={titleErrMsg} />
+      errMsg={titleErrMsg}
+      on:homeClick={goHome} />
 
     <div class="justify-center">
       <Controller

@@ -13,7 +13,12 @@
   let value = ''
 
   onMount(async () => {
-    await fetchAccount()
+    try {
+      await fetchAccount()
+    } catch (error) {
+      // ユーザー取得エラー時は何もせず、この画面を表示しない。
+      return
+    }
   })
 
   async function onRegister() {

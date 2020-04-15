@@ -27,13 +27,17 @@ export async function getBase64FromUrl(url) {
 }
 
 export function getImageSize(image) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const img = new Image()
     img.src = image
 
     img.onload = () => {
       const { width, height } = img
       resolve({ width, height })
+    }
+
+    img.onerror = e => {
+      reject(e)
     }
   })
 }
