@@ -10,6 +10,9 @@ Home:
   ログイン済み:
     - [sleep, 0]
     - [auth.isAuthenticated.set, true]
+  ログイン済み - 要ID入力:
+    - [sleep, 0]
+    - [user.hasNoId.set, true]
   アラート有り: [alert.success.set, 'パン作成成功!!']
 パン作成画面:
   funcs:

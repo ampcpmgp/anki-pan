@@ -20,6 +20,7 @@
 
   input {
     width: 100%;
+    border: solid 1px #999;
   }
 
   .error {

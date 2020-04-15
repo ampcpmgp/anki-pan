@@ -27,6 +27,10 @@ export async function fetch() {
       Authorization,
     })
 
+    if (response.status === 404) {
+      throw new Error('ユーザーが見つかりません')
+    }
+
     if (response.status === 503) {
       throw new Error('取得エラー')
     }
@@ -60,6 +64,10 @@ export async function fetchReadMore() {
       Authorization,
       params: $afterInfo,
     })
+
+    if (response.status === 404) {
+      throw new Error('ユーザーが見つかりません')
+    }
 
     if (response.status === 503) {
       throw new Error('取得エラー')
