@@ -24,6 +24,7 @@
   type={BreadType.SELF_MADE}
   items={$items}
   showReadMore={$existsAfter}
+  description=""
   {isReading}
   on:click={moveBreadDetail}
   on:readMore={onReadMore} />
