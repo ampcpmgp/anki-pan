@@ -1,4 +1,5 @@
 {
+  "alias": "anki-pan-staging",
   "build": {
     "env": {
       "NODE_ENV": "staging"
