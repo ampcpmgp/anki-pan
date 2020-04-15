@@ -61,7 +61,9 @@
   function onAnswerNext() {
     ++playbackIndex
   }
-  function onAnswerEnd() {}
+  function onAnswerEnd() {
+    playbackIndex = -1
+  }
 
   async function createBread() {
     if (!$title) {
