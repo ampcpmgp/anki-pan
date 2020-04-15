@@ -79,7 +79,7 @@
     await sleep(time)
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)
-    await speak(answer.name)
+    await speak(answer.reading || answer.name)
     isPlay = false
     dispatch('next')
     speakingIndex = -1
