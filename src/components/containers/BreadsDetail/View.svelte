@@ -1,4 +1,5 @@
 <script>
+  import { push } from 'svelte-spa-router'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -31,6 +32,10 @@
   }
 
   function onAnswerEnd() {}
+
+  function goHome() {
+    push('/')
+  }
 </script>
 
 <style>
@@ -56,7 +61,12 @@
 </style>
 
 <div class="breads-detail">
-  <Title value={title} {userId} readonly={true} errMsg="" />
+  <Title
+    value={title}
+    {userId}
+    readonly={true}
+    errMsg=""
+    on:homeClick={goHome} />
 
   <div class="justify-center">
     <Controller

@@ -15,6 +15,9 @@ export const 編集可能_エラー有 = () => ({
     readonly: boolean('readonly', false),
     errMsg: text('errMsg', 'タイトルは30文字以内で入力してください。'),
   },
+  on: {
+    homeClick: console.info,
+  },
 })
 
 export const 編集不可 = () => ({
@@ -27,5 +30,8 @@ export const 編集不可 = () => ({
     userId: text('userId', 'dummy-id__0123456789'),
     readonly: boolean('readonly', true),
     errMsg: text('errMsg', ''),
+  },
+  on: {
+    homeClick: console.info,
   },
 })
