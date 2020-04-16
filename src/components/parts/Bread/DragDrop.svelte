@@ -2,15 +2,26 @@
   import { createEventDispatcher } from 'svelte'
   import Validation from '../../../../const/validation'
   import { bread } from '../../../../utils/validator'
+  import MimeType from '../../../const/mime-type'
   import { readFile, compressImage } from '../../../utils/file'
 
   const dispatch = createEventDispatcher()
 
-  async function onFileDrop(e) {
-    const file = e.files[0]
+  async function getImage(file) {
+    if (file.type === MimeType.SVG) {
+      const image = await readFile(file)
+      return image
+    }
 
     const result = await compressImage(file)
     const image = await readFile(result)
+
+    return image
+  }
+
+  async function onFileDrop(e) {
+    const file = e.files[0]
+    const image = await getImage(file)
 
     if (bread.image.validate(image) === Validation.SIZE_OVER) {
       alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
