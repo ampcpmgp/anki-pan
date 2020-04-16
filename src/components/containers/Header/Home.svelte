@@ -34,6 +34,8 @@
     grid-auto-flow: column;
     justify-content: space-between;
     padding: 8px 0;
+    /* iOS/Safari では明示的に指定する必要有り。 */
+    border-width: 0;
     border-bottom: 1px solid;
     border-image-slice: 1;
     border-image-source: linear-gradient(
