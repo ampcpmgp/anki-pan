@@ -41,7 +41,7 @@
     BEFORE_SPEAKING_MSEC: 500,
   }
 
-  $: wrapperAspectRatio = size.wrapper.width / size.wrapper.height
+  $: wrapperAspectRatio = size.wrapper.width / height
   $: imageAspectRatio = size.image.width / size.image.height
   $: isLandScape = imageAspectRatio > wrapperAspectRatio
   $: isAnswerEdit = answerIndex !== answers.length
