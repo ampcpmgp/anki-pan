@@ -14,7 +14,6 @@
   const dispatch = createEventDispatcher()
 
   let breadElm
-  let imageElm
   let currentRectangleElm
   let isPlay = false
   let pin = initialPos()
@@ -327,7 +326,7 @@
       on:mouseup={onBreadMouseUp}
       on:mousemove={onBreadMouseMove}
       on:mouseleave={onBreadMouseLeave}>
-      <img bind:this={imageElm} src={image} alt="" />
+      <img src={image} alt="" />
 
       <div
         class="rectangle current"
