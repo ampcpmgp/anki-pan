@@ -27,9 +27,21 @@ now dev
 # Aceess http://localhost:3000, And open file `./dist/index.html`
 ```
 
-## Production & Staging
+## Staging
 
 ```shell
 now secrets add staging_fauna_db_secret <staging_fauna_db_secret>
+```
+
+Each time you deploy, change the following settings in your Auth0 staging environment app to the built URL.
+
+* Allowed Callback URLs
+* Allowed Logout URLs
+* Allowed Web Origins
+
+
+## Production
+
+```shell
 now secrets add prod_fauna_db_secret <prod_fauna_db_secret>
 ```

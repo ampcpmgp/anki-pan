@@ -12,9 +12,10 @@
   } from '../../../states/user-input/bread-edit'
   import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
-  import { reset } from '../../../states/breads-summary/latest'
+  import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
+  import * as db from '../../../utils/db'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -54,7 +55,9 @@
   function onAnswerNext() {
     ++playbackIndex
   }
-  function onAnswerEnd() {}
+  function onAnswerEnd() {
+    playbackIndex = -1
+  }
 
   async function updateBread() {
     if (!$title) {
@@ -89,14 +92,16 @@
 
     buttonDisabled = true
 
-    await update({
+    const bread = {
       nanoId,
       title: $title,
       answers: $answers,
       isPublic: $isPublic,
       source: $source,
       license: $license,
-    })
+    }
+
+    await update(bread)
 
     buttonDisabled = false
 
@@ -104,6 +109,8 @@
       replace('/')
       $success = 'パン更新成功'
       reset()
+
+      db.updateBread(nanoId, bread)
     }
   }
 

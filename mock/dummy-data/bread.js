@@ -22,7 +22,7 @@ export default {
       width: 0.1,
       height: 0.1,
       name: '沖縄',
-      reading: '',
+      reading: 'おきなわけん',
     },
   ],
   isPublic: true,

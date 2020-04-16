@@ -1,4 +1,4 @@
-const nanoId = require('nanoId')
+const nanoId = require('nanoid')
 const { getUserInfo } = require('../../_utils/auth0')
 const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { getDBUser, client, q } = require('../../_utils/faunadb')
