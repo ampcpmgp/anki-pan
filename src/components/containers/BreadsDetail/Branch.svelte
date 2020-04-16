@@ -20,7 +20,12 @@
   let bread
 
   onMount(async () => {
-    bread = await getBread(nanoId)
+    try {
+      bread = await getBread(nanoId)
+    } catch (error) {
+      // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+      console.info(error)
+    }
 
     if (!bread) {
       bread = await fetch(nanoId)
@@ -31,7 +36,12 @@
         return
       }
 
-      setBread(bread)
+      try {
+        await setBread(bread)
+      } catch (error) {
+        // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+        console.info(error)
+      }
     }
 
     if ($userNanoId === bread.userNanoId) {
