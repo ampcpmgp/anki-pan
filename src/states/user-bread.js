@@ -47,6 +47,10 @@ export async function bake({
     }
 
     bakedErrMsg.set('')
+
+    const { nanoId } = await response.json()
+
+    return nanoId
   } catch (error) {
     bakedErrMsg.set('その他エラー')
   }
