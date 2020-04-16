@@ -76,6 +76,10 @@
     isPlay = true
     const time =
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
+
+    // iOS/Safari では、アクション時に同期的に音声再生する必要がある。
+    speak('')
+
     await sleep(time)
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)

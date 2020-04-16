@@ -20,7 +20,12 @@
   let bread
 
   onMount(async () => {
-    bread = await getBread(nanoId)
+    try {
+      bread = await getBread(nanoId)
+    } catch (error) {
+      // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+      console.info(error)
+    }
 
     if (!bread) {
       bread = await fetch(nanoId)
@@ -31,7 +36,12 @@
         return
       }
 
-      setBread(bread)
+      try {
+        await setBread(bread)
+      } catch (error) {
+        // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+        console.info(error)
+      }
     }
 
     if ($userNanoId === bread.userNanoId) {
@@ -46,7 +56,7 @@
 </script>
 
 {#await fetchAccount()}
-  <p>読み込み中...</p>
+  <p>ユーザー読み込み中...</p>
 {:then _}
 
   {#if bread}
@@ -56,9 +66,13 @@
       <View {bread} />
     {/if}
   {:else}
-    <p>読み込み中...</p>
+    <p>パン読み込み中...</p>
   {/if}
 
 {:catch _}
-  <View {bread} />
+  {#if bread}
+    <View {bread} />
+  {:else}
+    <p>パン読み込み中...</p>
+  {/if}
 {/await}
