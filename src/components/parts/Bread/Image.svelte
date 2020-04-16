@@ -13,8 +13,8 @@
 
   const dispatch = createEventDispatcher()
 
-  let wrapper
-  let bread
+  let breadElm
+  let imageElm
   let currentRectangleElm
   let isPlay = false
   let pin = initialPos()
@@ -133,7 +133,7 @@
   function onBreadMouseDown(e) {
     if (!editable) return
     if (isSelecting) return
-    if (e.target !== bread) return
+    if (e.target !== breadElm) return
 
     const { x, y } = getOffset(e)
     mousePos.x = pin.x = x
@@ -242,13 +242,16 @@
   .wrapper {
     display: grid;
     width: 100%;
-    height: var(--height);
+    /* margin分引く、marginは .bread の box-shadow用 */
+    height: calc(var(--height) - 2px);
+    margin: 1px;
   }
 
   .bread {
     background-size: contain;
     position: relative;
-    border: solid 1px darkorange;
+    /* border にしてしまうと、1px分、画像と座標が異るため、box-shadowを利用 */
+    box-shadow: 0 0 0 1px darkorange;
   }
   .bread.is-editable {
     cursor: crosshair;
@@ -307,7 +310,6 @@
 <div
   class="wrapper"
   style="--height: {height}px"
-  bind:this={wrapper}
   bind:clientWidth={size.wrapper.width}
   bind:clientHeight={size.wrapper.height}>
   {#await setImageSize()}
@@ -318,14 +320,14 @@
       class:is-editable={editable}
       class:landscape={isLandScape}
       style="background-image: url({image})"
-      bind:this={bread}
+      bind:this={breadElm}
       bind:clientWidth={size.bread.width}
       bind:clientHeight={size.bread.height}
       on:mousedown={onBreadMouseDown}
       on:mouseup={onBreadMouseUp}
       on:mousemove={onBreadMouseMove}
       on:mouseleave={onBreadMouseLeave}>
-      <img src={image} alt="" />
+      <img bind:this={imageElm} src={image} alt="" />
 
       <div
         class="rectangle current"

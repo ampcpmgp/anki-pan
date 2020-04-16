@@ -92,7 +92,7 @@ export const 横長画像_小型 = () => ({
     editable: boolean('editable', true),
     answers,
     playbackIndex: number('playbackIndex', -1),
-    height: number('height', 500),
+    height: number('height', 400),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -128,7 +128,7 @@ export const 編集不可 = () => ({
     editable: boolean('editable', false),
     answers,
     playbackIndex: number('playbackIndex', -1),
-    height: number('height', 500),
+    height: number('height', 300),
   },
   on: {
     answerUpdate: e => console.info(e.detail),
@@ -139,6 +139,23 @@ export const 編集不可 = () => ({
   },
 })
 
+export const 都道府県 = () => ({
+  Component: Image,
+  props: {
+    image: 都道府県svg,
+    editable: boolean('editable', true),
+    answers,
+    playbackIndex: number('playbackIndex', -1),
+    height: number('height', 500),
+  },
+  on: {
+    answerUpdate: e => console.info(e.detail),
+    answerCreate: e => console.info(e.detail),
+    answerDelete: e => console.info(e.detail),
+    next: console.info,
+    end: console.info,
+  },
+})
 export const 都道府県_再生 = () => ({
   Component: Image,
   props: {
