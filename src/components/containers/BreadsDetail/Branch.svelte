@@ -56,7 +56,7 @@
 </script>
 
 {#await fetchAccount()}
-  <p>読み込み中...</p>
+  <p>ユーザー読み込み中...</p>
 {:then _}
 
   {#if bread}
@@ -66,9 +66,13 @@
       <View {bread} />
     {/if}
   {:else}
-    <p>読み込み中...</p>
+    <p>パン読み込み中...</p>
   {/if}
 
 {:catch _}
-  <View {bread} />
+  {#if bread}
+    <View {bread} />
+  {:else}
+    <p>パン読み込み中...</p>
+  {/if}
 {/await}
