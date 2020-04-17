@@ -150,7 +150,7 @@
     db.updateBread(nanoId, bread)
 
     isRefreshing = false
-    alert('最新パンを反映しました')
+    alert('最新パンに更新します')
   }
 </script>
 
