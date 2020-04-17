@@ -1,17 +1,15 @@
 settings:
   url: mock.html
 Home:
-  func: [page, /]
+  funcs:
+    - [page, /]
+    - [sleep, 0]
   認証中:
-    - [sleep, 0]
     - [auth.isExistsClient.set, false]
-  未ログイン:
-    - [sleep, 0]
+  未ログイン: []
   ログイン済み:
-    - [sleep, 0]
     - [auth.isAuthenticated.set, true]
   ログイン済み - 要ID入力:
-    - [sleep, 0]
     - [user.hasNoId.set, true]
   アラート有り: [alert.success.set, 'パン作成成功!!']
 パン作成画面:
@@ -25,8 +23,9 @@ Home:
   funcs:
     - [user.nanoId.set, dummy-user-nanoid]
     - [user.id.set, dummy-user-id]
-  ローカルにパン不所持:
     - [page, /breads/detail/no-bread-nanoid]
+  ローカルにパン不所持:
+    - []
   ローカルにパン所持:
     - [setBreadOnDB]
     - [page, /breads/detail/has-bread-nanoid]
@@ -34,6 +33,7 @@ Home:
     - [setBreadOnDB]
     - [page, /breads/detail/error-nanoid]
 パン詳細画面 - 閲覧モード:
-  ローカルにパン不所持:
+  funcs:
     - [page, /breads/detail/no-bread-nanoid]
+  ローカルにパン不所持: []
 404 page: [page, /404]
