@@ -2,7 +2,7 @@ import test from 'ava'
 import { mockFaunadb } from '../../_test-helper'
 import get from './get'
 
-test('400 Error', async t => {
+test('200 Success', async t => {
   const req = {
     query: {
       ref: 'dummy-ref',
