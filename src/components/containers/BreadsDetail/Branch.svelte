@@ -24,7 +24,8 @@
     try {
       bread = await getBread(nanoId)
     } catch (error) {
-      // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+      // Firefox のシークレットブラウザでは IndexedDB が使えず、
+      // エラーが起きるためスルーする。
       console.info(error)
     }
 
@@ -40,7 +41,8 @@
       try {
         await setBread(bread)
       } catch (error) {
-        // Firefox のシークレットブラウザではエラーが起きるためスルーする。
+        // Firefox のシークレットブラウザでは IndexedDB が使えず、
+        // エラーが起きるためスルーする。
         console.info(error)
       }
     }

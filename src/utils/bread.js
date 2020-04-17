@@ -34,3 +34,14 @@ export function getFrameBase64(type) {
 
   return `data:image/svg+xml;base64,${Base64.encode(svg)}`
 }
+
+export function isSame(bread, newBread) {
+  return (
+    bread.title === newBread.title &&
+    bread.image === newBread.image &&
+    JSON.stringify(bread.answers) === JSON.stringify(newBread.answers) &&
+    bread.isPublic === newBread.isPublic &&
+    bread.license === newBread.license &&
+    bread.source === newBread.source
+  )
+}
