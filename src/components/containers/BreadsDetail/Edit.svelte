@@ -105,9 +105,9 @@
 
     buttonDisabled = true
 
-    const newBread = getBread(nanoId)
+    const bread = getBread(nanoId)
 
-    await update(newBread)
+    await update(bread)
 
     buttonDisabled = false
 
@@ -116,7 +116,7 @@
       $success = 'パン更新成功'
       reset()
 
-      db.updateBread(nanoId, newBread)
+      db.updateBread(nanoId, bread)
     }
   }
 
