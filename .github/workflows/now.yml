@@ -49,7 +49,7 @@ jobs:
           node-version: '12.x'
       - name: Deploy to staging
         uses: amondnet/now-deployment@v2
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && contains(github.ref, 'deploy/')
         with:
           zeit-token: ${{ secrets.ZEIT_TOKEN }}
           now-project-id: ${{ secrets.NOW_PROJECT_ID }}
