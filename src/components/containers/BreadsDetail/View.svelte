@@ -1,5 +1,9 @@
 <script>
   import { push } from 'svelte-spa-router'
+  import feather from 'feather-icons'
+  import { fetch, errMsg } from '../../../states/bread-detail'
+  import { isSame } from '../../../utils/bread'
+  import * as db from '../../../utils/db'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -7,21 +11,26 @@
 
   export let bread = {}
 
-  const {
-    nanoId,
-    userNanoId,
-    userId,
-    title,
-    image,
-    answers,
-    source,
-    license,
-  } = bread
-
-  void (nanoId, userNanoId)
+  $: nanoId = bread.nanoId
+  // $: userNanoId = bread.userNanoId
+  $: userId = bread.userId
+  $: title = bread.title
+  $: image = bread.image
+  $: answers = bread.answers
+  $: source = bread.source
+  $: license = bread.license
 
   let playbackIndex = -1
   let imageHeight = 0
+  let isRefreshing = false
+
+  const svg = {
+    refreshCw: feather.icons['refresh-cw'].toSvg({
+      width: '24px',
+      height: '24px',
+      stroke: '#555',
+    }),
+  }
 
   function onPlay() {
     playbackIndex = 0
@@ -36,6 +45,34 @@
   function goHome() {
     push('/')
   }
+
+  async function refresh() {
+    isRefreshing = true
+    const newBread = await fetch(nanoId)
+
+    if (!newBread) {
+      isRefreshing = false
+      alert($errMsg)
+      return
+    }
+
+    if (isSame(bread, newBread)) {
+      alert('変更はありません')
+      isRefreshing = false
+      return
+    }
+
+    title = newBread.title
+    image = newBread.image
+    answers = newBread.answers
+    license = newBread.license
+    source = newBread.source
+
+    db.updateBread(nanoId, newBread)
+
+    isRefreshing = false
+    alert('最新パンに更新します')
+  }
 </script>
 
 <style>
@@ -47,6 +84,22 @@
   }
   .justify-center {
     justify-self: center;
+  }
+
+  .title-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-column-gap: 12px;
+  }
+
+  .refresh {
+    cursor: pointer;
+  }
+
+  .refresh.disabled {
+    pointer-events: none;
+    opacity: 0.3;
   }
 
   .image-wrapper {
@@ -61,12 +114,18 @@
 </style>
 
 <div class="breads-detail">
-  <Title
-    value={title}
-    {userId}
-    readonly={true}
-    errMsg=""
-    on:homeClick={goHome} />
+  <div class="title-wrapper">
+    <Title
+      value={title}
+      {userId}
+      readonly={true}
+      errMsg=""
+      on:homeClick={goHome} />
+
+    <div class="refresh" class:disabled={isRefreshing} on:click={refresh}>
+      {@html svg.refreshCw}
+    </div>
+  </div>
 
   <div class="justify-center">
     <Controller

@@ -1,5 +1,6 @@
 <script>
   import { replace, push } from 'svelte-spa-router'
+  import feather from 'feather-icons'
   import { bread } from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
@@ -9,13 +10,16 @@
     isPublic,
     license,
     source,
+    getBread,
   } from '../../../states/user-input/bread-edit'
+  import { fetch, errMsg } from '../../../states/bread-detail'
   import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
   import * as db from '../../../utils/db'
+  import { isSame } from '../../../utils/bread'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -30,9 +34,18 @@
   let playbackIndex = -1
   let imageHeight = 0
   let buttonDisabled = false
+  let isRefreshing = false
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
   $: answersErrMsg = bread.answers.getErrMsg($answers)
+
+  const svg = {
+    refreshCw: feather.icons['refresh-cw'].toSvg({
+      width: '24px',
+      height: '24px',
+      stroke: '#555',
+    }),
+  }
 
   function onDrop(e) {
     $image = e.detail
@@ -92,16 +105,9 @@
 
     buttonDisabled = true
 
-    const bread = {
-      nanoId,
-      title: $title,
-      answers: $answers,
-      isPublic: $isPublic,
-      source: $source,
-      license: $license,
-    }
+    const newBread = getBread(nanoId)
 
-    await update(bread)
+    await update(newBread)
 
     buttonDisabled = false
 
@@ -110,12 +116,41 @@
       $success = 'パン更新成功'
       reset()
 
-      db.updateBread(nanoId, bread)
+      db.updateBread(nanoId, newBread)
     }
   }
 
   function goHome() {
     push('/')
+  }
+
+  async function refresh() {
+    isRefreshing = true
+    const bread = await fetch(nanoId)
+
+    if (!bread) {
+      isRefreshing = false
+      alert($errMsg)
+      return
+    }
+
+    if (isSame(getBread(nanoId), bread)) {
+      alert('変更はありません')
+      isRefreshing = false
+      return
+    }
+
+    $title = bread.title
+    $image = bread.image
+    $answers = bread.answers
+    $isPublic = bread.isPublic
+    $license = bread.license
+    $source = bread.source
+
+    db.updateBread(nanoId, bread)
+
+    isRefreshing = false
+    alert('最新パンを反映しました')
   }
 </script>
 
@@ -145,6 +180,22 @@
     padding-bottom: 40px;
   }
 
+  .title-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    grid-column-gap: 12px;
+  }
+
+  .refresh {
+    cursor: pointer;
+  }
+
+  .refresh.disabled {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
   .image-wrapper {
     z-index: 1;
     /* これがあると resize 時にも能動的に調整してくれる。 */
@@ -162,12 +213,18 @@
 
 <div class="breads-new">
   <div class="first-view">
-    <Title
-      bind:value={$title}
-      userId={$id}
-      readonly={false}
-      errMsg={titleErrMsg}
-      on:homeClick={goHome} />
+    <div class="title-wrapper">
+      <Title
+        bind:value={$title}
+        userId={$id}
+        readonly={false}
+        errMsg={titleErrMsg}
+        on:homeClick={goHome} />
+
+      <div class="refresh" class:disabled={isRefreshing} on:click={refresh}>
+        {@html svg.refreshCw}
+      </div>
+    </div>
 
     <div class="justify-center">
       <Controller
