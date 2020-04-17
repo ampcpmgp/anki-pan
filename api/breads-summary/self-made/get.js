@@ -8,7 +8,7 @@ module.exports = handleApiError(async (req, res) => {
   const { sub: subjectClaim } = await responseUserInfo.json()
   const user = await getDBUser(subjectClaim)
 
-  // 最新10件取得
+  // 最新5件取得
   if (!req.query.ref || !req.query.ts) {
     const response = await client.query(
       q.Map(
@@ -18,7 +18,7 @@ module.exports = handleApiError(async (req, res) => {
             q.Index('breads_sort_by_ts_desc_with_ref')
           ),
           {
-            size: 10,
+            size: 5,
           }
         ),
         q.Lambda(['ts', 'ref'], {
@@ -33,7 +33,7 @@ module.exports = handleApiError(async (req, res) => {
     return
   }
 
-  // 特定のパンから後ろに最新10件取得
+  // 特定のパンから後ろに最新5件取得
   const response = await client.query(
     q.Map(
       q.Paginate(
@@ -42,7 +42,7 @@ module.exports = handleApiError(async (req, res) => {
           q.Index('breads_sort_by_ts_desc_with_ref')
         ),
         {
-          size: 10,
+          size: 5,
           after: [
             req.query.ts - 0,
             q.Ref(q.Collection('Breads'), req.query.ref),
