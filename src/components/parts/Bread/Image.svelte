@@ -240,8 +240,8 @@
 <style>
   .wrapper {
     display: grid;
-    width: 100%;
-    /* margin分引く、marginは .bread の box-shadow用 */
+    /* margin幅を引く。 marginは .bread の box-shadow用 */
+    width: calc(100% - 2px);
     height: calc(var(--height) - 2px);
     margin: 1px;
   }
