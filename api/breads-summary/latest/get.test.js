@@ -2,7 +2,7 @@ import test from 'ava'
 import { mockFaunadb } from '../../_test-helper'
 import get from './get'
 
-test('200 Success', async t => {
+test('200 Success - 最新10件取得', async t => {
   const req = {
     query: {
       ref: 'dummy-ref',
@@ -18,7 +18,7 @@ test('200 Success', async t => {
   t.is(res.statusCode, 200)
 })
 
-test('200 Success', async t => {
+test('200 Success - 特定のパンから後ろに10件取得', async t => {
   const req = {
     query: {
       ref: 'dummy-ref',
