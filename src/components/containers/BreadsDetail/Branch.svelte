@@ -18,6 +18,7 @@
   export let nanoId = ''
 
   let bread
+  let fetchAccountP = fetchAccount()
 
   onMount(async () => {
     try {
@@ -44,6 +45,8 @@
       }
     }
 
+    await fetchAccountP
+
     if ($userNanoId === bread.userNanoId) {
       $title = bread.title
       $image = bread.image
@@ -55,7 +58,7 @@
   })
 </script>
 
-{#await fetchAccount()}
+{#await fetchAccountP}
   <p>ユーザー読み込み中...</p>
 {:then _}
 
