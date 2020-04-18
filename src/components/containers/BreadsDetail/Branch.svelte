@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
-  import { getBread, setBread } from '../../../utils/db'
+  import * as db from '../../../utils/db'
   import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
   import { fetch, errMsg } from '../../../states/bread-detail'
   import {
@@ -21,7 +21,7 @@
   let fetchAccountP = fetchAccount()
 
   onMount(async () => {
-    bread = await getBread(nanoId)
+    bread = await db.getBread(nanoId)
 
     if (!bread) {
       bread = await fetch(nanoId)
@@ -32,7 +32,7 @@
         return
       }
 
-      await setBread(bread)
+      await db.setBread(bread)
     }
 
     await fetchAccountP
