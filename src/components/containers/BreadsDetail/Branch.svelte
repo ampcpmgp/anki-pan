@@ -21,13 +21,7 @@
   let fetchAccountP = fetchAccount()
 
   onMount(async () => {
-    try {
-      bread = await getBread(nanoId)
-    } catch (error) {
-      // Firefox のシークレットブラウザでは IndexedDB が使えず、
-      // エラーが起きるためスルーする。
-      console.info(error)
-    }
+    bread = await getBread(nanoId)
 
     if (!bread) {
       bread = await fetch(nanoId)
@@ -38,13 +32,7 @@
         return
       }
 
-      try {
-        await setBread(bread)
-      } catch (error) {
-        // Firefox のシークレットブラウザでは IndexedDB が使えず、
-        // エラーが起きるためスルーする。
-        console.info(error)
-      }
+      await setBread(bread)
     }
 
     await fetchAccountP

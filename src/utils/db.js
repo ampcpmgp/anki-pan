@@ -8,33 +8,33 @@ db.version(1).stores({
     '&nanoId,*userNanoId,*userId,title,image,answers,isPublic,source,license',
 })
 
-export async function setBread(bread) {
-  await db.breads.put(bread)
+export function setBread(bread) {
+  db.breads.put(bread)
 }
 
-export async function getBread(nanoId) {
-  return await db.breads
+export function getBread(nanoId) {
+  return db.breads
     .where('nanoId')
     .equals(nanoId)
     .first()
 }
 
-export async function updateBread(nanoId, bread) {
-  return await db.breads
+export function updateBread(nanoId, bread) {
+  return db.breads
     .where('nanoId')
     .equals(nanoId)
     .modify(bread)
 }
 
-export async function deleteBread(nanoId) {
-  return await db.breads
+export function deleteBread(nanoId) {
+  return db.breads
     .where('nanoId')
     .equals(nanoId)
     .delete()
 }
 
-export async function deleteAllBread() {
-  return await db.breads.clear()
+export function deleteAllBread() {
+  return db.breads.clear()
 }
 
 export async function showBreadsCount() {
