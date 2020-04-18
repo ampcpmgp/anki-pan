@@ -2,6 +2,7 @@ import * as svelte from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
 import { isAuthenticated, getAuthorization } from './auth'
 
+export const isHeart = svelte.writable(false)
 export const errMsg = svelte.writable('')
 
 export async function fetch(nanoId) {
@@ -42,4 +43,8 @@ export async function fetch(nanoId) {
   } catch (error) {
     errMsg.set('その他エラー')
   }
+}
+
+export async function fetchHeart() {
+  isHeart
 }

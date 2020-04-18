@@ -36,4 +36,7 @@ Home:
   funcs:
     - [page, /breads/detail/no-bread-nanoid]
   ローカルにパン不所持: []
+  お気に入り:
+    - [user.nanoId.set, no-item-id]
+    - [user.id.set, no-item-id]
 404 page: [page, /404]

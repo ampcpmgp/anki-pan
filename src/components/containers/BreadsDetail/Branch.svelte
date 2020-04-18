@@ -49,6 +49,10 @@
 
     await fetchAccountP
 
+    if ($userNanoId) {
+      void 1
+    }
+
     if ($userNanoId === bread.userNanoId) {
       $title = bread.title
       $image = bread.image

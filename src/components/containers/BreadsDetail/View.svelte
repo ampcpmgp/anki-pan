@@ -1,7 +1,8 @@
 <script>
   import { push } from 'svelte-spa-router'
   import feather from 'feather-icons'
-  import { fetch, errMsg } from '../../../states/bread-detail'
+  import { nanoId as userNanoId } from '../../../states/user'
+  import { fetch, errMsg, isHeart } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as db from '../../../utils/db'
   import Title from '../../parts/Bread/Title'
@@ -23,12 +24,24 @@
   let playbackIndex = -1
   let imageHeight = 0
   let isRefreshing = false
+  let isHearting = false
 
   const svg = {
     refreshCw: feather.icons['refresh-cw'].toSvg({
       width: '24px',
       height: '24px',
       stroke: '#555',
+    }),
+    heartActive: feather.icons.heart.toSvg({
+      width: '24px',
+      height: '24px',
+      stroke: 'hotpink',
+      fill: 'hotpink',
+    }),
+    heartInactive: feather.icons.heart.toSvg({
+      width: '24px',
+      height: '24px',
+      stroke: '#ccc',
     }),
   }
 
@@ -73,6 +86,25 @@
     isRefreshing = false
     alert('最新パンに更新します')
   }
+
+  async function removeHeart() {}
+
+  async function attachHeart() {
+    // isHearting = true
+    // const bread = await fetch(nanoId)
+    // if (!bread) {
+    //   isHearting = false
+    //   alert($errMsg)
+    //   return
+    // }
+    // if (isSame(getBread(nanoId), bread)) {
+    //   alert('変更はありません')
+    //   isHearting = false
+    //   return
+    // }
+    // isHearting = false
+    // alert('最新パンに更新します')
+  }
 </script>
 
 <style>
@@ -88,16 +120,16 @@
 
   .title-wrapper {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
     grid-column-gap: 12px;
   }
 
-  .refresh {
+  .icon {
     cursor: pointer;
   }
 
-  .refresh.disabled {
+  .icon.disabled {
     pointer-events: none;
     opacity: 0.3;
   }
@@ -122,9 +154,21 @@
       errMsg=""
       on:homeClick={goHome} />
 
-    <div class="refresh" class:disabled={isRefreshing} on:click={refresh}>
+    <div class="icon" class:disabled={isRefreshing} on:click={refresh}>
       {@html svg.refreshCw}
     </div>
+
+    {#if $userNanoId}
+      {#if $isHeart}
+        <div class="icon" class:disabled={isHearting} on:click={removeHeart}>
+          {@html svg.heartActive}
+        </div>
+      {:else}
+        <div class="icon" class:disabled={isHearting} on:click={attachHeart}>
+          {@html svg.heartInactive}
+        </div>
+      {/if}
+    {/if}
   </div>
 
   <div class="justify-center">

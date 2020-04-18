@@ -35,7 +35,6 @@
   let imageHeight = 0
   let buttonDisabled = false
   let isRefreshing = false
-  let isHearting = false
   $: titleErrMsg = bread.title.getErrMsg($title)
   $: sourceErrMsg = bread.source.getErrMsg($source)
   $: answersErrMsg = bread.answers.getErrMsg($answers)
@@ -45,17 +44,6 @@
       width: '24px',
       height: '24px',
       stroke: '#555',
-    }),
-    heartActive: feather.icons.heart.toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: 'hotpink',
-      fill: 'hotpink',
-    }),
-    heartInactive: feather.icons.heart.toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#ccc',
     }),
   }
 
@@ -164,35 +152,6 @@
     isRefreshing = false
     alert('最新パンに更新します')
   }
-
-  async function attachHeart() {
-    isRefreshing = true
-    const bread = await fetch(nanoId)
-
-    if (!bread) {
-      isRefreshing = false
-      alert($errMsg)
-      return
-    }
-
-    if (isSame(getBread(nanoId), bread)) {
-      alert('変更はありません')
-      isRefreshing = false
-      return
-    }
-
-    $title = bread.title
-    $image = bread.image
-    $answers = bread.answers
-    $isPublic = bread.isPublic
-    $license = bread.license
-    $source = bread.source
-
-    db.updateBread(nanoId, bread)
-
-    isRefreshing = false
-    alert('最新パンに更新します')
-  }
 </script>
 
 <style>
@@ -223,7 +182,7 @@
 
   .title-wrapper {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
     grid-column-gap: 12px;
   }
@@ -264,12 +223,6 @@
 
       <div class="icon" class:disabled={isRefreshing} on:click={refresh}>
         {@html svg.refreshCw}
-      </div>
-      <div class="icon" class:disabled={isHearting} on:click={attachHeart}>
-        {@html svg.heartInactive}
-      </div>
-      <div class="icon" class:disabled={isHearting} on:click={attachHeart}>
-        {@html svg.heartActive}
       </div>
     </div>
 
