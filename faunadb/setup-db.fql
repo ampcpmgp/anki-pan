@@ -1,4 +1,5 @@
 Do(
   CreateCollection({ name: 'Breads' }),
-  CreateCollection({ name: 'Users' })
+  CreateCollection({ name: 'Users' }),
+  CreateCollection({ name: 'Favorites' })
 )
