@@ -16,7 +16,7 @@
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
-  import { setBread } from '../../../utils/db'
+  import { setBread } from '../../../utils/idb'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'

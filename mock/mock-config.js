@@ -2,7 +2,7 @@ import mock from 'am-mocktimes'
 import fetchMock from 'fetch-mock'
 import { replace } from 'svelte-spa-router'
 import sleep from '../src/utils/sleep'
-import * as db from '../src/utils/db'
+import * as idb from '../src/utils/idb'
 import * as auth from '../src/states/auth'
 import * as user from '../src/states/user'
 import * as userInput from '../src/states/user-input'
@@ -23,7 +23,7 @@ fetchMock.mock('/api/breads-summary/self-made/get', dummyData.summaryNoAfter)
 
 mock({
   sleep,
-  db,
+  idb,
   auth,
   user,
   userInput,
@@ -39,6 +39,6 @@ mock({
   },
 
   async setBreadOnDB() {
-    await db.setBread(dummyData.bread)
+    await idb.setBread(dummyData.bread)
   },
 })

@@ -10,7 +10,7 @@
     isHeart,
   } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
-  import * as db from '../../../utils/db'
+  import * as idb from '../../../utils/idb'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -80,7 +80,7 @@
       return
     }
 
-    db.updateBread(nanoId, $bread)
+    idb.updateBread(nanoId, $bread)
 
     isRefreshing = false
     alert('最新パンを取得しました')

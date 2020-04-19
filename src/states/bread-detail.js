@@ -1,6 +1,6 @@
 import { writable, get, derived } from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
-import * as db from '../utils/db'
+import * as idb from '../utils/idb'
 import FromWhere from '../const/from-where'
 import { isAuthenticated, getAuthorization } from './auth'
 
@@ -11,11 +11,11 @@ export const fromWhere = writable(FromWhere.UNKNOWN)
 export const hasBread = derived(bread, $bread => Object.keys($bread).length > 0)
 
 export async function fetchFromDb(nanoId) {
-  const breadFromDb = await db.getBread(nanoId)
+  const breadFromDb = await idb.getBread(nanoId)
 
   if (breadFromDb) {
     bread.set(breadFromDb)
-    db.setBread(breadFromDb)
+    idb.setBread(breadFromDb)
     fromWhere.set(FromWhere.IDB)
   }
 }
@@ -60,7 +60,7 @@ export async function fetchFromServer(nanoId) {
     }
 
     bread.set(data)
-    db.setBread(data)
+    idb.setBread(data)
     fromWhere.set(FromWhere.SERVER)
   } catch (error) {
     errMsg.set('その他エラー')

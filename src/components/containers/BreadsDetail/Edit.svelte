@@ -20,7 +20,7 @@
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
-  import * as db from '../../../utils/db'
+  import * as idb from '../../../utils/idb'
   import { isSame } from '../../../utils/bread'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
@@ -122,7 +122,7 @@
       $success = 'パン更新成功'
       reset()
 
-      db.updateBread(nanoId, bread)
+      idb.updateBread(nanoId, bread)
     }
   }
 
@@ -147,7 +147,7 @@
     }
 
     updateFromBreadDetail()
-    db.updateBread(nanoId, $bread)
+    idb.updateBread(nanoId, $bread)
 
     isRefreshing = false
     alert('最新パンを取得しました')
