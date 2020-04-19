@@ -31,7 +31,7 @@
   {:else if $userNanoId === $bread.userNanoId}
     <Edit {nanoId} />
   {:else}
-    <View bread={$bread} />
+    <View />
   {/if}
 
 {:catch _}
@@ -39,6 +39,7 @@
   {#if !$hasBread}
     <p>パン読み込み中...</p>
   {:else}
-    <View bread={$bread} />
+    <View />
   {/if}
+
 {/await}

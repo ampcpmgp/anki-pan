@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store'
 import { loginUser } from '../utils/api'
-import { getAuthorization } from './auth'
+import { initP, getAuthorization, isAuthenticated } from './auth'
 
 export const nanoId = writable('')
 export const id = writable('')
@@ -8,6 +8,12 @@ export const hasNoId = writable(false)
 export const registrationErrMsg = writable('')
 
 export async function fetchAccount() {
+  await initP
+
+  if (!get(isAuthenticated)) {
+    return
+  }
+
   if (get(nanoId)) {
     return
   }

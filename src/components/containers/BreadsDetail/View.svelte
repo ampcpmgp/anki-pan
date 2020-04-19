@@ -1,8 +1,14 @@
 <script>
   import { push } from 'svelte-spa-router'
   import feather from 'feather-icons'
+  import cloneDeep from 'lodash.clonedeep'
   import { nanoId as selfNanoId } from '../../../states/user'
-  import { fetch, errMsg, isHeart } from '../../../states/bread-detail'
+  import {
+    bread,
+    fetchFromServer,
+    errMsg,
+    isHeart,
+  } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as db from '../../../utils/db'
   import Title from '../../parts/Bread/Title'
@@ -10,16 +16,14 @@
   import Image from '../../parts/Bread/Image'
   import Footer from '../../parts/Bread/Footer'
 
-  export let bread = {}
-
-  $: nanoId = bread.nanoId
-  $: userNanoId = bread.userNanoId
-  $: userId = bread.userId
-  $: title = bread.title
-  $: image = bread.image
-  $: answers = bread.answers
-  $: source = bread.source
-  $: license = bread.license
+  $: nanoId = $bread.nanoId
+  $: userNanoId = $bread.userNanoId
+  $: userId = $bread.userId
+  $: title = $bread.title
+  $: image = $bread.image
+  $: answers = $bread.answers
+  $: source = $bread.source
+  $: license = $bread.license
 
   let playbackIndex = -1
   let imageHeight = 0
@@ -60,44 +64,39 @@
   }
 
   async function refresh() {
+    const oldBread = cloneDeep($bread)
     isRefreshing = true
-    const newBread = await fetch(nanoId)
+    await fetchFromServer(nanoId)
 
-    if (!newBread) {
+    if (!$bread) {
       isRefreshing = false
       alert($errMsg)
       return
     }
 
-    if (isSame(bread, newBread)) {
+    if (isSame(oldBread, $bread)) {
       alert('変更はありません')
       isRefreshing = false
       return
     }
 
-    title = newBread.title
-    image = newBread.image
-    answers = newBread.answers
-    license = newBread.license
-    source = newBread.source
-
-    db.updateBread(nanoId, newBread)
+    db.updateBread(nanoId, $bread)
 
     isRefreshing = false
-    alert('最新パンに更新します')
+    alert('最新パンを取得しました')
   }
 
   async function removeHeart() {}
 
   async function attachHeart() {
     // isHearting = true
-    // const bread = await fetch(nanoId)
-    // if (!bread) {
+    // const $bread = await fetchFromServer(nanoId)
+    // if (!$bread) {
     //   isHearting = false
     //   alert($errMsg)
     //   return
     // }
-    // if (isSame(getBread(nanoId), bread)) {
+    // if (isSame(getBread(nanoId), $bread)) {
     //   alert('変更はありません')
     //   isHearting = false
     //   return
