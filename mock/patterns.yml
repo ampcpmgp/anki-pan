@@ -35,6 +35,7 @@ Home:
   ローカルにパン所持 未ログイン:
     - [page, /breads/detail/has-bread-nanoid]
   ローカルにパン不所持 ログイン済 お気に入り:
+    - [idb.deleteFavorite, {userNanoId: "dummy-user-nanoid", breadNanoId: "has-bread-nanoid"}]
     - [sleep, 0]
     - [auth.isAuthenticated.set, true]
     - [user.nanoId.set, no-item-id]
