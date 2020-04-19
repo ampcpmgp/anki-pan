@@ -126,6 +126,7 @@
 
   .icon {
     cursor: pointer;
+    display: grid;
   }
 
   .icon.disabled {
