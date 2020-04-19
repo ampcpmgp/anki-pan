@@ -1,7 +1,7 @@
 <script>
   import { push } from 'svelte-spa-router'
   import feather from 'feather-icons'
-  import { nanoId as userNanoId } from '../../../states/user'
+  import { nanoId as selfNanoId } from '../../../states/user'
   import { fetch, errMsg, isHeart } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as db from '../../../utils/db'
@@ -13,7 +13,7 @@
   export let bread = {}
 
   $: nanoId = bread.nanoId
-  // $: userNanoId = bread.userNanoId
+  $: userNanoId = bread.userNanoId
   $: userId = bread.userId
   $: title = bread.title
   $: image = bread.image
@@ -158,7 +158,7 @@
       {@html svg.refreshCw}
     </div>
 
-    {#if $userNanoId}
+    {#if $selfNanoId}
       {#if $isHeart}
         <div class="icon" class:disabled={isHearting} on:click={removeHeart}>
           {@html svg.heartActive}
