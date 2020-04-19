@@ -14,6 +14,13 @@ import * as dummyData from './dummy-data'
 fetchMock.mock('/api/user/account/get', {})
 fetchMock.mock('/api/user/bread/post', {})
 fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', dummyData.bread)
+fetchMock.mock('/api/user/favorite/get?breadNanoId=has-bread-nanoid', {
+  isExists: true,
+  favorite: {
+    userNanoId: 'dummy-user-nanoid',
+    breadNanoId: 'has-bread-nanoid',
+  },
+})
 fetchMock.mock('/api/breads-summary/latest/get', dummyData.summary)
 fetchMock.mock(
   '/api/breads-summary/latest/get?ref=261756579953520129&ts=1585889377480000',

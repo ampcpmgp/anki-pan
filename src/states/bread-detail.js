@@ -2,7 +2,7 @@ import { writable, get, derived } from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
 import * as idb from '../utils/idb'
 import FromWhere from '../const/from-where'
-import { isAuthenticated, getAuthorization } from './auth'
+import { initP, isAuthenticated, getAuthorization } from './auth'
 
 export const isHeart = writable(false)
 export const errMsg = writable('')
@@ -25,6 +25,8 @@ export async function fetchFromServer(nanoId) {
     errMsg.set('')
 
     let response
+
+    await initP
 
     if (get(isAuthenticated)) {
       const Authorization = await getAuthorization()
@@ -80,6 +82,33 @@ export async function fetch(nanoId) {
   await fetchFromServer(nanoId)
 }
 
-export async function fetchHeart() {
-  isHeart
+export async function fetchHeart(breadNanoId) {
+  try {
+    await initP
+
+    if (!get(isAuthenticated)) {
+      throw new Error('not authenticated')
+    }
+
+    const Authorization = await getAuthorization()
+
+    const response = await loginUser.get({
+      endpoint: 'user/favorite/get',
+      Authorization,
+      params: {
+        breadNanoId,
+      },
+    })
+
+    if (response.status === 400) {
+      throw new Error('Validation Error')
+    }
+
+    const data = await response.json()
+
+    isHeart.set(data.isExists)
+    idb.setFavorite(data.favorite)
+  } catch (error) {
+    throw new Error(error)
+  }
 }

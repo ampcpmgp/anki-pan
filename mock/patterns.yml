@@ -32,10 +32,12 @@ Home:
     - [setBreadOnDB]
     - [page, /breads/detail/error-nanoid]
 パン詳細画面 - 閲覧モード:
-  ローカルにパン不所持 未ログイン:
-    - [page, /breads/detail/no-bread-nanoid]
-  ローカルにパン所持 ログイン済 お気に入り:
+  ローカルにパン所持 未ログイン:
     - [page, /breads/detail/has-bread-nanoid]
+  ローカルにパン不所持 ログイン済 お気に入り:
+    - [sleep, 0]
+    - [auth.isAuthenticated.set, true]
     - [user.nanoId.set, no-item-id]
     - [user.id.set, no-item-id]
+    - [page, /breads/detail/no-bread-nanoid]
 404 page: [page, /404]

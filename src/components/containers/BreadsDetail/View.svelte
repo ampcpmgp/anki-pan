@@ -1,16 +1,20 @@
 <script>
+  import { onMount } from 'svelte'
   import { push } from 'svelte-spa-router'
   import feather from 'feather-icons'
   import cloneDeep from 'lodash.clonedeep'
   import { nanoId as selfNanoId } from '../../../states/user'
   import {
     bread,
-    fetchFromServer,
     errMsg,
+    fromWhere,
+    fetchFromServer,
     isHeart,
+    fetchHeart,
   } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as idb from '../../../utils/idb'
+  import FromWhere from '../../../const/from-where'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -48,6 +52,24 @@
       stroke: '#ccc',
     }),
   }
+
+  onMount(async () => {
+    if (!$selfNanoId) {
+      return
+    }
+
+    if ($fromWhere !== FromWhere.SERVER) {
+      return
+    }
+
+    const existsFavorite = await idb.existsFavorite($selfNanoId, nanoId)
+
+    if (existsFavorite) {
+      return
+    }
+
+    await fetchHeart(nanoId)
+  })
 
   function onPlay() {
     playbackIndex = 0
