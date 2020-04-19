@@ -121,11 +121,9 @@ Do(
         unique: true,
         serialized: true,
         terms: [
-          {
-            field: ['data', 'uesrNanoId'],
-            field: ['data', 'breadNanoId']
-          },
-        ],
+          { field: ['data', 'uesrNanoId'] },
+          { field: ['data', 'breadNanoId'] }
+        ]
       })
     ),
     (
