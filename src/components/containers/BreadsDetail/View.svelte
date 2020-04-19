@@ -75,8 +75,8 @@
     }
 
     if (isSame(oldBread, $bread)) {
-      alert('変更はありません')
       isRefreshing = false
+      alert('変更はありません')
       return
     }
 
