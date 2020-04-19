@@ -1,7 +1,8 @@
 <script>
+  import { onMount } from 'svelte'
   import { replace, push } from 'svelte-spa-router'
   import feather from 'feather-icons'
-  import { bread } from '../../../../utils/validator'
+  import * as validator from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
     title,
@@ -11,8 +12,9 @@
     license,
     source,
     getBread,
+    updateFromBreadDetail,
   } from '../../../states/user-input/bread-edit'
-  import { fetch, errMsg } from '../../../states/bread-detail'
+  import { bread, fetchFromServer, errMsg } from '../../../states/bread-detail'
   import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary'
@@ -35,9 +37,9 @@
   let imageHeight = 0
   let buttonDisabled = false
   let isRefreshing = false
-  $: titleErrMsg = bread.title.getErrMsg($title)
-  $: sourceErrMsg = bread.source.getErrMsg($source)
-  $: answersErrMsg = bread.answers.getErrMsg($answers)
+  $: titleErrMsg = validator.bread.title.getErrMsg($title)
+  $: sourceErrMsg = validator.bread.source.getErrMsg($source)
+  $: answersErrMsg = validator.bread.answers.getErrMsg($answers)
 
   const svg = {
     refreshCw: feather.icons['refresh-cw'].toSvg({
@@ -46,6 +48,10 @@
       stroke: '#555',
     }),
   }
+
+  onMount(() => {
+    updateFromBreadDetail()
+  })
 
   function onDrop(e) {
     $image = e.detail
@@ -126,31 +132,25 @@
 
   async function refresh() {
     isRefreshing = true
-    const bread = await fetch(nanoId)
+    await fetchFromServer(nanoId)
 
-    if (!bread) {
+    if ($errMsg) {
       isRefreshing = false
       alert($errMsg)
       return
     }
 
-    if (isSame(getBread(nanoId), bread)) {
-      alert('変更はありません')
+    if (isSame(getBread(nanoId), $bread)) {
       isRefreshing = false
+      alert('変更はありません')
       return
     }
 
-    $title = bread.title
-    $image = bread.image
-    $answers = bread.answers
-    $isPublic = bread.isPublic
-    $license = bread.license
-    $source = bread.source
-
-    db.updateBread(nanoId, bread)
+    updateFromBreadDetail()
+    db.updateBread(nanoId, $bread)
 
     isRefreshing = false
-    alert('最新パンに更新します')
+    alert('最新パンを取得しました')
   }
 </script>
 

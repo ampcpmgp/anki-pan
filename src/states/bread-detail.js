@@ -16,6 +16,7 @@ export async function fetchFromDb(nanoId) {
   if (breadFromDb) {
     bread.set(breadFromDb)
     db.setBread(breadFromDb)
+    fromWhere.set(FromWhere.IDB)
   }
 }
 
@@ -60,6 +61,7 @@ export async function fetchFromServer(nanoId) {
 
     bread.set(data)
     db.setBread(data)
+    fromWhere.set(FromWhere.SERVER)
   } catch (error) {
     errMsg.set('その他エラー')
   }
@@ -68,18 +70,14 @@ export async function fetchFromServer(nanoId) {
 export async function fetch(nanoId) {
   bread.set({})
   fromWhere.set(FromWhere.UNKNOWN)
+
   await fetchFromDb(nanoId)
 
   if (get(hasBread)) {
-    fromWhere.set(FromWhere.IDB)
     return
   }
 
   await fetchFromServer(nanoId)
-
-  if (get(hasBread)) {
-    fromWhere.set(FromWhere.SERVER)
-  }
 }
 
 export async function fetchHeart() {
