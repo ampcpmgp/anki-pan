@@ -7,6 +7,29 @@ db.version(1).stores({
   breads:
     '&nanoId,*userNanoId,*userId,title,image,answers,isPublic,source,license',
 })
+db.version(2).stores({
+  breads:
+    '&nanoId,*userNanoId,*userId,title,image,answers,isPublic,source,license',
+  favorites: '[userNanoId+breadNanoId],*userNanoId,*breadNanoId',
+})
+
+export function setFavorite(favorite) {
+  db.favorites.put(favorite)
+}
+
+export function getFavorite(userNanoId, breadNanoId) {
+  return db.favorites
+    .where('[userNanoId+breadNanoId]')
+    .equals([userNanoId, breadNanoId])
+    .first()
+}
+
+export function deleteFavorite(userNanoId, breadNanoId) {
+  return db.favorites
+    .where('[userNanoId+breadNanoId]')
+    .equals([userNanoId, breadNanoId])
+    .delete()
+}
 
 export function setBread(bread) {
   db.breads.put(bread)
