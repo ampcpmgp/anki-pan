@@ -37,10 +37,6 @@
 
     await fetchAccountP
 
-    if ($userNanoId) {
-      void 1
-    }
-
     if ($userNanoId === bread.userNanoId) {
       $title = bread.title
       $image = bread.image
@@ -56,20 +52,18 @@
   <p>ユーザー読み込み中...</p>
 {:then _}
 
-  {#if bread}
-    {#if $userNanoId === bread.userNanoId}
-      <Edit {nanoId} />
-    {:else}
-      <View {bread} />
-    {/if}
-  {:else}
+  {#if !bread}
     <p>パン読み込み中...</p>
+  {:else if $userNanoId === bread.userNanoId}
+    <Edit {nanoId} />
+  {:else}
+    <View {bread} />
   {/if}
 
 {:catch _}
-  {#if bread}
-    <View {bread} />
-  {:else}
+  {#if !bread}
     <p>パン読み込み中...</p>
+  {:else}
+    <View {bread} />
   {/if}
 {/await}
