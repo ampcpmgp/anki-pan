@@ -1,13 +1,24 @@
 import { writable, get, derived } from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
+import * as db from '../utils/db'
+import FromWhere from '../const/from-where'
 import { isAuthenticated, getAuthorization } from './auth'
 
 export const isHeart = writable(false)
 export const errMsg = writable('')
 export const bread = writable({})
+export const fromWhere = writable(FromWhere.UNKNOWN)
 export const hasBread = derived(bread, $bread => Object.keys($bread).length > 0)
 
-export async function fetch(nanoId) {
+export async function fetchFromDb(nanoId) {
+  const breadFromDb = await db.getBread(nanoId)
+
+  if (breadFromDb) {
+    bread.set(breadFromDb)
+  }
+}
+
+export async function fetchFromServer(nanoId) {
   try {
     errMsg.set('')
 
@@ -41,9 +52,29 @@ export async function fetch(nanoId) {
 
     const data = await response.json()
 
+    bread.set(data)
+
+    // TODO: 削除
     return data
   } catch (error) {
     errMsg.set('その他エラー')
+  }
+}
+
+export async function fetch(nanoId) {
+  bread.set({})
+  fromWhere.set(FromWhere.UNKNOWN)
+  await fetchFromDb(nanoId)
+
+  if (get(hasBread)) {
+    fromWhere.set(FromWhere.IDB)
+    return
+  }
+
+  await fetchFromServer(nanoId)
+
+  if (get(hasBread)) {
+    fromWhere.set(FromWhere.SERVER)
   }
 }
 
