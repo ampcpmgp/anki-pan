@@ -1,9 +1,11 @@
-import * as svelte from 'svelte/store'
+import { writable, get, derived } from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
 import { isAuthenticated, getAuthorization } from './auth'
 
-export const isHeart = svelte.writable(false)
-export const errMsg = svelte.writable('')
+export const isHeart = writable(false)
+export const errMsg = writable('')
+export const bread = writable({})
+export const hasBread = derived(bread, $bread => Object.keys($bread).length > 0)
 
 export async function fetch(nanoId) {
   try {
@@ -11,7 +13,7 @@ export async function fetch(nanoId) {
 
     let response
 
-    if (svelte.get(isAuthenticated)) {
+    if (get(isAuthenticated)) {
       const Authorization = await getAuthorization()
 
       response = await loginUser.get({
