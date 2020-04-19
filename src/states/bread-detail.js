@@ -15,6 +15,7 @@ export async function fetchFromDb(nanoId) {
 
   if (breadFromDb) {
     bread.set(breadFromDb)
+    db.setBread(breadFromDb)
   }
 }
 
@@ -52,10 +53,13 @@ export async function fetchFromServer(nanoId) {
 
     const data = await response.json()
 
-    bread.set(data)
+    if (!data) {
+      errMsg.set('パン取得に失敗しました')
+      return
+    }
 
-    // TODO: 削除
-    return data
+    bread.set(data)
+    db.setBread(data)
   } catch (error) {
     errMsg.set('その他エラー')
   }
