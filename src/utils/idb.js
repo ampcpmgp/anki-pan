@@ -25,7 +25,7 @@ export async function existsFavorite(userNanoId, breadNanoId) {
   return count === 1
 }
 
-export function deleteFavorite(userNanoId, breadNanoId) {
+export function deleteFavorite({ userNanoId, breadNanoId }) {
   return db.favorites
     .where('[userNanoId+breadNanoId]')
     .equals([userNanoId, breadNanoId])

@@ -107,7 +107,12 @@ export async function fetchHeart(breadNanoId) {
     const data = await response.json()
 
     isHeart.set(data.isExists)
-    idb.setFavorite(data.favorite)
+
+    if (data.isExists) {
+      idb.setFavorite(data.favorite)
+    } else {
+      idb.deleteFavorite(data.favorite)
+    }
   } catch (error) {
     throw new Error(error)
   }
