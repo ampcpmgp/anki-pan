@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte'
   import { push } from 'svelte-spa-router'
-  import feather from 'feather-icons'
   import cloneDeep from 'lodash.clonedeep'
   import { nanoId as selfNanoId } from '../../../states/user'
   import {
@@ -9,8 +8,8 @@
     errMsg,
     fromWhere,
     fetchFromServer,
-    isHeart,
-    fetchHeart,
+    isFavorite,
+    fetchFavorite,
   } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as idb from '../../../utils/idb'
@@ -18,6 +17,7 @@
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
+  import Operation from '../../parts/Bread/Operation'
   import Footer from '../../parts/Bread/Footer'
 
   $: nanoId = $bread.nanoId
@@ -32,26 +32,7 @@
   let playbackIndex = -1
   let imageHeight = 0
   let isRefreshing = false
-  let isHearting = false
-
-  const svg = {
-    refreshCw: feather.icons['refresh-cw'].toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#555',
-    }),
-    heartActive: feather.icons.heart.toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: 'hotpink',
-      fill: 'hotpink',
-    }),
-    heartInactive: feather.icons.heart.toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#ccc',
-    }),
-  }
+  let isFavoriting = false
 
   onMount(async () => {
     if (!$selfNanoId) {
@@ -68,7 +49,7 @@
       return
     }
 
-    await fetchHeart(nanoId)
+    await fetchFavorite(nanoId)
   })
 
   function onPlay() {
@@ -85,7 +66,7 @@
     push('/')
   }
 
-  async function refresh() {
+  async function onRefresh() {
     const oldBread = cloneDeep($bread)
     isRefreshing = true
     await fetchFromServer(nanoId)
@@ -108,23 +89,13 @@
     alert('最新パンを取得しました')
   }
 
-  async function removeHeart() {}
+  async function onFavorite(e) {
+    isFavoriting = true
+    const { isFavorite } = e.detail
 
-  async function attachHeart() {
-    // isHearting = true
-    // const $bread = await fetchFromServer(nanoId)
-    // if (!$bread) {
-    //   isHearting = false
-    //   alert($errMsg)
-    //   return
-    // }
-    // if (isSame(getBread(nanoId), $bread)) {
-    //   alert('変更はありません')
-    //   isHearting = false
-    //   return
-    // }
-    // isHearting = false
-    // alert('最新パンに更新します')
+    console.log(isFavorite)
+
+    isFavoriting = false
   }
 </script>
 
@@ -141,19 +112,9 @@
 
   .title-wrapper {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     align-items: center;
     grid-column-gap: 12px;
-  }
-
-  .icon {
-    cursor: pointer;
-    display: grid;
-  }
-
-  .icon.disabled {
-    pointer-events: none;
-    opacity: 0.3;
   }
 
   .image-wrapper {
@@ -176,21 +137,14 @@
       errMsg=""
       on:homeClick={goHome} />
 
-    <div class="icon" class:disabled={isRefreshing} on:click={refresh}>
-      {@html svg.refreshCw}
-    </div>
-
-    {#if $selfNanoId}
-      {#if $isHeart}
-        <div class="icon" class:disabled={isHearting} on:click={removeHeart}>
-          {@html svg.heartActive}
-        </div>
-      {:else}
-        <div class="icon" class:disabled={isHearting} on:click={attachHeart}>
-          {@html svg.heartInactive}
-        </div>
-      {/if}
-    {/if}
+    <Operation
+      visibleFavorite={!!$selfNanoId}
+      isFavorite={$isFavorite}
+      disabledFavorite={isFavoriting}
+      disabledRefresh={isRefreshing || $fromWhere === FromWhere.SERVER}
+      fromWhere={$fromWhere}
+      on:refresh={onRefresh}
+      on:favorite={onFavorite} />
   </div>
 
   <div class="justify-center">

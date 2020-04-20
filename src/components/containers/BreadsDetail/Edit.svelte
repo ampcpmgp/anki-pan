@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte'
   import { replace, push } from 'svelte-spa-router'
-  import feather from 'feather-icons'
   import * as validator from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
@@ -14,7 +13,12 @@
     getBread,
     updateFromBreadDetail,
   } from '../../../states/user-input/bread-edit'
-  import { bread, fetchFromServer, errMsg } from '../../../states/bread-detail'
+  import {
+    bread,
+    fetchFromServer,
+    fromWhere,
+    errMsg,
+  } from '../../../states/bread-detail'
   import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary'
@@ -22,9 +26,11 @@
   import * as answersUtil from '../../../utils/answers'
   import * as idb from '../../../utils/idb'
   import { isSame } from '../../../utils/bread'
+  import FromWhere from '../../../const/from-where'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
+  import Operation from '../../parts/Bread/Operation'
   import DragDrop from '../../parts/Bread/DragDrop'
   import Checkbox from '../../parts/Form/Checkbox'
   import Text from '../../parts/Form/Text'
@@ -40,14 +46,6 @@
   $: titleErrMsg = validator.bread.title.getErrMsg($title)
   $: sourceErrMsg = validator.bread.source.getErrMsg($source)
   $: answersErrMsg = validator.bread.answers.getErrMsg($answers)
-
-  const svg = {
-    refreshCw: feather.icons['refresh-cw'].toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#555',
-    }),
-  }
 
   onMount(() => {
     updateFromBreadDetail()
@@ -187,16 +185,6 @@
     grid-column-gap: 12px;
   }
 
-  .icon {
-    cursor: pointer;
-    display: grid;
-  }
-
-  .icon.disabled {
-    pointer-events: none;
-    opacity: 0.3;
-  }
-
   .image-wrapper {
     z-index: 1;
     /* これがあると resize 時にも能動的に調整してくれる。 */
@@ -222,9 +210,13 @@
         errMsg={titleErrMsg}
         on:homeClick={goHome} />
 
-      <div class="icon" class:disabled={isRefreshing} on:click={refresh}>
-        {@html svg.refreshCw}
-      </div>
+      <Operation
+        visibleFavorite={false}
+        isFavorite={false}
+        disabledFavorite={false}
+        disabledRefresh={isRefreshing || $fromWhere === FromWhere.SERVER}
+        fromWhere={$fromWhere}
+        on:refresh={refresh} />
     </div>
 
     <div class="justify-center">

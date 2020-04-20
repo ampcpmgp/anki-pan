@@ -4,7 +4,7 @@ import * as idb from '../utils/idb'
 import FromWhere from '../const/from-where'
 import { initP, isAuthenticated, getAuthorization } from './auth'
 
-export const isHeart = writable(false)
+export const isFavorite = writable(false)
 export const errMsg = writable('')
 export const bread = writable({})
 export const fromWhere = writable(FromWhere.UNKNOWN)
@@ -82,7 +82,7 @@ export async function fetch(nanoId) {
   await fetchFromServer(nanoId)
 }
 
-export async function fetchHeart(breadNanoId) {
+export async function fetchFavorite(breadNanoId) {
   try {
     await initP
 
@@ -106,7 +106,7 @@ export async function fetchHeart(breadNanoId) {
 
     const data = await response.json()
 
-    isHeart.set(data.isExists)
+    isFavorite.set(data.isExists)
 
     if (data.isExists) {
       idb.setFavorite(data.favorite)

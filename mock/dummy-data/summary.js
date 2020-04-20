@@ -42,26 +42,5 @@ export default {
       userId: 'dummy-account-id-00000',
     },
     { nanoId: 'PhVHAUCQvbn4gEITz_CzP', title: '草人5', userId: 'abc' },
-    { nanoId: 'vowkDPQjWd1I6-8FWXzjP', title: 'a', userId: 'abc' },
-    {
-      nanoId: '1585889377358',
-      title: '細胞の秘密 5',
-      userId: 'dummy-account-id',
-    },
-    {
-      nanoId: '1585889377454',
-      title: '細胞の秘密 1',
-      userId: 'dummy-account-id-00000',
-    },
-    {
-      nanoId: '1585889377359',
-      title: '細胞の秘密 6',
-      userId: 'dummy-account-id',
-    },
-    {
-      nanoId: '1585889377456',
-      title: '細胞の秘密 3',
-      userId: 'dummy-account-id-00000',
-    },
   ],
 }

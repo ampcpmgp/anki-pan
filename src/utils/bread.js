@@ -4,7 +4,7 @@ import { Base64 } from 'js-base64'
 export function getColor(type) {
   switch (type) {
     case BreadType.NEW:
-      return 'rgb(255,81,0)'
+      return 'rgb(255, 81, 0)'
     case BreadType.FAVORITES:
       return 'hotpink'
     case BreadType.SELF_MADE:
