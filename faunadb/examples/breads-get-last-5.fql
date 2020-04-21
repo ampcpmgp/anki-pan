@@ -1,0 +1,22 @@
+Map(
+  Map(
+    Paginate(
+      Match(Index("breads_sort_by_ts_desc"), true),
+      {
+        size: 5
+      }
+    ),
+    Lambda(
+      ["ts", "ref"],
+      Get(Var("ref"))
+    )
+  ),
+  Lambda(
+    "item",
+    {
+      nanoId: Select(["data", "nanoId"], Var("item")),
+      title: Select(["data", "title"], Var("item")),
+      userId: Select(["data", "userId"], Var("item")),
+    }
+  )
+)
