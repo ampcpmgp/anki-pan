@@ -121,7 +121,7 @@ Do(
         unique: true,
         serialized: true,
         terms: [
-          { field: ['data', 'uesrNanoId'] },
+          { field: ['data', 'userNanoId'] },
           { field: ['data', 'breadNanoId'] }
         ]
       })
@@ -134,7 +134,7 @@ Do(
         serialized: true,
         terms: [
           {
-            field: ['data', 'uesrNanoId']
+            field: ['data', 'userNanoId']
           },
         ],
       })

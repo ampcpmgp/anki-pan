@@ -1,0 +1,8 @@
+Delete(
+  Select(
+    "ref",
+    Get(
+      Match(Index('favorites_by_ids'), ["__user_nano_id__", "__bread_nano_id__"])
+    )
+  )
+)

@@ -10,6 +10,7 @@
     fetchFromServer,
     isFavorite,
     fetchFavorite,
+    toggleFavorite,
   } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
   import * as idb from '../../../utils/idb'
@@ -91,9 +92,15 @@
 
   async function onFavorite(e) {
     isFavoriting = true
-    const { isFavorite } = e.detail
+    $isFavorite = !$isFavorite
 
-    console.log(isFavorite)
+    const isSuccess = await toggleFavorite(e.detail.isFavorite).catch(alert)
+
+    if (isSuccess) {
+      // Do nothing
+    } else {
+      $isFavorite = !$isFavorite
+    }
 
     isFavoriting = false
   }

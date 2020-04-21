@@ -3,7 +3,7 @@ Do(
     Collection('Favorites'),
     {
       data: {
-        uesrNanoId: 'dummy-user-nano-id',
+        userNanoId: 'dummy-user-nano-id',
         breadNanoId: 'dummy-bread-nano-id-1'
       }
     }
@@ -12,7 +12,7 @@ Do(
     Collection('Favorites'),
     {
       data: {
-        uesrNanoId: 'dummy-user-nano-id',
+        userNanoId: 'dummy-user-nano-id',
         breadNanoId: 'dummy-bread-nano-id-2'
       }
     }

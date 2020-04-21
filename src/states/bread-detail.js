@@ -117,3 +117,40 @@ export async function fetchFavorite(breadNanoId) {
     throw new Error(error)
   }
 }
+
+export async function toggleFavorite(isFavorite) {
+  await initP
+
+  if (!get(isAuthenticated)) {
+    return
+  }
+
+  const { nanoId } = get(bread)
+
+  const Authorization = await getAuthorization()
+
+  const response = await loginUser
+    .post({
+      endpoint: 'user/favorite/post',
+      Authorization,
+      data: {
+        breadNanoId: nanoId,
+        isFavorite,
+      },
+    })
+    .catch(() => {
+      throw new Error('その他エラー')
+    })
+
+  if (response.status === 503) {
+    throw new Error('サーバーエラー')
+  }
+
+  if (response.status === 400) {
+    throw new Error('入力エラー')
+  }
+
+  const data = await response.json()
+
+  return data.isSuccess
+}
