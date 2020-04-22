@@ -137,6 +137,10 @@ Do(
             field: ['data', 'userNanoId']
           },
         ],
+        values: [
+          { field: ['ts'], reverse: true },
+          { field: ['data', "breadNanoId"] },
+        ],
       })
     ),
     (
@@ -149,6 +153,10 @@ Do(
           {
             field: ['data', 'breadNanoId']
           },
+        ],
+        values: [
+          { field: ['ts'], reverse: true },
+          { field: ['data', "userNanoId"] },
         ],
       })
     )

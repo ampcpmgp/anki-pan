@@ -7,12 +7,7 @@ Foreach(
         Collection('Breads'),
         {
           data: {
-            nanoId: ToString(
-              Add(
-                TimeDiff(Epoch(0, 'second'), Now(), 'milliseconds'),
-                Var('num')
-              )
-            ),
+            nanoId: Concat(['dummy-bread-nano-id-', ToString(Var('num'))]),
             userNanoId: 'abcde01234',
             userId: 'dummy-account-id',
             title: Concat(['細胞の秘密 ', ToString(Var('num'))]),
@@ -37,13 +32,7 @@ Foreach(
         Collection('Breads'),
         {
           data: {
-            nanoId: ToString(
-              Add(
-                TimeDiff(Epoch(0, 'second'), Now(), 'milliseconds'),
-                Var('num'),
-                100
-              )
-            ),
+            nanoId: Concat(['dummy-bread-nano-id-0-', ToString(Var('num'))]),
             userNanoId: 'abcde00000',
             userId: 'dummy-account-id-00000',
             title: Concat(['細胞の秘密 ', ToString(Var('num'))]),
