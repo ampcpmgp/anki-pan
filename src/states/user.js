@@ -7,6 +7,8 @@ export const id = writable('')
 export const hasNoId = writable(false)
 export const registrationErrMsg = writable('')
 
+export const fetchAccountP = fetchAccount()
+
 export async function fetchAccount() {
   await initP
 

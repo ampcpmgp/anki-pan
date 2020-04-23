@@ -1,14 +1,12 @@
 <script>
   import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
-  import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
+  import { nanoId as userNanoId, fetchAccountP } from '../../../states/user'
   import { bread, hasBread, fetch, errMsg } from '../../../states/bread-detail'
   import View from './View'
   import Edit from './Edit'
 
   export let nanoId = ''
-
-  const fetchAccountP = fetchAccount()
 
   onMount(async () => {
     await fetchAccountP
