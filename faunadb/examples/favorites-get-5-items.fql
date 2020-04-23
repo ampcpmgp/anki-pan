@@ -1,0 +1,30 @@
+Map(
+  Map(
+    Paginate(
+      Match(
+        Index("favorites_by_user_nano_id"),
+        "dummy-user-nano-id"
+      ),
+      {
+        size: 5
+      }
+    ),
+    Lambda(
+      ["ts", "breadNanoId"],
+      Get(
+        Match(
+          Index("breads_by_nano_id"),
+          Var("breadNanoId")
+        )
+      )
+    )
+  ),
+  Lambda(
+    "item",
+    {
+      nanoId: Select(["data", "nanoId"], Var("item")),
+      title: Select(["data", "title"], Var("item")),
+      userId: Select(["data", "userId"], Var("item")),
+    }
+  )
+)
