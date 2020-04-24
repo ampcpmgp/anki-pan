@@ -1,11 +1,9 @@
 const { q, client, getDBUser } = require('../../_utils/faunadb')
-const { getUserInfo } = require('../../_utils/auth0')
+const { verifyToken } = require('../../_utils/auth0')
 const { handleApiError } = require('../../_utils/api-error')
 
 module.exports = handleApiError(async (req, res) => {
-  const responseUserInfo = await getUserInfo(req)
-
-  const { sub: subjectClaim } = await responseUserInfo.json()
+  const { sub: subjectClaim } = await verifyToken(req)
   const user = await getDBUser(subjectClaim)
 
   // 最新5件取得

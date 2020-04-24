@@ -111,19 +111,6 @@ Do(
       ],
     })
   ),
-  (
-    CreateIndex({
-      name: 'users_by_access_token',
-      source: Collection('Users'),
-      unique: true,
-      serialized: true,
-      terms: [
-        {
-          field: ['data', 'accessToken'],
-        },
-      ],
-    })
-  ),
 
   // お気に入りインデックス
   Do(

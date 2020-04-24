@@ -2,7 +2,7 @@ import { writable, get, derived } from 'svelte/store'
 import { guestUser, loginUser } from '../utils/api'
 import * as idb from '../utils/idb'
 import FromWhere from '../const/from-where'
-import { initP, isAuthenticated, getAuthorization } from './auth'
+import { initP, isAuthenticated, getRawIdToken } from './auth'
 
 export const isFavorite = writable(false)
 export const errMsg = writable('')
@@ -29,7 +29,7 @@ export async function fetchFromServer(nanoId) {
     await initP
 
     if (get(isAuthenticated)) {
-      const Authorization = await getAuthorization()
+      const Authorization = await getRawIdToken()
 
       response = await loginUser.get({
         endpoint: 'user/bread/get',
@@ -90,7 +90,7 @@ export async function fetchFavorite(breadNanoId) {
       throw new Error('not authenticated')
     }
 
-    const Authorization = await getAuthorization()
+    const Authorization = await getRawIdToken()
 
     const response = await loginUser.get({
       endpoint: 'user/favorite/get',
@@ -127,7 +127,7 @@ export async function toggleFavorite(isFavorite) {
 
   const { nanoId } = get(bread)
 
-  const Authorization = await getAuthorization()
+  const Authorization = await getRawIdToken()
 
   const response = await loginUser
     .post({

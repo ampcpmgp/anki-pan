@@ -79,7 +79,7 @@ export async function getRawIdToken() {
   const claims = await auth0.getIdTokenClaims()
   // https://community.auth0.com/t/getting-the-jwt-id-token-from-auth0-spa-js/28281/10
 
-  return claims.__raw
+  return `Bearer ${claims.__raw}`
 }
 
 export async function getUserProfile() {

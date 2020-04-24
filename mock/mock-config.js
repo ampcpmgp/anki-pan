@@ -11,7 +11,7 @@ import * as alert from '../src/states/alert'
 import * as images from '../src/images/stories'
 import * as dummyData from './dummy-data'
 
-fetchMock.mock('/api/user/account/put', {})
+fetchMock.mock('/api/user/account/get', {})
 fetchMock.mock('/api/user/bread/post', {})
 fetchMock.mock('/api/user/bread/get?nanoId=no-bread-nanoid', dummyData.bread)
 fetchMock.mock('/api/user/favorite/get?breadNanoId=has-bread-nanoid', {
