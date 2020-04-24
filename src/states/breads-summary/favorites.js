@@ -44,6 +44,7 @@ export async function fetch() {
     fetched.set(true)
   } catch (error) {
     console.info(error)
+    throw new Error('その他エラー')
   }
 }
 
@@ -81,5 +82,6 @@ export async function fetchReadMore() {
     after.set(result.after || [])
   } catch (error) {
     console.info(error)
+    throw new Error('その他エラー')
   }
 }

@@ -26,6 +26,7 @@ fetchMock.mock(
   '/api/breads-summary/latest/get?ref=261756579953520129&ts=1585889377480000',
   dummyData.summaryNoAfter
 )
+fetchMock.mock('/api/breads-summary/favorites/get', dummyData.summaryNoAfter)
 fetchMock.mock('/api/breads-summary/self-made/get', dummyData.summaryNoAfter)
 
 mock({

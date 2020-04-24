@@ -22,10 +22,12 @@ export function getBread(nanoId) {
 }
 
 export function updateFromBreadDetail() {
-  title.set(get(bread).title)
-  image.set(get(bread).image)
-  answers.set(get(bread).answers)
-  isPublic.set(get(bread).isPublic)
-  source.set(get(bread).source)
-  license.set(get(bread).license)
+  const $bread = get(bread)
+
+  title.set($bread.title)
+  image.set($bread.image)
+  answers.set($bread.answers)
+  isPublic.set($bread.isPublic)
+  source.set($bread.source)
+  license.set($bread.license)
 }

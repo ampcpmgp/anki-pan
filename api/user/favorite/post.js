@@ -52,6 +52,8 @@ module.exports = handleApiError(async (req, res) => {
       })
     )
   } else {
+    // FIXME: 削除失敗時、クライアント側にお気に入りデータが残ったままになる。
+    // 対策要検討。
     await client.query(
       q.Delete(
         q.Select(

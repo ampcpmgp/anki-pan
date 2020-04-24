@@ -15,7 +15,6 @@ export async function fetchFromDb(nanoId) {
 
   if (breadFromDb) {
     bread.set(breadFromDb)
-    idb.setBread(breadFromDb)
     fromWhere.set(FromWhere.IDB)
   }
 }

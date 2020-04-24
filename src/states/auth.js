@@ -25,6 +25,9 @@ function createClient() {
       getTokenSilently() {
         return 'dummy-token'
       },
+      getIdTokenClaims() {
+        return 'dummy-raw-token'
+      },
     }))
   }
 
@@ -77,8 +80,8 @@ export async function getAuthorization() {
 export async function getRawIdToken() {
   const auth0 = await auth0P
   const claims = await auth0.getIdTokenClaims()
-  // https://community.auth0.com/t/getting-the-jwt-id-token-from-auth0-spa-js/28281/10
 
+  // 参考: https://community.auth0.com/t/getting-the-jwt-id-token-from-auth0-spa-js/28281/10
   return `Bearer ${claims.__raw}`
 }
 
