@@ -74,6 +74,14 @@ export async function getAuthorization() {
   return `Bearer ${value}`
 }
 
+export async function getRawIdToken() {
+  const auth0 = await auth0P
+  const claims = await auth0.getIdTokenClaims()
+  // https://community.auth0.com/t/getting-the-jwt-id-token-from-auth0-spa-js/28281/10
+
+  return claims.__raw
+}
+
 export async function getUserProfile() {
   const auth0 = await auth0P
   const value = await auth0.getUser()
