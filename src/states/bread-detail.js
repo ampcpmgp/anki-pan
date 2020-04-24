@@ -150,6 +150,10 @@ export async function toggleFavorite(isFavorite) {
     throw new Error('入力エラー')
   }
 
+  if (response.status === 404) {
+    throw new Error('該当のパンが削除されています')
+  }
+
   const data = await response.json()
 
   return data.isSuccess

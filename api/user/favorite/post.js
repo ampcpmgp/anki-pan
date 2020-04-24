@@ -32,6 +32,15 @@ module.exports = handleApiError(async (req, res) => {
   }
 
   if (isFavorite) {
+    // 該当のパンが存在しているか確認。
+    const isExistsBread = client.query(
+      q.Exists(q.Match('breads_by_nano_id', breadNanoId))
+    )
+
+    if (!isExistsBread) {
+      throw new ApiError('Bread Not Found', 404)
+    }
+
     await client.query(
       q.Create(q.Collection('Favorites'), {
         data: {
