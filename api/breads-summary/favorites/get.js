@@ -4,7 +4,7 @@ const { handleApiError } = require('../../_utils/api-error')
 
 module.exports = handleApiError(async (req, res) => {
   const { sub: subjectClaim } = await verifyToken(req)
-  const user = await getDBUser(subjectClaim)
+  const { data: user } = await getDBUser(subjectClaim)
 
   // 最新5件取得
   if (!req.query.ref || !req.query.nanoId || !req.query.ts) {

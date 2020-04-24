@@ -4,7 +4,9 @@ const { getDBUser } = require('../../_utils/faunadb')
 
 module.exports = handleApiError(async (req, res) => {
   const { sub: subjectClaim } = await verifyToken(req)
-  const { id, nanoId } = await getDBUser(subjectClaim)
+  const {
+    data: { id, nanoId },
+  } = await getDBUser(subjectClaim)
 
   res.json({
     id,

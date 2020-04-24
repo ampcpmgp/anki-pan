@@ -18,7 +18,7 @@ module.exports = handleApiError(async (req, res) => {
     }
 
     const { sub: subjectClaim } = await verifyToken(req)
-    const user = await getDBUser(subjectClaim)
+    const { data: user } = await getDBUser(subjectClaim)
 
     if (user.nanoId !== response.data.userNanoId) {
       throw new ApiError('Forbidden', 403)

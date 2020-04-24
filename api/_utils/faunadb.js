@@ -32,9 +32,7 @@ exports.getDBUser = async function(subjectClaim) {
 
     return {
       ref,
-      // TODO: dataを返す。
-      id: data.id,
-      nanoId: data.nanoId,
+      data,
     }
   } catch (error) {
     if (error.requestResult && error.requestResult.statusCode === 404) {

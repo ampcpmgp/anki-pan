@@ -7,7 +7,7 @@ const { getName } = require('../../../utils/license')
 
 module.exports = handleApiError(async (req, res) => {
   const { sub: subjectClaim } = await verifyToken(req)
-  const user = await getDBUser(subjectClaim)
+  const { data: user } = await getDBUser(subjectClaim)
 
   const { title, image, answers, isPublic, source, license } = req.body
 
