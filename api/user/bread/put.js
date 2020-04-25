@@ -1,14 +1,12 @@
-const { getUserInfo } = require('../../_utils/auth0')
+const { verifyToken } = require('../../_utils/auth0')
 const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { getDBUser, client, q } = require('../../_utils/faunadb')
 const { bread } = require('../../../utils/validator')
 const { getName } = require('../../../utils/license')
 
 module.exports = handleApiError(async (req, res) => {
-  const response = await getUserInfo(req)
-
-  const { sub: subjectClaim } = await response.json()
-  const user = await getDBUser(subjectClaim)
+  const { sub: subjectClaim } = await verifyToken(req)
+  const { data: user } = await getDBUser(subjectClaim)
 
   const { nanoId, title, answers, isPublic, source, license } = req.body
 

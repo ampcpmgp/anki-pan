@@ -1,61 +1,21 @@
 <script>
   import { onMount } from 'svelte'
   import { replace } from 'svelte-spa-router'
-  import { getBread, setBread } from '../../../utils/db'
-  import { nanoId as userNanoId, fetchAccount } from '../../../states/user'
-  import { fetch, errMsg } from '../../../states/bread-detail'
-  import {
-    title,
-    image,
-    answers,
-    isPublic,
-    license,
-    source,
-  } from '../../../states/user-input/bread-edit'
+  import { nanoId as userNanoId, fetchAccountP } from '../../../states/user'
+  import { bread, hasBread, fetch, errMsg } from '../../../states/bread-detail'
   import View from './View'
   import Edit from './Edit'
 
   export let nanoId = ''
 
-  let bread
-  let fetchAccountP = fetchAccount()
-
   onMount(async () => {
-    try {
-      bread = await getBread(nanoId)
-    } catch (error) {
-      // Firefox のシークレットブラウザでは IndexedDB が使えず、
-      // エラーが起きるためスルーする。
-      console.info(error)
-    }
-
-    if (!bread) {
-      bread = await fetch(nanoId)
-
-      if (!bread) {
-        window.alert($errMsg)
-        replace('/')
-        return
-      }
-
-      try {
-        await setBread(bread)
-      } catch (error) {
-        // Firefox のシークレットブラウザでは IndexedDB が使えず、
-        // エラーが起きるためスルーする。
-        console.info(error)
-      }
-    }
-
     await fetchAccountP
+    await fetch(nanoId)
 
-    if ($userNanoId === bread.userNanoId) {
-      $title = bread.title
-      $image = bread.image
-      $answers = bread.answers
-      $isPublic = bread.isPublic
-      $license = bread.license
-      $source = bread.source
+    if (!$hasBread) {
+      window.alert($errMsg)
+      replace('/')
+      return
     }
   })
 </script>
@@ -64,20 +24,20 @@
   <p>ユーザー読み込み中...</p>
 {:then _}
 
-  {#if bread}
-    {#if $userNanoId === bread.userNanoId}
-      <Edit {nanoId} />
-    {:else}
-      <View {bread} />
-    {/if}
-  {:else}
+  {#if !$hasBread}
     <p>パン読み込み中...</p>
+  {:else if $userNanoId === $bread.userNanoId}
+    <Edit {nanoId} />
+  {:else}
+    <View />
   {/if}
 
 {:catch _}
-  {#if bread}
-    <View {bread} />
-  {:else}
+
+  {#if !$hasBread}
     <p>パン読み込み中...</p>
+  {:else}
+    <View />
   {/if}
+
 {/await}

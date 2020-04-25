@@ -1,0 +1,20 @@
+Do(
+  Create(
+    Collection('Favorites'),
+    {
+      data: {
+        userNanoId: 'dummy-user-nano-id',
+        breadNanoId: 'dummy-bread-nano-id-1'
+      }
+    }
+  ),
+  Create(
+    Collection('Favorites'),
+    {
+      data: {
+        userNanoId: 'dummy-user-nano-id',
+        breadNanoId: 'dummy-bread-nano-id-2'
+      }
+    }
+  )
+)

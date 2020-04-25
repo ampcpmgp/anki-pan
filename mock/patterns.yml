@@ -23,17 +23,22 @@ Home:
   funcs:
     - [user.nanoId.set, dummy-user-nanoid]
     - [user.id.set, dummy-user-id]
-    - [page, /breads/detail/no-bread-nanoid]
   ローカルにパン不所持:
-    - []
+    - [page, /breads/detail/no-bread-nanoid]
   ローカルにパン所持:
-    - [setBreadOnDB]
     - [page, /breads/detail/has-bread-nanoid]
+    - [setBreadOnDB]
   パン取得エラー:
     - [setBreadOnDB]
     - [page, /breads/detail/error-nanoid]
 パン詳細画面 - 閲覧モード:
-  funcs:
+  ローカルにパン所持 未ログイン:
+    - [page, /breads/detail/has-bread-nanoid]
+  ローカルにパン不所持 ログイン済 お気に入り:
+    - [idb.deleteFavorite, {userNanoId: "dummy-user-nanoid", breadNanoId: "has-bread-nanoid"}]
+    - [sleep, 0]
+    - [auth.isAuthenticated.set, true]
+    - [user.nanoId.set, no-item-id]
+    - [user.id.set, no-item-id]
     - [page, /breads/detail/no-bread-nanoid]
-  ローカルにパン不所持: []
 404 page: [page, /404]

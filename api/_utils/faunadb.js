@@ -26,11 +26,13 @@ exports.getDBUser = async function(subjectClaim) {
   const indexName = exports.getSubIndexName(provider)
 
   try {
-    const { data } = await client.query(q.Get(q.Match(q.Index(indexName), id)))
+    const { ref, data } = await client.query(
+      q.Get(q.Match(q.Index(indexName), id))
+    )
 
     return {
-      id: data.id,
-      nanoId: data.nanoId,
+      ref,
+      data,
     }
   } catch (error) {
     if (error.requestResult && error.requestResult.statusCode === 404) {

@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import { replace, push } from 'svelte-spa-router'
   import { bread } from '../../../../utils/validator'
-  import { id, nanoId, fetchAccount } from '../../../states/user'
+  import { id, nanoId, fetchAccountP } from '../../../states/user'
   import {
     title,
     image,
@@ -16,7 +16,7 @@
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
-  import { setBread } from '../../../utils/db'
+  import { setBread } from '../../../utils/idb'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
@@ -34,7 +34,7 @@
   $: answersErrMsg = bread.answers.getErrMsg($answers)
 
   onMount(async () => {
-    await fetchAccount()
+    await fetchAccountP
 
     if (!$nanoId) {
       replace('/')

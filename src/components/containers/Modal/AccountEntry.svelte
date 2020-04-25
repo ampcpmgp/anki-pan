@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import AccountEntry from '../../parts/Modal/AccountEntry'
   import {
-    fetchAccount,
+    fetchAccountP,
     hasNoId,
     register,
     registrationErrMsg,
@@ -14,7 +14,7 @@
 
   onMount(async () => {
     try {
-      await fetchAccount()
+      await fetchAccountP
     } catch (error) {
       // ユーザー取得エラー時は何もせず、この画面を表示しない。
       return

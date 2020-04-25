@@ -2,7 +2,7 @@ const nanoid = require('nanoid')
 const Provider = require('../../../const/provider')
 const { getSubInfo } = require('../../../utils/oauth')
 const { ApiError, handleApiError } = require('../../_utils/api-error')
-const { getUserInfo } = require('../../_utils/auth0')
+const { verifyToken } = require('../../_utils/auth0')
 const { q, client } = require('../../_utils/faunadb')
 
 async function post({ id, subjectClaim }) {
@@ -46,9 +46,7 @@ async function post({ id, subjectClaim }) {
 }
 
 module.exports = handleApiError(async (req, res) => {
-  const response = await getUserInfo(req)
-
-  const { sub: subjectClaim } = await response.json()
+  const { sub: subjectClaim } = await verifyToken(req)
   const { id } = req.body
 
   await post({

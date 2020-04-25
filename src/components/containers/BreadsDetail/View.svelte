@@ -1,36 +1,57 @@
 <script>
+  import { onMount } from 'svelte'
   import { push } from 'svelte-spa-router'
-  import feather from 'feather-icons'
-  import { fetch, errMsg } from '../../../states/bread-detail'
+  import cloneDeep from 'lodash.clonedeep'
+  import { nanoId as selfNanoId } from '../../../states/user'
+  import {
+    bread,
+    errMsg,
+    fromWhere,
+    fetchFromServer,
+    isFavorite,
+    fetchFavorite,
+    toggleFavorite,
+  } from '../../../states/bread-detail'
   import { isSame } from '../../../utils/bread'
-  import * as db from '../../../utils/db'
+  import * as idb from '../../../utils/idb'
+  import FromWhere from '../../../const/from-where'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
+  import Operation from '../../parts/Bread/Operation'
   import Footer from '../../parts/Bread/Footer'
 
-  export let bread = {}
-
-  $: nanoId = bread.nanoId
-  // $: userNanoId = bread.userNanoId
-  $: userId = bread.userId
-  $: title = bread.title
-  $: image = bread.image
-  $: answers = bread.answers
-  $: source = bread.source
-  $: license = bread.license
+  $: nanoId = $bread.nanoId
+  $: userNanoId = $bread.userNanoId
+  $: userId = $bread.userId
+  $: title = $bread.title
+  $: image = $bread.image
+  $: answers = $bread.answers
+  $: source = $bread.source
+  $: license = $bread.license
 
   let playbackIndex = -1
   let imageHeight = 0
   let isRefreshing = false
+  let isFavoriting = false
 
-  const svg = {
-    refreshCw: feather.icons['refresh-cw'].toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#555',
-    }),
-  }
+  onMount(async () => {
+    if (!$selfNanoId) {
+      return
+    }
+
+    if ($fromWhere !== FromWhere.SERVER) {
+      return
+    }
+
+    const existsFavorite = await idb.existsFavorite($selfNanoId, nanoId)
+
+    if (existsFavorite) {
+      return
+    }
+
+    await fetchFavorite(nanoId)
+  })
 
   function onPlay() {
     playbackIndex = 0
@@ -46,32 +67,42 @@
     push('/')
   }
 
-  async function refresh() {
+  async function onRefresh() {
+    const oldBread = cloneDeep($bread)
     isRefreshing = true
-    const newBread = await fetch(nanoId)
+    await fetchFromServer(nanoId)
 
-    if (!newBread) {
+    if (!$bread) {
       isRefreshing = false
       alert($errMsg)
       return
     }
 
-    if (isSame(bread, newBread)) {
-      alert('変更はありません')
+    if (isSame(oldBread, $bread)) {
       isRefreshing = false
+      alert('変更はありません')
       return
     }
 
-    title = newBread.title
-    image = newBread.image
-    answers = newBread.answers
-    license = newBread.license
-    source = newBread.source
-
-    db.updateBread(nanoId, newBread)
+    idb.updateBread(nanoId, $bread)
 
     isRefreshing = false
-    alert('最新パンに更新します')
+    alert('最新パンを取得しました')
+  }
+
+  async function onFavorite(e) {
+    isFavoriting = true
+    $isFavorite = !$isFavorite
+
+    const isSuccess = await toggleFavorite(e.detail.isFavorite).catch(alert)
+
+    if (isSuccess) {
+      // Do nothing
+    } else {
+      $isFavorite = !$isFavorite
+    }
+
+    isFavoriting = false
   }
 </script>
 
@@ -91,15 +122,6 @@
     grid-template-columns: 1fr auto;
     align-items: center;
     grid-column-gap: 12px;
-  }
-
-  .refresh {
-    cursor: pointer;
-  }
-
-  .refresh.disabled {
-    pointer-events: none;
-    opacity: 0.3;
   }
 
   .image-wrapper {
@@ -122,9 +144,14 @@
       errMsg=""
       on:homeClick={goHome} />
 
-    <div class="refresh" class:disabled={isRefreshing} on:click={refresh}>
-      {@html svg.refreshCw}
-    </div>
+    <Operation
+      visibleFavorite={!!$selfNanoId}
+      isFavorite={$isFavorite}
+      disabledFavorite={isFavoriting}
+      disabledRefresh={isRefreshing || $fromWhere === FromWhere.SERVER}
+      fromWhere={$fromWhere}
+      on:refresh={onRefresh}
+      on:favorite={onFavorite} />
   </div>
 
   <div class="justify-center">

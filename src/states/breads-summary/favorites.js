@@ -1,5 +1,6 @@
 import { get, writable, derived } from 'svelte/store'
-import { guestUser } from '../../utils/api'
+import { loginUser } from '../../utils/api'
+import { getRawIdToken } from '../auth'
 
 export const items = writable([])
 export const after = writable([])
@@ -7,7 +8,8 @@ export const fetched = writable(false)
 export const existsAfter = derived(after, $after => $after.length > 0)
 export const afterInfo = derived(after, $after => ({
   ts: $after[0],
-  ref: $after[1]['@ref'].id,
+  nanoId: $after[1],
+  ref: $after[2]['@ref'].id,
 }))
 
 export function reset() {
@@ -20,7 +22,16 @@ export async function fetch() {
   if (get(fetched)) return
 
   try {
-    const response = await guestUser.get('breads-summary/latest/get')
+    const Authorization = await getRawIdToken()
+
+    const response = await loginUser.get({
+      endpoint: 'breads-summary/favorites/get',
+      Authorization,
+    })
+
+    if (response.status === 404) {
+      throw new Error('ユーザーが見つかりません')
+    }
 
     if (response.status === 503) {
       throw new Error('取得エラー')
@@ -50,10 +61,16 @@ export async function fetchReadMore() {
   const $afterInfo = get(afterInfo)
 
   try {
-    const response = await guestUser.get(
-      'breads-summary/latest/get',
-      $afterInfo
-    )
+    const Authorization = await getRawIdToken()
+    const response = await loginUser.get({
+      endpoint: 'breads-summary/favorites/get',
+      Authorization,
+      params: $afterInfo,
+    })
+
+    if (response.status === 404) {
+      throw new Error('ユーザーが見つかりません')
+    }
 
     if (response.status === 503) {
       throw new Error('取得エラー')

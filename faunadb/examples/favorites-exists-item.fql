@@ -1,0 +1,3 @@
+Exists(
+  Match(Index("favorites_by_ids"), ["dummy-user-nano-id", "dummy-bread-nano-id-1"]),
+)

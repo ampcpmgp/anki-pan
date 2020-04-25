@@ -110,5 +110,55 @@ Do(
         },
       ],
     })
+  ),
+
+  // お気に入りインデックス
+  Do(
+    (
+      CreateIndex({
+        name: 'favorites_by_ids',
+        source: Collection('Favorites'),
+        unique: true,
+        serialized: true,
+        terms: [
+          { field: ['data', 'userNanoId'] },
+          { field: ['data', 'breadNanoId'] }
+        ]
+      })
+    ),
+    (
+      CreateIndex({
+        name: 'favorites_by_user_nano_id',
+        source: Collection('Favorites'),
+        unique: false,
+        serialized: true,
+        terms: [
+          {
+            field: ['data', 'userNanoId']
+          },
+        ],
+        values: [
+          { field: ['ts'], reverse: true },
+          { field: ['data', "breadNanoId"] },
+        ],
+      })
+    ),
+    (
+      CreateIndex({
+        name: 'favorites_by_bread_nano_id',
+        source: Collection('Favorites'),
+        unique: false,
+        serialized: true,
+        terms: [
+          {
+            field: ['data', 'breadNanoId']
+          },
+        ],
+        values: [
+          { field: ['ts'], reverse: true },
+          { field: ['data', "userNanoId"] },
+        ],
+      })
+    )
   )
 )

@@ -1,5 +1,6 @@
 import { writable, get } from 'svelte/store'
 import License from '../../../const/license'
+import { bread } from '../bread-detail'
 
 export const title = writable('')
 export const image = writable('')
@@ -18,4 +19,15 @@ export function getBread(nanoId) {
     source: get(source),
     license: get(license),
   }
+}
+
+export function updateFromBreadDetail() {
+  const $bread = get(bread)
+
+  title.set($bread.title)
+  image.set($bread.image)
+  answers.set($bread.answers)
+  isPublic.set($bread.isPublic)
+  source.set($bread.source)
+  license.set($bread.license)
 }

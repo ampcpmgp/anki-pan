@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store'
 import { loginUser } from '../utils/api'
-import { getAuthorization } from './auth'
+import { getRawIdToken } from './auth'
 
 export const bakedErrMsg = writable('')
 export const updatedErrMsg = writable('')
@@ -16,7 +16,7 @@ export async function bake({
   try {
     bakedErrMsg.set('')
 
-    const Authorization = await getAuthorization()
+    const Authorization = await getRawIdToken()
 
     const response = await loginUser.post({
       endpoint: 'user/bread/post',
@@ -67,7 +67,7 @@ export async function update({
   try {
     updatedErrMsg.set('')
 
-    const Authorization = await getAuthorization()
+    const Authorization = await getRawIdToken()
 
     const response = await loginUser.put({
       endpoint: 'user/bread/put',

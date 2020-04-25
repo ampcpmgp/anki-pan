@@ -1,4 +1,4 @@
-const { getUserInfo } = require('../../_utils/auth0')
+const { verifyToken } = require('../../_utils/auth0')
 const { ApiError, handleApiError } = require('../../_utils/api-error')
 const { getDBUser, client, q } = require('../../_utils/faunadb')
 
@@ -17,9 +17,8 @@ module.exports = handleApiError(async (req, res) => {
       return
     }
 
-    const responseUserINfo = await getUserInfo(req)
-    const { sub: subjectClaim } = await responseUserINfo.json()
-    const user = await getDBUser(subjectClaim)
+    const { sub: subjectClaim } = await verifyToken(req)
+    const { data: user } = await getDBUser(subjectClaim)
 
     if (user.nanoId !== response.data.userNanoId) {
       throw new ApiError('Forbidden', 403)

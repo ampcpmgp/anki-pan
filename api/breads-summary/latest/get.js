@@ -6,13 +6,16 @@ module.exports = handleApiError(async (req, res) => {
   if (!req.query.ref || !req.query.ts) {
     const response = await client.query(
       q.Map(
-        q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
-          size: 5,
-        }),
-        q.Lambda(['ts', 'ref'], {
-          nanoId: q.Select(['data', 'nanoId'], q.Get(q.Var('ref'))),
-          title: q.Select(['data', 'title'], q.Get(q.Var('ref'))),
-          userId: q.Select(['data', 'userId'], q.Get(q.Var('ref'))),
+        q.Map(
+          q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
+            size: 5,
+          }),
+          q.Lambda(['ts', 'ref'], q.Get(q.Var('ref')))
+        ),
+        q.Lambda('item', {
+          nanoId: q.Select(['data', 'nanoId'], q.Var('item')),
+          title: q.Select(['data', 'title'], q.Var('item')),
+          userId: q.Select(['data', 'userId'], q.Var('item')),
         })
       )
     )
@@ -24,14 +27,20 @@ module.exports = handleApiError(async (req, res) => {
   // 特定のパンから後ろに最新5件取得
   const response = await client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
-        size: 5,
-        after: [req.query.ts - 0, q.Ref(q.Collection('Breads'), req.query.ref)],
-      }),
-      q.Lambda(['ts', 'ref'], {
-        nanoId: q.Select(['data', 'nanoId'], q.Get(q.Var('ref'))),
-        title: q.Select(['data', 'title'], q.Get(q.Var('ref'))),
-        userId: q.Select(['data', 'userId'], q.Get(q.Var('ref'))),
+      q.Map(
+        q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
+          size: 5,
+          after: [
+            req.query.ts - 0,
+            q.Ref(q.Collection('Breads'), req.query.ref),
+          ],
+        }),
+        q.Lambda(['ts', 'ref'], q.Get(q.Var('ref')))
+      ),
+      q.Lambda('item', {
+        nanoId: q.Select(['data', 'nanoId'], q.Var('item')),
+        title: q.Select(['data', 'title'], q.Var('item')),
+        userId: q.Select(['data', 'userId'], q.Var('item')),
       })
     )
   )

@@ -1,6 +1,6 @@
 import { get, writable, derived } from 'svelte/store'
 import { loginUser } from '../../utils/api'
-import { getAuthorization } from '../auth'
+import { getRawIdToken } from '../auth'
 
 export const items = writable([])
 export const after = writable([])
@@ -21,7 +21,7 @@ export async function fetch() {
   if (get(fetched)) return
 
   try {
-    const Authorization = await getAuthorization()
+    const Authorization = await getRawIdToken()
     const response = await loginUser.get({
       endpoint: 'breads-summary/self-made/get',
       Authorization,
@@ -42,6 +42,7 @@ export async function fetch() {
     fetched.set(true)
   } catch (error) {
     console.info(error)
+    throw new Error('その他エラー')
   }
 }
 
@@ -58,7 +59,7 @@ export async function fetchReadMore() {
   const $afterInfo = get(afterInfo)
 
   try {
-    const Authorization = await getAuthorization()
+    const Authorization = await getRawIdToken()
     const response = await loginUser.get({
       endpoint: 'breads-summary/self-made/get',
       Authorization,
@@ -79,5 +80,6 @@ export async function fetchReadMore() {
     after.set(result.after || [])
   } catch (error) {
     console.info(error)
+    throw new Error('その他エラー')
   }
 }

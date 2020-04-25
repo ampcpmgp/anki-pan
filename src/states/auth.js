@@ -3,7 +3,9 @@ import queryString from 'query-string'
 import createAuth0Client from '@auth0/auth0-spa-js'
 import config from '../../auth0'
 
-let auth0Promise
+let auth0P
+
+export const initP = init()
 
 export const isExistsClient = writable(false)
 export const isAuthenticated = writable(false)
@@ -23,6 +25,9 @@ function createClient() {
       getTokenSilently() {
         return 'dummy-token'
       },
+      getIdTokenClaims() {
+        return 'dummy-raw-token'
+      },
     }))
   }
 
@@ -35,13 +40,12 @@ function createClient() {
 }
 
 export async function init() {
-  auth0Promise = createClient()
+  auth0P = createClient()
 
-  const auth0 = await auth0Promise
-
-  isExistsClient.set(true)
+  const auth0 = await auth0P
 
   await updateAuthenticated()
+  isExistsClient.set(true)
 
   const checkAuthenticated = get(isAuthenticated)
 
@@ -63,25 +67,33 @@ export async function init() {
 }
 
 export async function getAuth0() {
-  await auth0Promise
+  await auth0P
 }
 
 export async function getAuthorization() {
-  const auth0 = await auth0Promise
+  const auth0 = await auth0P
   const value = await auth0.getTokenSilently()
 
   return `Bearer ${value}`
 }
 
+export async function getRawIdToken() {
+  const auth0 = await auth0P
+  const claims = await auth0.getIdTokenClaims()
+
+  // 参考: https://community.auth0.com/t/getting-the-jwt-id-token-from-auth0-spa-js/28281/10
+  return `Bearer ${claims.__raw}`
+}
+
 export async function getUserProfile() {
-  const auth0 = await auth0Promise
+  const auth0 = await auth0P
   const value = await auth0.getUser()
 
   return value
 }
 
 export async function login() {
-  const auth0 = await auth0Promise
+  const auth0 = await auth0P
 
   await auth0.loginWithRedirect({
     redirect_uri: location.href,
@@ -89,7 +101,7 @@ export async function login() {
 }
 
 export async function logout() {
-  const auth0 = await auth0Promise
+  const auth0 = await auth0P
 
   await auth0.logout({
     redirect_uri: location.href,
@@ -97,7 +109,7 @@ export async function logout() {
 }
 
 async function updateAuthenticated() {
-  const auth0 = await auth0Promise
+  const auth0 = await auth0P
 
   try {
     const checkAuthenticated = await auth0.isAuthenticated()

@@ -1,7 +1,7 @@
 <script>
+  import { onMount } from 'svelte'
   import { replace, push } from 'svelte-spa-router'
-  import feather from 'feather-icons'
-  import { bread } from '../../../../utils/validator'
+  import * as validator from '../../../../utils/validator'
   import { id } from '../../../states/user'
   import {
     title,
@@ -11,18 +11,26 @@
     license,
     source,
     getBread,
+    updateFromBreadDetail,
   } from '../../../states/user-input/bread-edit'
-  import { fetch, errMsg } from '../../../states/bread-detail'
+  import {
+    bread,
+    fetchFromServer,
+    fromWhere,
+    errMsg,
+  } from '../../../states/bread-detail'
   import { update, updatedErrMsg } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
   import * as answersUtil from '../../../utils/answers'
-  import * as db from '../../../utils/db'
+  import * as idb from '../../../utils/idb'
   import { isSame } from '../../../utils/bread'
+  import FromWhere from '../../../const/from-where'
   import Title from '../../parts/Bread/Title'
   import Controller from '../../parts/Bread/Controller'
   import Image from '../../parts/Bread/Image'
+  import Operation from '../../parts/Bread/Operation'
   import DragDrop from '../../parts/Bread/DragDrop'
   import Checkbox from '../../parts/Form/Checkbox'
   import Text from '../../parts/Form/Text'
@@ -35,17 +43,13 @@
   let imageHeight = 0
   let buttonDisabled = false
   let isRefreshing = false
-  $: titleErrMsg = bread.title.getErrMsg($title)
-  $: sourceErrMsg = bread.source.getErrMsg($source)
-  $: answersErrMsg = bread.answers.getErrMsg($answers)
+  $: titleErrMsg = validator.bread.title.getErrMsg($title)
+  $: sourceErrMsg = validator.bread.source.getErrMsg($source)
+  $: answersErrMsg = validator.bread.answers.getErrMsg($answers)
 
-  const svg = {
-    refreshCw: feather.icons['refresh-cw'].toSvg({
-      width: '24px',
-      height: '24px',
-      stroke: '#555',
-    }),
-  }
+  onMount(() => {
+    updateFromBreadDetail()
+  })
 
   function onDrop(e) {
     $image = e.detail
@@ -116,7 +120,7 @@
       $success = 'パン更新成功'
       reset()
 
-      db.updateBread(nanoId, bread)
+      idb.updateBread(nanoId, bread)
     }
   }
 
@@ -126,31 +130,25 @@
 
   async function refresh() {
     isRefreshing = true
-    const bread = await fetch(nanoId)
+    await fetchFromServer(nanoId)
 
-    if (!bread) {
+    if ($errMsg) {
       isRefreshing = false
       alert($errMsg)
       return
     }
 
-    if (isSame(getBread(nanoId), bread)) {
-      alert('変更はありません')
+    if (isSame(getBread(nanoId), $bread)) {
       isRefreshing = false
+      alert('変更はありません')
       return
     }
 
-    $title = bread.title
-    $image = bread.image
-    $answers = bread.answers
-    $isPublic = bread.isPublic
-    $license = bread.license
-    $source = bread.source
-
-    db.updateBread(nanoId, bread)
+    updateFromBreadDetail()
+    idb.updateBread(nanoId, $bread)
 
     isRefreshing = false
-    alert('最新パンに更新します')
+    alert('最新パンを取得しました')
   }
 </script>
 
@@ -187,15 +185,6 @@
     grid-column-gap: 12px;
   }
 
-  .refresh {
-    cursor: pointer;
-  }
-
-  .refresh.disabled {
-    pointer-events: none;
-    opacity: 0.3;
-  }
-
   .image-wrapper {
     z-index: 1;
     /* これがあると resize 時にも能動的に調整してくれる。 */
@@ -221,9 +210,13 @@
         errMsg={titleErrMsg}
         on:homeClick={goHome} />
 
-      <div class="refresh" class:disabled={isRefreshing} on:click={refresh}>
-        {@html svg.refreshCw}
-      </div>
+      <Operation
+        visibleFavorite={false}
+        isFavorite={false}
+        disabledFavorite={false}
+        disabledRefresh={isRefreshing || $fromWhere === FromWhere.SERVER}
+        fromWhere={$fromWhere}
+        on:refresh={refresh} />
     </div>
 
     <div class="justify-center">
