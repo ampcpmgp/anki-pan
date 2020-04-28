@@ -17,6 +17,7 @@
 
     if (nextBreads.length > 0) {
       breads = nextBreads
+      nextBreads = []
     } else {
       breads = await getBreads(offsetFromLast)
     }
