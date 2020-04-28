@@ -42,6 +42,14 @@ mock({
     replace(name)
   },
 
+  setCaches() {
+    const breads = [...dummyData.summary.data, ...dummyData.summaryNoAfter.data]
+
+    breads.forEach(bread => {
+      idb.setBread(bread)
+    })
+  },
+
   setBreadsImage() {
     userInput.breadNew.image.set(images.earthBig)
   },
