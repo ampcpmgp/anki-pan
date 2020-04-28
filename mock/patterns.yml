@@ -4,6 +4,7 @@ Home:
   funcs:
     - [page, /]
     - [sleep, 0]
+    - [setCaches]
   認証中:
     - [auth.isExistsClient.set, false]
   未ログイン: []
