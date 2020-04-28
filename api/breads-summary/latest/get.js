@@ -1,14 +1,15 @@
+const { SIZE } = require('../../../const/pager')
 const { q, client } = require('../../_utils/faunadb')
 const { handleApiError } = require('../../_utils/api-error')
 
 module.exports = handleApiError(async (req, res) => {
-  // 最新5件取得
+  // 最新取得
   if (!req.query.ref || !req.query.ts) {
     const response = await client.query(
       q.Map(
         q.Map(
           q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
-            size: 5,
+            size: SIZE,
           }),
           q.Lambda(['ts', 'ref'], q.Get(q.Var('ref')))
         ),
@@ -24,12 +25,12 @@ module.exports = handleApiError(async (req, res) => {
     return
   }
 
-  // 特定のパンから後ろに最新5件取得
+  // 特定のパンから後ろに取得
   const response = await client.query(
     q.Map(
       q.Map(
         q.Paginate(q.Match(q.Index('breads_sort_by_ts_desc'), true), {
-          size: 5,
+          size: SIZE,
           after: [
             req.query.ts - 0,
             q.Ref(q.Collection('Breads'), req.query.ref),

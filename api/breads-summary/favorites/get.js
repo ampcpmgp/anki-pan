@@ -1,3 +1,4 @@
+const { SIZE } = require('../../../const/pager')
 const { q, client, getDBUser } = require('../../_utils/faunadb')
 const { verifyToken } = require('../../_utils/auth0')
 const { handleApiError } = require('../../_utils/api-error')
@@ -6,7 +7,7 @@ module.exports = handleApiError(async (req, res) => {
   const { sub: subjectClaim } = await verifyToken(req)
   const { data: user } = await getDBUser(subjectClaim)
 
-  // 最新5件取得
+  // 最新取得
   if (!req.query.ref || !req.query.nanoId || !req.query.ts) {
     const response = await client.query(
       q.Map(
@@ -14,7 +15,7 @@ module.exports = handleApiError(async (req, res) => {
           q.Paginate(
             q.Match(q.Index('favorites_by_user_nano_id'), user.nanoId),
             {
-              size: 5,
+              size: SIZE,
             }
           ),
           q.Lambda(
@@ -33,12 +34,12 @@ module.exports = handleApiError(async (req, res) => {
     return
   }
 
-  // 特定のパンから後ろに最新5件取得
+  // 特定のパンから後ろに取得
   const response = await client.query(
     q.Map(
       q.Map(
         q.Paginate(q.Match(q.Index('favorites_by_user_nano_id'), user.nanoId), {
-          size: 5,
+          size: SIZE,
           after: [
             req.query.ts - 0,
             req.query.nanoId,
