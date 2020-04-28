@@ -43,11 +43,11 @@ mock({
   },
 
   setCaches() {
-    ;[...dummyData.summary.data, ...dummyData.summaryNoAfter.data].forEach(
-      bread => {
-        idb.setBread(bread)
-      }
-    )
+    const breads = [...dummyData.summary.data, ...dummyData.summaryNoAfter.data]
+
+    breads.forEach(bread => {
+      idb.setBread(bread)
+    })
   },
 
   setBreadsImage() {
