@@ -281,7 +281,6 @@
   }
   .rectangle.is-complete {
     background-color: transparent;
-    border: none;
   }
 
   @keyframes flashing {

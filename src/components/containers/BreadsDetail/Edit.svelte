@@ -72,9 +72,7 @@
   function onAnswerNext() {
     ++playbackIndex
   }
-  function onAnswerEnd() {
-    playbackIndex = -1
-  }
+  function onAnswerEnd() {}
 
   async function updateBread() {
     if (!$title) {
