@@ -95,6 +95,10 @@
     cursor: pointer;
     display: grid;
     align-items: center;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    appearance: none;
   }
 
   .buttons {
@@ -117,9 +121,9 @@
   </div>
 
   {#if !existsReading}
-    <div class="speak name" on:click={() => speak(name)}>
+    <button type="button" class="speak name" on:click={() => speak(name)}>
       {@html svg.volume2}
-    </div>
+    </button>
   {/if}
 
   <div class="reading">
@@ -131,9 +135,9 @@
   </div>
 
   {#if existsReading}
-    <div class="speak reading" on:click={() => speak(reading)}>
+    <button type="button" class="speak reading" on:click={() => speak(reading)}>
       {@html svg.volume2}
-    </div>
+    </button>
   {/if}
 
   <div class="index">
