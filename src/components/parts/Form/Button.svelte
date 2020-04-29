@@ -20,6 +20,8 @@
     user-select: none;
     text-align: center;
     border-radius: 4px;
+    outline: none;
+    appearance: none;
   }
 
   .button:hover {
@@ -66,7 +68,8 @@
   }
 </style>
 
-<div
+<button
+  type="button"
   class="button"
   class:disabled
   class:hot
@@ -77,4 +80,4 @@
   class:negative
   on:click>
   {text}
-</div>
+</button>
