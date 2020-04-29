@@ -35,6 +35,9 @@
   let isRefreshing = false
   let isFavoriting = false
 
+  $: disabledSkipBack = playbackIndex === -1
+  $: isPlaying = playbackIndex > -1
+
   onMount(async () => {
     if (!$selfNanoId) {
       return
@@ -157,8 +160,10 @@
   <div class="justify-center">
     <Controller
       disabledBack={true}
+      {disabledSkipBack}
       disabledPlay={false}
       disabledNext={true}
+      {isPlaying}
       on:back={console.error}
       on:play={onPlay}
       on:next={console.error} />
