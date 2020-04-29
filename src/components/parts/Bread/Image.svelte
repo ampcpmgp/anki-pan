@@ -10,7 +10,7 @@
   export let answers = []
   export let playbackIndex = -1
   export let height = 0
-  export let isPlaying = false
+  export let isPause = true
 
   const dispatch = createEventDispatcher()
 
@@ -27,6 +27,7 @@
   let answerLoc = { top: 0, left: 0 }
   let answerName = ''
   let answerReading = ''
+  let isPlaying = false
   // DOMや画像の縦横幅を設定する
   const size = {
     wrapper: { width: 0, height: 0 },
@@ -60,7 +61,10 @@
 
   beforeUpdate(() => {
     if (playbackIndex === -1) return
-    if (!isPlaying) return
+    if (isPause) {
+      return
+    }
+    if (isPlaying) return
 
     const answer = answers[playbackIndex]
     if (!answer) {
@@ -72,7 +76,8 @@
   })
 
   async function play(answer) {
-    isPlaying = false
+    isPlaying = true
+
     const time =
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
 
@@ -83,6 +88,7 @@
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)
     await speak(answer.reading || answer.name)
+    isPlaying = false
     dispatch('next')
     speakingIndex = -1
   }
