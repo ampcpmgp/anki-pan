@@ -20,7 +20,6 @@
     user-select: none;
     text-align: center;
     border-radius: 4px;
-    outline: none;
     appearance: none;
   }
 
