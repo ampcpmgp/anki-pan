@@ -7,16 +7,37 @@ export default {
   decorators: [withKnobs],
 }
 
-export const Main = () => ({
+export const 標準 = () => ({
   Component: Controller,
   props: {
     noBack: boolean('noBack', false),
+    noSkipBack: boolean('noSkipBack', true),
     noPlay: boolean('noPlay', false),
     noNext: boolean('noNext', false),
+    isPlaying: boolean('isPlaying', false),
   },
   on: {
     back: console.info,
     play: console.info,
     next: console.info,
+    stop: console.info,
+  },
+})
+
+export const 再生中 = () => ({
+  Component: Controller,
+  props: {
+    noBack: boolean('noBack', false),
+    noSkipBack: boolean('noSkipBack', false),
+    noPlay: boolean('noPlay', false),
+    noNext: boolean('noNext', false),
+    isPlaying: boolean('isPlaying', true),
+  },
+  on: {
+    back: console.info,
+    skipBack: console.info,
+    play: console.info,
+    next: console.info,
+    pause: console.info,
   },
 })

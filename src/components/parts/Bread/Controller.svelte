@@ -3,13 +3,21 @@
   import feather from 'feather-icons'
 
   export let noBack = false
+  export let noSkipBack = false
   export let noPlay = false
   export let noNext = false
+  export let isPlaying = false
 
   const dispatch = createEventDispatcher()
 
   function onBack() {
     dispatch('back')
+  }
+  function onSkipBack() {
+    dispatch('skipBack')
+  }
+  function onPause() {
+    dispatch('pause')
   }
   function onPlay() {
     dispatch('play')
@@ -19,7 +27,17 @@
   }
 
   const svg = {
+    skipBack: feather.icons['skip-back'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
     play: feather.icons['play'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
+    pause: feather.icons['pause'].toSvg({
       stroke: '#555',
       width: 26,
       height: 26,
@@ -72,9 +90,20 @@
   <div on:click={onBack} class="icon" class:disabled={noBack}>
     {@html svg.chevronsLeft}
   </div>
-  <div on:click={onPlay} class="icon" class:disabled={noPlay}>
-    {@html svg.play}
+
+  <div on:click={onSkipBack} class="icon" class:disabled={noSkipBack}>
+    {@html svg.skipBack}
   </div>
+
+  {#if isPlaying}
+    <div on:click={onPause} class="icon" class:disabled={noPlay}>
+      {@html svg.pause}
+    </div>
+  {:else}
+    <div on:click={onPlay} class="icon" class:disabled={noPlay}>
+      {@html svg.play}
+    </div>
+  {/if}
   <div on:click={onNext} class="icon" class:disabled={noNext}>
     {@html svg.chevronsRight}
   </div>
