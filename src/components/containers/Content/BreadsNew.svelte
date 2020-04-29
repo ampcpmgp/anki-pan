@@ -183,9 +183,9 @@
 
     <div class="justify-center">
       <Controller
-        noBack={true}
-        noPlay={false}
-        noNext={true}
+        disabledBack={true}
+        disabledPlay={false}
+        disabledNext={true}
         on:back={console.error}
         on:play={onPlay}
         on:next={console.error} />

@@ -10,10 +10,10 @@ export default {
 export const 標準 = () => ({
   Component: Controller,
   props: {
-    noBack: boolean('noBack', false),
-    noSkipBack: boolean('noSkipBack', true),
-    noPlay: boolean('noPlay', false),
-    noNext: boolean('noNext', false),
+    disabledBack: boolean('disabledBack', false),
+    disabledSkipBack: boolean('disabledSkipBack', true),
+    disabledPlay: boolean('disabledPlay', false),
+    disabledNext: boolean('disabledNext', false),
     isPlaying: boolean('isPlaying', false),
   },
   on: {
@@ -27,10 +27,10 @@ export const 標準 = () => ({
 export const 再生中 = () => ({
   Component: Controller,
   props: {
-    noBack: boolean('noBack', false),
-    noSkipBack: boolean('noSkipBack', false),
-    noPlay: boolean('noPlay', false),
-    noNext: boolean('noNext', false),
+    disabledBack: boolean('disabledBack', false),
+    disabledSkipBack: boolean('disabledSkipBack', false),
+    disabledPlay: boolean('disabledPlay', false),
+    disabledNext: boolean('disabledNext', false),
     isPlaying: boolean('isPlaying', true),
   },
   on: {
