@@ -77,6 +77,11 @@
     play(answer)
   })
 
+  function completeSpeaking() {
+    speakingIndex = -1
+    isPlaying = false
+  }
+
   async function play(answer) {
     isPlaying = true
 
@@ -87,19 +92,30 @@
     speak('')
 
     await sleep(time)
+
+    if (isPause) {
+      completeSpeaking()
+      return
+    }
+
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)
 
-    if (!isPause) {
-      await speak(answer.reading || answer.name)
-
-      if (!isPause) {
-        dispatch('next')
-      }
+    if (isPause) {
+      completeSpeaking()
+      return
     }
 
-    speakingIndex = -1
-    isPlaying = false
+    await speak(answer.reading || answer.name)
+
+    if (isPause) {
+      completeSpeaking()
+      return
+    }
+
+    dispatch('next')
+
+    completeSpeaking()
   }
 
   function getRectangleStyle({ left, top, width, height }) {
