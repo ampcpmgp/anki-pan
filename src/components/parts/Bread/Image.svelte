@@ -10,12 +10,12 @@
   export let answers = []
   export let playbackIndex = -1
   export let height = 0
+  export let isPause = true
 
   const dispatch = createEventDispatcher()
 
   let breadElm
   let currentRectangleElm
-  let isPlay = false
   let pin = initialPos()
   let mousePos = initialPos()
   let currentRectangle = { top: 0, left: 0, width: 0, height: 0 }
@@ -27,6 +27,7 @@
   let answerLoc = { top: 0, left: 0 }
   let answerName = ''
   let answerReading = ''
+  let isSpeaking = false
   // DOMや画像の縦横幅を設定する
   const size = {
     wrapper: { width: 0, height: 0 },
@@ -60,7 +61,12 @@
 
   beforeUpdate(() => {
     if (playbackIndex === -1) return
-    if (isPlay) return
+    if (isSpeaking) return
+
+    if (isPause) {
+      speakingIndex = -1
+      return
+    }
 
     const answer = answers[playbackIndex]
     if (!answer) {
@@ -71,8 +77,14 @@
     play(answer)
   })
 
+  function completeSpeaking() {
+    speakingIndex = -1
+    isSpeaking = false
+  }
+
   async function play(answer) {
-    isPlay = true
+    isSpeaking = true
+
     const time =
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
 
@@ -80,12 +92,30 @@
     speak('')
 
     await sleep(time)
+
+    if (isPause) {
+      completeSpeaking()
+      return
+    }
+
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)
+
+    if (isPause) {
+      completeSpeaking()
+      return
+    }
+
     await speak(answer.reading || answer.name)
-    isPlay = false
+
+    if (isPause) {
+      completeSpeaking()
+      return
+    }
+
     dispatch('next')
-    speakingIndex = -1
+
+    completeSpeaking()
   }
 
   function getRectangleStyle({ left, top, width, height }) {
@@ -281,7 +311,6 @@
   }
   .rectangle.is-complete {
     background-color: transparent;
-    border: none;
   }
 
   @keyframes flashing {
@@ -336,7 +365,7 @@
       {#each answers as answer, i}
         <div
           class="rectangle"
-          class:is-active={i === playbackIndex}
+          class:is-active={!isPause && i === playbackIndex}
           class:is-speaking={i === speakingIndex}
           class:is-complete={i < playbackIndex}
           style={getRectangleStyle(answer)}

@@ -34,6 +34,11 @@
   let imageHeight = 0
   let isRefreshing = false
   let isFavoriting = false
+  let isPause = true
+  let isPlaying = false
+
+  $: disabledSkipBack = playbackIndex === -1
+  $: disabledSkipForward = playbackIndex === answers.length
 
   onMount(async () => {
     if (!$selfNanoId) {
@@ -53,15 +58,43 @@
     await fetchFavorite(nanoId)
   })
 
+  function onSkipBack() {
+    isPause = true
+    isPlaying = false
+    playbackIndex = -1
+  }
+
+  function onSkipForward() {
+    isPause = true
+    isPlaying = false
+    playbackIndex = answers.length
+  }
+
   function onPlay() {
-    playbackIndex = 0
+    if (answers.length === playbackIndex) {
+      playbackIndex = 0
+    }
+
+    if (playbackIndex === -1) {
+      playbackIndex = 0
+    }
+
+    isPause = false
+    isPlaying = true
+  }
+
+  function onPause() {
+    isPause = true
+    isPlaying = false
   }
 
   function onAnswerNext() {
     ++playbackIndex
   }
 
-  function onAnswerEnd() {}
+  function onAnswerEnd() {
+    isPlaying = false
+  }
 
   function goHome() {
     push('/')
@@ -156,11 +189,17 @@
 
   <div class="justify-center">
     <Controller
-      noBack={true}
-      noPlay={false}
-      noNext={true}
-      on:back={console.error}
+      disabledPrev={true}
+      {disabledSkipBack}
+      {disabledSkipForward}
+      disabledPlay={false}
+      disabledNext={true}
+      {isPlaying}
+      on:prev={console.error}
+      on:skipBack={onSkipBack}
+      on:skipForward={onSkipForward}
       on:play={onPlay}
+      on:pause={onPause}
       on:next={console.error} />
   </div>
 
@@ -170,6 +209,7 @@
       editable={false}
       {answers}
       {playbackIndex}
+      {isPause}
       height={imageHeight}
       on:next={onAnswerNext}
       on:end={onAnswerEnd} />

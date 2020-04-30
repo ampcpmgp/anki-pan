@@ -2,14 +2,26 @@
   import { createEventDispatcher } from 'svelte'
   import feather from 'feather-icons'
 
-  export let noBack = false
-  export let noPlay = false
-  export let noNext = false
+  export let disabledPrev = false
+  export let disabledSkipBack = false
+  export let disabledSkipForward = false
+  export let disabledPlay = false
+  export let disabledNext = false
+  export let isPlaying = false
 
   const dispatch = createEventDispatcher()
 
-  function onBack() {
-    dispatch('back')
+  function onPrev() {
+    dispatch('prev')
+  }
+  function onSkipBack() {
+    dispatch('skipBack')
+  }
+  function onSkipForward() {
+    dispatch('skipForward')
+  }
+  function onPause() {
+    dispatch('pause')
   }
   function onPlay() {
     dispatch('play')
@@ -19,7 +31,22 @@
   }
 
   const svg = {
+    skipBack: feather.icons['skip-back'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
+    skipForward: feather.icons['skip-forward'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
     play: feather.icons['play'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
+    pause: feather.icons['pause'].toSvg({
       stroke: '#555',
       width: 26,
       height: 26,
@@ -69,13 +96,32 @@
 </style>
 
 <div class="wrapper">
-  <div on:click={onBack} class="icon" class:disabled={noBack}>
+  <div on:click={onPrev} class="icon" class:disabled={disabledPrev}>
     {@html svg.chevronsLeft}
   </div>
-  <div on:click={onPlay} class="icon" class:disabled={noPlay}>
-    {@html svg.play}
+
+  <div on:click={onSkipBack} class="icon" class:disabled={disabledSkipBack}>
+    {@html svg.skipBack}
   </div>
-  <div on:click={onNext} class="icon" class:disabled={noNext}>
+
+  {#if isPlaying}
+    <div on:click={onPause} class="icon" class:disabled={disabledPlay}>
+      {@html svg.pause}
+    </div>
+  {:else}
+    <div on:click={onPlay} class="icon" class:disabled={disabledPlay}>
+      {@html svg.play}
+    </div>
+  {/if}
+
+  <div
+    on:click={onSkipForward}
+    class="icon"
+    class:disabled={disabledSkipForward}>
+    {@html svg.skipForward}
+  </div>
+
+  <div on:click={onNext} class="icon" class:disabled={disabledNext}>
     {@html svg.chevronsRight}
   </div>
 </div>

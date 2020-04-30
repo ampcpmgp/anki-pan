@@ -29,7 +29,7 @@ export const 両方有り_最新 = () => ({
     visibleFavorite: boolean('visibleFavorite', true),
     isFavorite: boolean('isFavorite', false),
     disabledFavorite: boolean('disabledFavorite', false),
-    disabledRefresh: boolean('disabledRefresh', false),
+    disabledRefresh: boolean('disabledRefresh', true),
     fromWhere: select('fromWhere', FromWhere, FromWhere.SERVER),
   },
   on: {

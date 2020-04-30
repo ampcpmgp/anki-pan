@@ -7,16 +7,40 @@ export default {
   decorators: [withKnobs],
 }
 
-export const Main = () => ({
+export const 再生前 = () => ({
   Component: Controller,
   props: {
-    noBack: boolean('noBack', false),
-    noPlay: boolean('noPlay', false),
-    noNext: boolean('noNext', false),
+    disabledPrev: boolean('disabledPrev', false),
+    disabledSkipBack: boolean('disabledSkipBack', true),
+    disabledPlay: boolean('disabledPlay', false),
+    disabledNext: boolean('disabledNext', false),
+    isPlaying: boolean('isPlaying', false),
   },
   on: {
-    back: console.info,
+    prev: console.info,
+    skipBack: console.info,
+    skipForward: console.info,
     play: console.info,
     next: console.info,
+    pause: console.info,
+  },
+})
+
+export const 再生中 = () => ({
+  Component: Controller,
+  props: {
+    disabledPrev: boolean('disabledPrev', false),
+    disabledSkipBack: boolean('disabledSkipBack', false),
+    disabledPlay: boolean('disabledPlay', false),
+    disabledNext: boolean('disabledNext', false),
+    isPlaying: boolean('isPlaying', true),
+  },
+  on: {
+    prev: console.info,
+    skipBack: console.info,
+    skipForward: console.info,
+    play: console.info,
+    next: console.info,
+    pause: console.info,
   },
 })

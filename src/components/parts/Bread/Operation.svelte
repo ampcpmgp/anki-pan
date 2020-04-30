@@ -70,7 +70,7 @@
   }
   .icon.disabled {
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.1;
   }
 
   .status-text {
