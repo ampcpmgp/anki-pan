@@ -7,7 +7,7 @@ export default {
   decorators: [withKnobs],
 }
 
-export const 標準 = () => ({
+export const 再生前 = () => ({
   Component: Controller,
   props: {
     disabledPrev: boolean('disabledPrev', false),

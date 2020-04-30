@@ -27,7 +27,7 @@
   let answerLoc = { top: 0, left: 0 }
   let answerName = ''
   let answerReading = ''
-  let isPlaying = false
+  let isSpeaking = false
   // DOMや画像の縦横幅を設定する
   const size = {
     wrapper: { width: 0, height: 0 },
@@ -61,7 +61,7 @@
 
   beforeUpdate(() => {
     if (playbackIndex === -1) return
-    if (isPlaying) return
+    if (isSpeaking) return
 
     if (isPause) {
       speakingIndex = -1
@@ -79,11 +79,11 @@
 
   function completeSpeaking() {
     speakingIndex = -1
-    isPlaying = false
+    isSpeaking = false
   }
 
   async function play(answer) {
-    isPlaying = true
+    isSpeaking = true
 
     const time =
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
