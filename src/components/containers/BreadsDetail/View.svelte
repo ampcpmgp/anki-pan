@@ -38,6 +38,7 @@
   let isPlaying = false
 
   $: disabledSkipBack = playbackIndex === -1
+  $: disabledSkipForward = playbackIndex === answers.length
 
   onMount(async () => {
     if (!$selfNanoId) {
@@ -61,6 +62,12 @@
     isPause = true
     isPlaying = false
     playbackIndex = -1
+  }
+
+  function onSkipForward() {
+    isPause = true
+    isPlaying = false
+    playbackIndex = answers.length
   }
 
   function onPlay() {
@@ -184,11 +191,13 @@
     <Controller
       disabledPrev={true}
       {disabledSkipBack}
+      {disabledSkipForward}
       disabledPlay={false}
       disabledNext={true}
       {isPlaying}
       on:prev={console.error}
       on:skipBack={onSkipBack}
+      on:skipForward={onSkipForward}
       on:play={onPlay}
       on:pause={onPause}
       on:next={console.error} />
