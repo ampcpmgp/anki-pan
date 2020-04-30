@@ -4,6 +4,7 @@
 
   export let disabledPrev = false
   export let disabledSkipBack = false
+  export let disabledSkipForward = false
   export let disabledPlay = false
   export let disabledNext = false
   export let isPlaying = false
@@ -15,6 +16,9 @@
   }
   function onSkipBack() {
     dispatch('skipBack')
+  }
+  function onSkipForward() {
+    dispatch('skipForward')
   }
   function onPause() {
     dispatch('pause')
@@ -28,6 +32,11 @@
 
   const svg = {
     skipBack: feather.icons['skip-back'].toSvg({
+      stroke: '#555',
+      width: 26,
+      height: 26,
+    }),
+    skipForward: feather.icons['skip-forward'].toSvg({
       stroke: '#555',
       width: 26,
       height: 26,
@@ -104,6 +113,14 @@
       {@html svg.play}
     </div>
   {/if}
+
+  <div
+    on:click={onSkipForward}
+    class="icon"
+    class:disabled={disabledSkipForward}>
+    {@html svg.skipForward}
+  </div>
+
   <div on:click={onNext} class="icon" class:disabled={disabledNext}>
     {@html svg.chevronsRight}
   </div>

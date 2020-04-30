@@ -19,6 +19,7 @@ export const 標準 = () => ({
   on: {
     prev: console.info,
     skipBack: console.info,
+    skipForward: console.info,
     play: console.info,
     next: console.info,
     pause: console.info,
@@ -37,6 +38,7 @@ export const 再生中 = () => ({
   on: {
     prev: console.info,
     skipBack: console.info,
+    skipForward: console.info,
     play: console.info,
     next: console.info,
     pause: console.info,
