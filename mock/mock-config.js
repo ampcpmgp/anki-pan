@@ -50,8 +50,9 @@ mock({
     })
   },
 
-  setBreadsImage() {
+  setNewBreads() {
     userInput.breadNew.image.set(images.earthBig)
+    userInput.breadNew.answers.set(dummyData.bread.answers)
   },
 
   async setBreadOnDB() {
