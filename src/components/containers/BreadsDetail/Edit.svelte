@@ -219,7 +219,7 @@
 
     <div class="justify-center">
       <Controller
-        disabledBack={true}
+        disabledPrev={true}
         disabledPlay={false}
         disabledNext={true}
         on:back={console.error}

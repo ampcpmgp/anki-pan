@@ -61,10 +61,12 @@
 
   beforeUpdate(() => {
     if (playbackIndex === -1) return
+    if (isPlaying) return
+
     if (isPause) {
+      speakingIndex = -1
       return
     }
-    if (isPlaying) return
 
     const answer = answers[playbackIndex]
     if (!answer) {
@@ -87,10 +89,17 @@
     await sleep(time)
     speakingIndex = playbackIndex
     await sleep(Animation.AFTER_DISP_ANSWER)
-    await speak(answer.reading || answer.name)
-    isPlaying = false
-    dispatch('next')
+
+    if (!isPause) {
+      await speak(answer.reading || answer.name)
+
+      if (!isPause) {
+        dispatch('next')
+      }
+    }
+
     speakingIndex = -1
+    isPlaying = false
   }
 
   function getRectangleStyle({ left, top, width, height }) {
@@ -340,7 +349,7 @@
       {#each answers as answer, i}
         <div
           class="rectangle"
-          class:is-active={i === playbackIndex}
+          class:is-active={!isPause && i === playbackIndex}
           class:is-speaking={i === speakingIndex}
           class:is-complete={i < playbackIndex}
           style={getRectangleStyle(answer)}

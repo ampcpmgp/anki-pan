@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import feather from 'feather-icons'
 
-  export let disabledBack = false
+  export let disabledPrev = false
   export let disabledSkipBack = false
   export let disabledPlay = false
   export let disabledNext = false
@@ -10,8 +10,8 @@
 
   const dispatch = createEventDispatcher()
 
-  function onBack() {
-    dispatch('back')
+  function onPrev() {
+    dispatch('prev')
   }
   function onSkipBack() {
     dispatch('skipBack')
@@ -87,7 +87,7 @@
 </style>
 
 <div class="wrapper">
-  <div on:click={onBack} class="icon" class:disabled={disabledBack}>
+  <div on:click={onPrev} class="icon" class:disabled={disabledPrev}>
     {@html svg.chevronsLeft}
   </div>
 
