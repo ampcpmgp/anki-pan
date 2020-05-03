@@ -38,7 +38,9 @@ export function getImageSize(image) {
           height: img.height,
         })
       },
-      false
+      {
+        once: true,
+      }
     )
 
     img.addEventListener(
@@ -46,7 +48,9 @@ export function getImageSize(image) {
       e => {
         reject(e)
       },
-      false
+      {
+        once: true,
+      }
     )
 
     img.src = image
