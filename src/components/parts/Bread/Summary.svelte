@@ -1,19 +1,11 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { link } from 'svelte-spa-router'
   import { getFrameBase64 } from '../../../utils/bread'
 
   export let title = ''
   export let userId = 0
   export let nanoId = ''
   export let type = 0
-
-  const dispatch = createEventDispatcher()
-
-  function onClick() {
-    dispatch('click', {
-      nanoId,
-    })
-  }
 </script>
 
 <style>
@@ -25,7 +17,8 @@
     width: 200px;
     height: 200px;
     padding: 40px 20px 20px;
-    cursor: pointer;
+    text-decoration: none;
+    color: initial;
   }
 
   .title {
@@ -41,10 +34,11 @@
   }
 </style>
 
-<div
+<a
   class="bread"
-  on:click={onClick}
+  href="/breads/detail/{nanoId}"
+  use:link
   style="background-image: url({getFrameBase64(type)})">
   <div class="title">{title}</div>
   <div class="author">@{userId}</div>
-</div>
+</a>
