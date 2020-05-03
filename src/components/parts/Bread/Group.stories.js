@@ -27,7 +27,6 @@ export const パン10個_最新 = () => ({
     isReading: boolean('isReading', false),
   },
   on: {
-    click: e => console.info(e.detail),
     readMore: e => console.info(e.detail),
   },
 })
@@ -42,7 +41,6 @@ export const パン3個_お気に入り_読込中 = () => ({
     isReading: boolean('isReading', true),
   },
   on: {
-    click: e => console.info(e.detail),
     readMore: e => console.info(e.detail),
   },
 })
@@ -57,7 +55,6 @@ export const パン0個_自作 = () => ({
     isReading: boolean('isReading', false),
   },
   on: {
-    click: e => console.info(e.detail),
     readMore: e => console.info(e.detail),
   },
 })
@@ -72,7 +69,6 @@ export const パン5個_キャッシュ = () => ({
     isReading: boolean('isReading', false),
   },
   on: {
-    click: e => console.info(e.detail),
     readMore: e => console.info(e.detail),
   },
 })

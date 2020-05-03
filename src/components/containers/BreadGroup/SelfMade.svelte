@@ -6,7 +6,6 @@
     existsAfter,
     items,
   } from '../../../states/breads-summary/self-made'
-  import { moveBreadDetail } from '../../../utils/router'
   import Group from '../../parts/Bread/Group'
 
   let isReading = false
@@ -26,5 +25,4 @@
   showReadMore={$existsAfter}
   description=""
   {isReading}
-  on:click={moveBreadDetail}
   on:readMore={onReadMore} />

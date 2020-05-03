@@ -16,9 +16,6 @@ export const 新規_６文字 = () => ({
     userId: text('userId', 'dummy-id__0123456789'),
     nanoId: text('nanoId', 'dummy-nano-id'),
   },
-  on: {
-    click: e => console.info(e.detail),
-  },
 })
 
 export const お気に入り_１文字 = () => ({
@@ -28,9 +25,6 @@ export const お気に入り_１文字 = () => ({
     type: select('type', BreadType, BreadType.FAVORITES),
     userId: text('userId', 'a'),
     nanoId: text('nanoId', 'dummy-nano-id'),
-  },
-  on: {
-    click: e => console.info(e.detail),
   },
 })
 
@@ -45,9 +39,6 @@ export const 自作_３０文字 = () => ({
     userId: text('userId', 'self_made'),
     nanoId: text('nanoId', 'dummy-nano-id'),
   },
-  on: {
-    click: e => console.info(e.detail),
-  },
 })
 
 export const キャッシュ = () => ({
@@ -57,8 +48,5 @@ export const キャッシュ = () => ({
     type: select('type', BreadType, BreadType.CACHE),
     userId: text('userId', 'downloaded'),
     nanoId: text('nanoId', 'dummy-nano-id'),
-  },
-  on: {
-    click: e => console.info(e.detail),
   },
 })

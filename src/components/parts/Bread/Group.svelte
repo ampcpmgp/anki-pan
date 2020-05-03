@@ -53,8 +53,7 @@
           title={item.title}
           nanoId={item.nanoId}
           userId={item.userId}
-          {type}
-          on:click />
+          {type} />
       {/each}
 
       {#if showReadMore}
