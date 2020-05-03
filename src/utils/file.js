@@ -29,16 +29,27 @@ export async function getBase64FromUrl(url) {
 export function getImageSize(image) {
   return new Promise((resolve, reject) => {
     const img = new Image()
+
+    img.addEventListener(
+      'load',
+      () => {
+        resolve({
+          width: img.width,
+          height: img.height,
+        })
+      },
+      false
+    )
+
+    img.addEventListener(
+      'error',
+      e => {
+        reject(e)
+      },
+      false
+    )
+
     img.src = image
-
-    img.onload = () => {
-      const { width, height } = img
-      resolve({ width, height })
-    }
-
-    img.onerror = e => {
-      reject(e)
-    }
   })
 }
 

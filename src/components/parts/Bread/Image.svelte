@@ -194,6 +194,10 @@
   }
 
   async function setImageSize() {
+    // Firefox v75.0 ではなぜか ここで sleep(0) を入れないと、
+    // ２回パン画像を読み込んだ時に、前回の width, height が取得されてしまう問題に対応。
+    // 関連 issue 見当たらず。
+    await sleep(0)
     const { width, height } = await getImageSize(image)
 
     size.image.width = width
