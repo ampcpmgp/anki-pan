@@ -116,6 +116,7 @@
     <Text
       label="答え"
       bind:value={name}
+      focused={true}
       placeholder=""
       errMsg={answserErrMsg} />
   </div>

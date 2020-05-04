@@ -1,4 +1,4 @@
-import { withKnobs, text } from '@storybook/addon-knobs'
+import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import Text from './Text.svelte'
 
 export default {
@@ -14,6 +14,7 @@ export const Main = () => ({
     value: text('value', ''),
     placeholder: text('placeholder', '入力してください'),
     errMsg: text('errMsg', ''),
+    focused: boolean('focused', false),
   },
 })
 
@@ -24,5 +25,17 @@ export const Error = () => ({
     value: text('value', 'ABCDE'),
     placeholder: text('placeholder', '入力してください'),
     errMsg: text('errMsg', '使用可能文字は a~z 0~9 - _ です'),
+    focused: boolean('focused', false),
+  },
+})
+
+export const Focused = () => ({
+  Component: Text,
+  props: {
+    label: text('label', '出典元URL'),
+    value: text('value', ''),
+    placeholder: text('placeholder', '入力してください'),
+    errMsg: text('errMsg', ''),
+    focused: boolean('focused', true),
   },
 })
