@@ -391,8 +391,6 @@
             bind:reading={answerReading}
             bind:index={answerNewIndex}
             isEdit={isAnswerEdit}
-            top={answerLoc.top}
-            left={answerLoc.left}
             on:cancel={init}
             on:delete={onAnswerDelete}
             on:create={onAnswerCreate}

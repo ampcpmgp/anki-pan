@@ -51,7 +51,6 @@
     font-size: 0.9em;
     border: solid 1px green;
     border-radius: 4px;
-    top: calc(var(--width) / 2);
     background-color: white;
   }
 
