@@ -53,8 +53,8 @@
     const leftPercent = 100 * left
     const bottomPercent = 100 * bottom
     const rightPercent = 100 * right
-    const topStyle = `top: calc(${topPercent}% + 20px);`
-    const bottomStyle = `
+    const aimUpStyle = `top: calc(${topPercent}% + 20px);`
+    const aimDownStyle = `
       top: calc(${bottomPercent}% - 20px);
       transform: translateY(-100%);
     `
@@ -65,7 +65,7 @@
     const isLeft = left < 0.5
 
     return `
-      ${arrowAimUp ? topStyle : bottomStyle}
+      ${arrowAimUp ? aimUpStyle : aimDownStyle}
       ${rightStyle}
       ${isLeft ? leftStyle : ''}
     `
