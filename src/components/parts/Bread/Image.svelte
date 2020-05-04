@@ -251,28 +251,20 @@
     answerNewIndex = answerIndex = i
   }
 
-  function getAnswerWrapperStyle() {
-    const { top, left, width, height } = currentRectangle
-    const topPercent = 100 * (top + height)
-    const rightPercent = 100 * (1 - (left + width))
-    const leftPercent = 100 * left
-    const topStyle = `top: calc(${topPercent}% + 20px);`
-    const rightStyle = `right: calc(${rightPercent}% - 15px);`
-
-    // 回答が画面左端を超えないようにするため指定。
-    const leftStyle = `left: calc(${leftPercent}% - 30px);`
-    const isLeft = left + height < 0.5
-
-    return `
-      ${topStyle}
-      ${rightStyle}
-      ${isLeft ? leftStyle : ''}
-    `
-  }
-
   function onWindowKeyDown(e) {
     if (e.keyCode === 27) {
       init()
+    }
+  }
+
+  function getAnswerCoord() {
+    const { top, left, width, height } = currentRectangle
+
+    return {
+      top: top + height,
+      left,
+      bottom: top,
+      right: 1 - (left + width),
     }
   }
 </script>
@@ -339,10 +331,6 @@
     height: 100%;
     max-height: 100%;
   }
-
-  .answer-wrapper {
-    position: absolute;
-  }
 </style>
 
 <svelte:window on:keydown={onWindowKeyDown} />
@@ -385,17 +373,16 @@
       {/each}
 
       {#if isSelecting}
-        <div class="answer-wrapper" style={getAnswerWrapperStyle()}>
-          <Answer
-            bind:name={answerName}
-            bind:reading={answerReading}
-            bind:index={answerNewIndex}
-            isEdit={isAnswerEdit}
-            on:cancel={init}
-            on:delete={onAnswerDelete}
-            on:create={onAnswerCreate}
-            on:update={onAnswerUpdate} />
-        </div>
+        <Answer
+          bind:name={answerName}
+          bind:reading={answerReading}
+          bind:index={answerNewIndex}
+          isEdit={isAnswerEdit}
+          coord={getAnswerCoord()}
+          on:cancel={init}
+          on:delete={onAnswerDelete}
+          on:create={onAnswerCreate}
+          on:update={onAnswerUpdate} />
       {/if}
     </div>
   {/await}
