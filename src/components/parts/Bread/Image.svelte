@@ -269,6 +269,12 @@
       ${isLeft ? leftStyle : ''}
     `
   }
+
+  function onWindowKeyDown(e) {
+    if (e.keyCode === 27) {
+      init()
+    }
+  }
 </script>
 
 <style>
@@ -338,6 +344,8 @@
     position: absolute;
   }
 </style>
+
+<svelte:window on:keydown={onWindowKeyDown} />
 
 <div
   class="wrapper"
