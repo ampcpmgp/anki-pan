@@ -1,9 +1,19 @@
 <script>
+  import { onMount } from 'svelte'
   import ErrorBalloon from '../Text/ErrorBalloon'
   export let label = ''
   export let value = ''
   export let placeholder = ''
   export let errMsg = ''
+  export let focused = false
+
+  let textElm
+
+  onMount(() => {
+    if (focused) {
+      textElm.focus()
+    }
+  })
 </script>
 
 <style>
@@ -34,7 +44,7 @@
   <span class="term">{label}</span>
 
   <div class="wrapper">
-    <input type="text" bind:value {placeholder} />
+    <input type="text" bind:this={textElm} bind:value {placeholder} />
 
     <div class="error">
       <ErrorBalloon message={errMsg} />
