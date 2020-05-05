@@ -6,6 +6,7 @@
   import AccountEntry from '../containers/Modal/AccountEntry'
   import Settings from '../containers/Modal/Settings'
   import Alert from '../containers/Alert/Alert'
+  import ScrollPos from '../containers/ScrollPos/Home'
 </script>
 
 <Frame>
@@ -15,4 +16,5 @@
   <AccountEntry />
   <Settings />
   <Alert />
+  <ScrollPos />
 </Frame>
