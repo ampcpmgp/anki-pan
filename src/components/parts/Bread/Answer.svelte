@@ -167,7 +167,7 @@
       <Text
         label="答え"
         bind:value={name}
-        focused={true}
+        focused={false}
         placeholder=""
         errMsg={answserErrMsg} />
     </div>
