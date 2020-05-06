@@ -1,7 +1,7 @@
 import { withKnobs, select } from '@storybook/addon-knobs'
 import Selectbox from './Selectbox.svelte'
 import License from '../../../../const/license'
-import { objToArr } from '../../../utils/data'
+import { getList } from '../../../utils/license'
 
 export default {
   title: 'Form/Selectbox',
@@ -12,7 +12,8 @@ export default {
 export const Main = () => ({
   Component: Selectbox,
   props: {
-    options: objToArr(License),
+    label: 'ライセンス',
+    options: getList(),
     value: select('value', License, License.CC0),
   },
 })

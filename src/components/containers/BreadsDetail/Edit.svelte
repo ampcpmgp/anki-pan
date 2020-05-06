@@ -299,7 +299,7 @@
   </div>
 
   <div class="justify-start">
-    <Selectbox options={getList()} bind:value={$license} />
+    <Selectbox label="ライセンス" options={getList()} bind:value={$license} />
   </div>
 
   <div class="justify-end">
