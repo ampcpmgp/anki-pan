@@ -50,7 +50,11 @@ mock({
     })
   },
 
-  setNewBreads() {
+  setBreadImage() {
+    userInput.breadNew.image.set(images.earthBig)
+  },
+
+  setNewBread() {
     userInput.breadNew.image.set(images.earthBig)
     userInput.breadNew.answers.set(dummyData.bread.answers)
   },
