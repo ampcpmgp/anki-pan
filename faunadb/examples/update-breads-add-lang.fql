@@ -1,0 +1,42 @@
+Foreach(
+  Map(
+    Paginate(
+      Documents(Collection("Breads")),
+      {
+        size: 1000
+      }
+    ),
+    Lambda(
+      "ref",
+      Get(Var("ref"))
+    )
+  ),
+  Lambda(
+    "item",
+    Update(
+      Select(
+        ["ref"],
+        Var("item")
+      ),
+      {
+        data: {
+          answers: Map(
+            Select(
+              ["data", "answers"],
+              Var("item")
+            ),
+            Lambda(
+              "answer",
+              Merge(
+                Var("answer"),
+                {
+                  lang: "ja-JP"
+                }
+              )
+            )
+          )
+        }
+      }
+    )
+  )
+)

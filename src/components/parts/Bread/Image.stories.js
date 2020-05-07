@@ -32,6 +32,15 @@ const answers = [
     reading: '',
     lang: Lang.JA_JP,
   },
+  {
+    left: 0.87,
+    top: 0.86,
+    width: 0.07,
+    height: 0.059,
+    name: 'OKINAWA',
+    reading: '',
+    lang: Lang.EN_US,
+  },
 ]
 
 export const 画像未設定 = () => ({

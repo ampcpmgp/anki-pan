@@ -1,4 +1,5 @@
 import Dexie from 'dexie'
+import { JA_JP } from '../../const/lang'
 import { SIZE } from '../../const/pager'
 
 const db = new Dexie('AnkipanDatabase')
@@ -21,6 +22,19 @@ db.version(3)
   .upgrade(trans => {
     return trans.breads.toCollection().modify(bread => {
       bread.timestamp = Date.now()
+    })
+  })
+db.version(4)
+  .stores({
+    breads:
+      '&nanoId,timestamp,userNanoId,userId,title,answers,isPublic,source,license',
+    favorites: '++,userNanoId,breadNanoId,&[userNanoId+breadNanoId]',
+  })
+  .upgrade(trans => {
+    return trans.breads.toCollection().modify(bread => {
+      bread.answers.forEach(answer => {
+        answer.lang = JA_JP
+      })
     })
   })
 

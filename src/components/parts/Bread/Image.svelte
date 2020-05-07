@@ -108,7 +108,7 @@
       return
     }
 
-    await speak(answer.reading || answer.name)
+    await speak(answer.reading || answer.name, answer.lang)
 
     if (isPause) {
       completeSpeaking()
@@ -176,6 +176,7 @@
     if (isSelecting) return
 
     answerNewIndex = answerIndex = answers.length
+    answerLang = Lang.JA_JP
     isSelecting = true
   }
 
@@ -251,6 +252,7 @@
     mousePos.y = (answer.top + answer.height) * size.bread.height
     answerName = answer.name
     answerReading = answer.reading
+    answerLang = answer.lang
 
     answerNewIndex = answerIndex = i
   }
