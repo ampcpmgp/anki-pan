@@ -58,6 +58,10 @@ export function getUsableList() {
 
 export function getSelectableList(value) {
   const list = getUsableList()
+  const isExists = list.some(item => item.value === value)
+
+  if (isExists) return list
+
   list.push({
     value,
     name: getName(value),

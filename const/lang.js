@@ -1,3 +1,4 @@
+// Android では区切り文字が `_` なため要注意。
 module.exports = {
   JA_JP: 'ja-JP',
   EN_US: 'en-US',

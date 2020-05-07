@@ -4,7 +4,8 @@
   export let value = ''
 
   function getSelectedColor() {
-    return options.find(option => option.value === value).color || 'initial'
+    const option = options.find(option => option.value === value)
+    return (option && option.color) || 'initial'
   }
 </script>
 

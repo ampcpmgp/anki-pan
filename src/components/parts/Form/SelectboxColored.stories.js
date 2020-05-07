@@ -77,3 +77,12 @@ export const 横長文字 = () => ({
     ),
   },
 })
+
+export const 空オプション = () => ({
+  Component: SelectboxColored,
+  props: {
+    label: '選択',
+    options: [],
+    value: '',
+  },
+})
