@@ -1,4 +1,5 @@
 import { default as Lang } from '../../const/lang'
+import { langs } from './speech'
 
 // 参考: https://so-zou.jp/web-app/tech/data/code/language.htm
 export function getName(lang) {
@@ -49,4 +50,19 @@ export function getList() {
     value,
     name: getName(value),
   }))
+}
+
+export function getUsableList() {
+  return getList().filter(item => langs.includes(item.value))
+}
+
+export function getSelectableList(value) {
+  const list = getUsableList()
+  list.push({
+    value,
+    name: getName(value),
+    color: 'rgba(0, 0, 0, 0.3)',
+  })
+
+  return list
 }

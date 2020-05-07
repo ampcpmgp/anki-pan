@@ -2,15 +2,20 @@
   import { createEventDispatcher } from 'svelte'
   import fether from 'feather-icons'
   import { slide } from 'svelte/transition'
+  import { default as Lang } from '../../../../const/lang'
   import { bread } from '../../../../utils/validator'
   import { speak } from '../../../utils/speech'
+  import { getSelectableList } from '../../../utils/lang'
+
   import Text from '../Form/Text'
   import Button from '../Form/Button'
   import Number from '../Form/Number'
+  import { default as SelectboxColored } from '../Form/SelectboxColored'
 
   export let name = ''
   export let reading = ''
-  export let index = -1
+  export let index = 0
+  export let lang = Lang.JA_JP
   export let isEdit = false
   export let coord = {
     top: 0,
@@ -26,6 +31,7 @@
 
   const BALLOON_WIDTH = '30px'
   const dispatch = createEventDispatcher()
+  const langOptions = getSelectableList(lang)
 
   const svg = {
     volume2: fether.icons['volume-2'].toSvg({
@@ -133,10 +139,13 @@
     display: grid;
   }
 
-  .index {
+  .sub-info {
     z-index: 1;
     grid-row: 3;
-    width: 90px;
+    display: grid;
+    grid-template-columns: 90px auto;
+    align-items: center;
+    grid-column-gap: 20px;
   }
 
   .speak {
@@ -152,7 +161,7 @@
   .buttons {
     justify-self: end;
     grid-row: 4;
-    grid-column: span 2;
+    grid-column: span 3;
   }
 </style>
 
@@ -173,7 +182,10 @@
     </div>
 
     {#if !existsReading}
-      <button type="button" class="speak name" on:click={() => speak(name)}>
+      <button
+        type="button"
+        class="speak name"
+        on:click={() => speak(lang, name)}>
         {@html svg.volume2}
       </button>
     {/if}
@@ -195,8 +207,9 @@
       </button>
     {/if}
 
-    <div class="index">
+    <div class="sub-info">
       <Number label="順番" bind:value={index} />
+      <SelectboxColored label="" options={langOptions} bind:value={lang} />
     </div>
 
     <div class="buttons">
