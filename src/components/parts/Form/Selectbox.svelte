@@ -1,4 +1,5 @@
 <script>
+  export let label = ''
   export let options = []
   export let value = ''
 </script>
@@ -12,10 +13,10 @@
 </style>
 
 <label>
-  ライセンス
+  {label}
   <select bind:value>
     {#each options as option}
-      <option value={option.key}>{option.value}</option>
+      <option value={option.value}>{option.name}</option>
     {/each}
   </select>
 </label>

@@ -18,8 +18,10 @@ Home:
     - [user.nanoId.set, dummy-user-nanoid]
     - [user.id.set, dummy-user-id]
     - [page, /breads/new]
-  パン画像設定有り:
-    - [setNewBreads]
+  パン画像 設定有り:
+    - [setBreadImage]
+  パン画像＆回答 設定有り:
+    - [setNewBread]
   作成エラー: [userBread.bakedErrMsg.set, 'サーバーエラー']
 パン詳細画面 - 編集モード:
   funcs:

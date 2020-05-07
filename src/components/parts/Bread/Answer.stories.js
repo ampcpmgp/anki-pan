@@ -1,5 +1,17 @@
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs'
+import {
+  withKnobs,
+  text,
+  boolean,
+  number,
+  select,
+} from '@storybook/addon-knobs'
+import { default as cloneDeep } from 'lodash.clonedeep'
+import { default as Lang } from '../../../../const/lang'
 import Answer from './Answer.svelte'
+
+const LangWithOther = cloneDeep(Lang)
+
+LangWithOther.OTHER_OTHER = 'other_OTHER'
 
 export default {
   title: 'Bread/Answer',
@@ -14,11 +26,12 @@ export const エラー無し_上向き = () => ({
     isEdit: boolean('isEdit', false),
     reading: text('reading', ''),
     index: number('index', 0),
+    lang: select('lang', Lang, Lang.JA_JP),
     coord: {
       top: 0.2,
-      left: 0.2,
+      left: 0.8,
       bottom: 0.4,
-      right: 0.4,
+      right: 0.2,
     },
   },
   on: {
@@ -36,11 +49,12 @@ export const エラー無し_下向き = () => ({
     isEdit: boolean('isEdit', false),
     reading: text('reading', ''),
     index: number('index', 0),
+    lang: select('lang', Lang, Lang.JA_JP),
     coord: {
       top: 0.7,
-      left: 0.2,
+      left: 0.8,
       bottom: 0.8,
-      right: 0.4,
+      right: 0.2,
     },
   },
   on: {
@@ -61,11 +75,12 @@ export const エラー有り = () => ({
     isEdit: boolean('isEdit', false),
     reading: text('reading', ''),
     index: number('index', 0),
+    lang: select('lang', Lang, Lang.JA_JP),
     coord: {
       top: 0.2,
-      left: 0.2,
+      left: 0.8,
       bottom: 0.4,
-      right: 0.4,
+      right: 0.2,
     },
   },
   on: {
@@ -83,11 +98,58 @@ export const 編集可能 = () => ({
     isEdit: boolean('isEdit', true),
     reading: text('reading', 'さくじょかのう'),
     index: number('index', 2),
+    lang: select('lang', Lang, Lang.JA_JP),
     coord: {
       top: 0.2,
-      left: 0.2,
+      left: 0.8,
       bottom: 0.4,
-      right: 0.4,
+      right: 0.2,
+    },
+  },
+  on: {
+    cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
+  },
+})
+
+export const 英語 = () => ({
+  Component: Answer,
+  props: {
+    name: text('name', 'hello'),
+    isEdit: boolean('isEdit', true),
+    reading: text('reading', ''),
+    index: number('index', 2),
+    lang: select('lang', Lang, Lang.EN_US),
+    coord: {
+      top: 0.2,
+      left: 0.8,
+      bottom: 0.4,
+      right: 0.2,
+    },
+  },
+  on: {
+    cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
+  },
+})
+
+export const 対応外言語 = () => ({
+  Component: Answer,
+  props: {
+    name: text('name', '削除可能'),
+    isEdit: boolean('isEdit', true),
+    reading: text('reading', 'さくじょかのう'),
+    index: number('index', 2),
+    lang: select('lang', LangWithOther, LangWithOther.OTHER_OTHER),
+    coord: {
+      top: 0.2,
+      left: 0.8,
+      bottom: 0.4,
+      right: 0.2,
     },
   },
   on: {

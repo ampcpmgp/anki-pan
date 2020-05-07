@@ -1,32 +1,58 @@
-const utterance = new SpeechSynthesisUtterance()
+import { default as Lang } from '../../const/lang'
 
-function getVoice(voices, name) {
+const utterance = new SpeechSynthesisUtterance()
+export const langs = []
+
+function getVoiceByName(name) {
+  const voices = speechSynthesis.getVoices()
   return voices.find(voice => name === voice.name)
 }
 
-function setVoice() {
+function getVoiceByLang(lang) {
   const voices = speechSynthesis.getVoices()
+  return voices.find(voice => lang === voice.lang)
+}
 
-  utterance.voice =
-    getVoice(voices, 'Google 日本語') ||
-    getVoice(voices, 'Microsoft Haruka Desktop - Japanese')
+export function setUsableLangs() {
+  if (langs.length > 0) return
+
+  const voices = speechSynthesis.getVoices()
+  const duplicatedLangs = voices.map(voice => voice.lang)
+  langs.push(...new Set(duplicatedLangs))
+}
+
+function getVoice(lang) {
+  switch (lang) {
+    case Lang.JA_JP:
+      return (
+        getVoiceByName('Google 日本語') ||
+        getVoiceByName('Microsoft Haruka Desktop - Japanese') ||
+        getVoiceByLang(lang)
+      )
+    default:
+      return getVoiceByLang(lang)
+  }
 }
 
 function init() {
   utterance.pitch = 1
-  utterance.lang = 'ja-JP'
   utterance.rate = 1.0
 
   // for google chrome
-  window.speechSynthesis.onvoiceschanged = function() {
-    setVoice()
+  speechSynthesis.onvoiceschanged = function() {
+    setUsableLangs()
   }
 
-  setVoice()
+  setUsableLangs()
 }
 
-export function speak(text) {
+export function speak(text, lang) {
   utterance.text = text
+  utterance.lang = lang
+
+  const voice = getVoice(lang)
+  utterance.voice = voice || getVoiceByLang(langs[0])
+
   speechSynthesis.speak(utterance)
 
   return new Promise(resolve => {

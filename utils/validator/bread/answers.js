@@ -1,7 +1,9 @@
 const Validation = require('../../../const/validation')
+const Lang = require('../../../const/lang')
 const MAX_LENGTH = 1000
 const answerName = require('./answer-name')
 const reading = require('./reading')
+const langs = Object.values(Lang)
 
 exports.validate = value => {
   if (value.length === 0) {
@@ -15,13 +17,14 @@ exports.validate = value => {
   if (
     value.some(
       item =>
-        Object.keys(item).length !== 6 ||
+        Object.keys(item).length !== 7 ||
         !(item.left >= 0 && item.left <= 1) ||
         !(item.top >= 0 && item.top <= 1) ||
         !(item.width >= 0 && item.width <= 1) ||
         !(item.height >= 0 && item.height <= 1) ||
         !answerName.isValid(item.name) ||
-        !reading.isValid(item.reading)
+        !reading.isValid(item.reading) ||
+        !langs.includes(item.lang)
     )
   ) {
     return Validation.OTHER
