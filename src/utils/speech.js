@@ -2,22 +2,34 @@ import { default as Lang } from '../../const/lang'
 
 const utterance = new SpeechSynthesisUtterance()
 export const langs = []
+const voices = [] // { formalLang, value: voice }
 
 function getVoiceByName(name) {
-  const voices = speechSynthesis.getVoices()
-  return voices.find(voice => name === voice.name)
+  const voice = voices.find(voice => name === voice.value.name)
+  return voice && voice.value
 }
 
 function getVoiceByLang(lang) {
-  const voices = speechSynthesis.getVoices()
-  return voices.find(voice => lang === voice.lang)
+  const voice = voices.find(voice => lang === voice.formalLang)
+  return voice && voice.value
 }
 
 export function setUsableLangs() {
   if (langs.length > 0) return
 
-  const voices = speechSynthesis.getVoices()
-  const duplicatedLangs = voices.map(voice => voice.lang)
+  // Android chrome@81.0 では、言語と国の区切り文字を '_' としている。
+  // RFC 4646 によると `-` が正しい模様。
+  // 参考 - https://www.asahi-net.or.jp/~ax2s-kmtn/ref/iso639.html
+  // そのため、ハイフンに置き換えて利用する。
+  speechSynthesis.getVoices().forEach(voice => {
+    const formalLang = voice.lang.replace(/_/g, '-')
+    voices.push({
+      formalLang,
+      value: voice,
+    })
+  })
+
+  const duplicatedLangs = voices.map(voice => voice.formalLang)
   langs.push(...new Set(duplicatedLangs))
 }
 
