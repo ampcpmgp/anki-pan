@@ -124,9 +124,9 @@ export const 対応外言語 = () => ({
     lang: select('lang', LangWithOther, LangWithOther.OTHER_OTHER),
     coord: {
       top: 0.2,
-      left: 0.2,
+      left: 0.8,
       bottom: 0.4,
-      right: 0.4,
+      right: 0.2,
     },
   },
   on: {

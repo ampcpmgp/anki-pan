@@ -185,7 +185,7 @@
       <button
         type="button"
         class="speak name"
-        on:click={() => speak(lang, name)}>
+        on:click={() => speak(name, lang)}>
         {@html svg.volume2}
       </button>
     {/if}
@@ -202,7 +202,7 @@
       <button
         type="button"
         class="speak reading"
-        on:click={() => speak(reading)}>
+        on:click={() => speak(reading, lang)}>
         {@html svg.volume2}
       </button>
     {/if}
