@@ -39,7 +39,7 @@ function init() {
   utterance.rate = 1.0
 
   // for google chrome
-  window.speechSynthesis.onvoiceschanged = function() {
+  speechSynthesis.onvoiceschanged = function() {
     setUsableLangs()
   }
 
