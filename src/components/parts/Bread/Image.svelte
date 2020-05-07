@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher, beforeUpdate } from 'svelte'
+  import { default as Lang } from '../../../../const/lang'
   import { getImageSize } from '../../../utils/file'
   import sleep from '../../../utils/sleep'
   import { speak } from '../../../utils/speech'
@@ -23,6 +24,7 @@
   let answerIndex = -1
   let answerNewIndex = -1
   let speakingIndex = -1
+  let answerLang = Lang.JA_JP
   let isSelecting = false
   let answerLoc = { top: 0, left: 0 }
   let answerName = ''
@@ -210,6 +212,7 @@
         ...currentRectangle,
         name: answerName,
         reading: answerReading,
+        lang: answerLang,
       },
       index: answerIndex,
       newIndex: answerNewIndex,
@@ -224,6 +227,7 @@
         ...currentRectangle,
         name: answerName,
         reading: answerReading,
+        lang: answerLang,
       },
       newIndex: answerNewIndex,
     })
@@ -377,6 +381,7 @@
           bind:name={answerName}
           bind:reading={answerReading}
           bind:index={answerNewIndex}
+          bind:lang={answerLang}
           isEdit={isAnswerEdit}
           coord={getAnswerCoord()}
           on:cancel={init}

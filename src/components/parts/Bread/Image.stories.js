@@ -1,10 +1,11 @@
 import { withKnobs, boolean, number } from '@storybook/addon-knobs'
-import Image from './Image.svelte'
+import Lang from '../../../../const/lang'
 import earthMini from '../../../images/stories/240px-The_Earth_seen_from_Apollo_17.jpg'
 import earthBig from '../../../images/stories/1023px-The_Earth_seen_from_Apollo_17.jpg'
 import 都道府県svg from '../../../images/stories/Prefectures_of_Japan_nallow_gray_labeled_Jp.svg'
 import landScapeMini from '../../../images/stories/Rheinfall_Panorama_revised_mini.jpg'
 import landScapeBig from '../../../images/stories/Rheinfall_Panorama_revised_big.jpg'
+import Image from './Image.svelte'
 
 export default {
   title: 'Bread/Image',
@@ -20,6 +21,7 @@ const answers = [
     height: 0.07,
     name: '北海道',
     reading: 'ほっかいどー',
+    lang: Lang.JA_JP,
   },
   {
     left: 0.72,
@@ -28,6 +30,7 @@ const answers = [
     height: 0.029,
     name: '神奈川県',
     reading: '',
+    lang: Lang.JA_JP,
   },
 ]
 
