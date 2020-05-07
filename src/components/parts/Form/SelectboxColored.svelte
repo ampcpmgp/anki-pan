@@ -9,6 +9,12 @@
 </script>
 
 <style>
+  /* 参考: https://stackoverflow.com/questions/10672586/how-to-make-select-elements-shrink-to-max-width-percent-style-within-fieldset */
+  select {
+    width: 100%;
+    max-width: 100%;
+  }
+
   label {
     display: inline-grid;
     grid-auto-flow: column;
