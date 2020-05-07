@@ -114,6 +114,29 @@ export const 編集可能 = () => ({
   },
 })
 
+export const 英語 = () => ({
+  Component: Answer,
+  props: {
+    name: text('name', 'hello'),
+    isEdit: boolean('isEdit', true),
+    reading: text('reading', ''),
+    index: number('index', 2),
+    lang: select('lang', Lang, Lang.EN_US),
+    coord: {
+      top: 0.2,
+      left: 0.8,
+      bottom: 0.4,
+      right: 0.2,
+    },
+  },
+  on: {
+    cancel: console.info,
+    create: console.info,
+    delete: console.info,
+    update: console.info,
+  },
+})
+
 export const 対応外言語 = () => ({
   Component: Answer,
   props: {

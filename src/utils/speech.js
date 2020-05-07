@@ -14,6 +14,8 @@ function getVoiceByLang(lang) {
 }
 
 export function setUsableLangs() {
+  if (langs.length > 0) return
+
   const voices = speechSynthesis.getVoices()
   const duplicatedLangs = voices.map(voice => voice.lang)
   langs.push(...new Set(duplicatedLangs))
