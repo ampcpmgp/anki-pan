@@ -18,7 +18,7 @@ export function setUsableLangs() {
   if (langs.length > 0) return
 
   // Android chrome@81.0 では、言語と国の区切り文字を '_' としている。
-  // RFC 4646 によると `-` が正しい模様。
+  // RFC 4646 では `-` と定めている模様。
   // 参考 - https://www.asahi-net.or.jp/~ax2s-kmtn/ref/iso639.html
   // そのため、ハイフンに置き換えて利用する。
   speechSynthesis.getVoices().forEach(voice => {
