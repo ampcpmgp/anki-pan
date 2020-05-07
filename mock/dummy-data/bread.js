@@ -15,6 +15,7 @@ export default {
       height: 0.1,
       name: '北海道',
       reading: '',
+      lang: 'ja-JP',
     },
     {
       top: 0.84,
@@ -23,6 +24,7 @@ export default {
       height: 0.1,
       name: '沖縄',
       reading: 'おきなわけん',
+      lang: 'ja-JP',
     },
   ],
   isPublic: true,
