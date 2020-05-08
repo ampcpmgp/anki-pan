@@ -37,6 +37,7 @@
     display: grid;
     width: 100%;
     height: 100%;
+    text-align: center;
   }
 
   :global(.bread-image-file-drop.drop-valid) {
@@ -73,7 +74,13 @@
   accept="image/*"
   on:filedrop={onFileDrop}>
   <div class="message">
-    <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
+    <p class="valid">
+      画像ファイルをドラッグ＆ドロップ
+      <br />
+      OR
+      <br />
+      画像データをコピー＆ペースト
+    </p>
     <p class="invalid">このファイルは指定できません</p>
   </div>
 </file-drop>
