@@ -47,7 +47,7 @@ export async function fetch() {
 }
 
 export async function reload() {
-  fetched.set(false)
+  reset()
   await fetch()
 }
 
