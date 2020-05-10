@@ -1,4 +1,4 @@
-name: Deploy to Now
+name: Deploy to Vercel
 
 on:
   push:
