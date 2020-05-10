@@ -5,7 +5,7 @@
 ## Infrastructure
 
 * Auth0 - https://auth0.com/jp/
-* ZEIT Now - https://zeit.co/
+* Vercel - https://vercel.com/
 * FaunaDB - https://fauna.com/
 
 ##  Setup
