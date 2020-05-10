@@ -47,6 +47,7 @@
   $: imageAspectRatio = size.image.width / size.image.height
   $: isLandScape = imageAspectRatio > wrapperAspectRatio
   $: isAnswerEdit = answerIndex !== answers.length
+  $: existsPinned = pin.x !== -1 && pin.y !== -1
   $: {
     currentRectangle.left =
       (pin.x > mousePos.x ? mousePos.x : pin.x) / size.bread.width
@@ -157,10 +158,6 @@
     return { x: -1, y: -1 }
   }
 
-  function existsPinned() {
-    return pin.x !== -1 && pin.y !== -1
-  }
-
   function onBreadMouseDown(e) {
     if (!editable) return
     if (isSelecting) return
@@ -172,7 +169,7 @@
   }
 
   function onBreadMouseUp() {
-    if (!existsPinned()) return
+    if (!existsPinned) return
     if (isSelecting) return
 
     answerNewIndex = answerIndex = answers.length
@@ -181,7 +178,7 @@
   }
 
   function onBreadMouseMove(e) {
-    if (!existsPinned()) return
+    if (!existsPinned) return
     if (isSelecting) return
 
     const { x, y } = getOffset(e)
@@ -363,10 +360,12 @@
       on:mouseleave={onBreadMouseLeave}>
       <img src={image} alt="" />
 
-      <div
-        class="rectangle current"
-        bind:this={currentRectangleElm}
-        style={currentRectangleStyle} />
+      {#if existsPinned}
+        <div
+          class="rectangle current"
+          bind:this={currentRectangleElm}
+          style={currentRectangleStyle} />
+      {/if}
 
       {#each answers as answer, i}
         <div
