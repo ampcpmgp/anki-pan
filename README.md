@@ -1,6 +1,6 @@
-## Anki Pan
+# Anki Pan
 
-絵と音声と隠し文字で学ぶ、暗記アプリ。
+絵と音声と隠し文字で学ぶ、暗記アプリ。 https://anki-pan.now.sh/
 
 ## Infrastructure
 
@@ -15,7 +15,7 @@ npm i
 npm i now -g
 ```
 
-## Local Mock (with am-mocktimes)
+## Mock (with am-mocktimes)
 
 ```shell
 npm start
@@ -32,3 +32,7 @@ npm run storybook
 ```shell
 npm test
 ```
+
+## Other
+
+* Github Pages ( 最新のモック・パーツ一覧を確認可能 )
