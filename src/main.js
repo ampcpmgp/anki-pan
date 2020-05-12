@@ -1,5 +1,5 @@
 import 'file-drop-element'
-import 'modern-css-reset/dist/reset.min.css'
+import 'modern-css-reset'
 import App from './components/App'
 import './states/auth'
 import './utils/idb'
