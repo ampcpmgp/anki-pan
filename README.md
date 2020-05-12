@@ -35,4 +35,4 @@ npm test
 
 ## Other
 
-* Github Pages ( 最新のモック・パーツ一覧を確認可能 )
+* [Github Pages](https://ampcpmgp.github.io/anki-pan/) ( 最新のモック・パーツ一覧を確認可能 )
