@@ -24,6 +24,7 @@ Home:
     - [setNewBread]
   作成エラー: [userBread.bakedErrMsg.set, 'サーバーエラー']
 パン詳細画面 - 編集モード:
+  noLink: true
   funcs:
     - [user.nanoId.set, dummy-user-nanoid]
     - [user.id.set, dummy-user-id]
@@ -36,8 +37,10 @@ Home:
     - [setBreadOnDB]
     - [page, /breads/detail/error-nanoid]
 パン詳細画面 - 閲覧モード:
+  noLink: true
   ローカルにパン所持 未ログイン:
     - [page, /breads/detail/has-bread-nanoid]
+    - [setBreadOnDB]
   ローカルにパン不所持 ログイン済 お気に入り:
     - [idb.deleteFavorite, {userNanoId: "dummy-user-nanoid", breadNanoId: "has-bread-nanoid"}]
     - [sleep, 0]
