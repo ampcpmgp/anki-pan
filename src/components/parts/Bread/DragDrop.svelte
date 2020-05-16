@@ -24,7 +24,7 @@
     const image = await getImage(file)
 
     if (bread.image.validate(image) === Validation.SIZE_OVER) {
-      alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
+      alert('ファイルサイズは1MBまでにしてください🙇🙇‍♀')
       return
     }
 
@@ -74,7 +74,13 @@
   accept="image/*"
   on:filedrop={onFileDrop}>
   <div class="message">
-    <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
+    <p class="valid">
+      画像ファイルをドラッグ＆ドロップ
+      <br />
+      OR
+      <br />
+      画像データをコピー＆ペースト
+    </p>
     <p class="invalid">このファイルは指定できません</p>
   </div>
 </file-drop>

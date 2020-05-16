@@ -1,5 +1,5 @@
 const Validation = require('../../../const/validation')
-exports.MAX_IMAGE_SIZE = 1024 * 1024 * 3 // 3MB
+exports.MAX_IMAGE_SIZE = 1024 * 1024 * 1 // 1MB
 
 exports.validate = value => {
   if (value.length === 0) {
