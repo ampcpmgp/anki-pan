@@ -24,7 +24,7 @@
     const image = await getImage(file)
 
     if (bread.image.validate(image) === Validation.SIZE_OVER) {
-      alert('ファイルサイズは2MBまでにしてください🙇🙇‍♀')
+      alert('ファイルサイズは1MBまでにしてください🙇🙇‍♀')
       return
     }
 
