@@ -122,7 +122,6 @@
 
     buttonDisabled = true
 
-    idb.deleteBread(nanoId)
     await remove(nanoId)
 
     buttonDisabled = false
