@@ -127,6 +127,8 @@
     buttonDisabled = false
 
     if (!$removedErrMsg) {
+      await idb.deleteBread(nanoId)
+
       replace('/')
       $success = 'パン削除完了'
       reset()
