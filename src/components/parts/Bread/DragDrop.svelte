@@ -74,13 +74,7 @@
   accept="image/*"
   on:filedrop={onFileDrop}>
   <div class="message">
-    <p class="valid">
-      画像ファイルをドラッグ＆ドロップ
-      <br />
-      OR
-      <br />
-      画像データをコピー＆ペースト
-    </p>
+    <p class="valid">画像ファイルをドラッグ＆ドロップ</p>
     <p class="invalid">このファイルは指定できません</p>
   </div>
 </file-drop>
