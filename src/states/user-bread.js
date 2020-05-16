@@ -124,7 +124,7 @@ export async function remove(nanoId) {
     }
 
     if (response.status === 404) {
-      removedErrMsg.set('該当のパンが見つかりません')
+      removedErrMsg.set('')
       return
     }
 
