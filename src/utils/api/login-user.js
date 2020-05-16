@@ -37,3 +37,18 @@ export function put({ endpoint, Authorization, data = {} }) {
     },
   })
 }
+
+function remove({ endpoint, Authorization, data = {} }) {
+  const url = `${API_ROOT}${endpoint}`
+
+  return fetch(url, {
+    method: 'DELETE',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization,
+    },
+  })
+}
+
+export { remove as delete }
