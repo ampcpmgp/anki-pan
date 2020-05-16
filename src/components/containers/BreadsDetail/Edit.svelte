@@ -46,8 +46,7 @@
 
   let playbackIndex = -1
   let imageHeight = 0
-  let updateButtonDisabled = false
-  let deleteButtonDisabled = false
+  let buttonDisabled = false
   let isRefreshing = false
   let isPause = true
   let isPlaying = false
@@ -121,11 +120,11 @@
 
     if (!isConfirm) return
 
-    deleteButtonDisabled = true
+    buttonDisabled = true
 
     await remove(nanoId)
 
-    deleteButtonDisabled = false
+    buttonDisabled = false
 
     if (!$removedErrMsg) {
       replace('/')
@@ -167,13 +166,13 @@
       return
     }
 
-    updateButtonDisabled = true
+    buttonDisabled = true
 
     const bread = getBread(nanoId)
 
     await update(bread)
 
-    updateButtonDisabled = false
+    buttonDisabled = false
 
     if (!$updatedErrMsg) {
       replace('/')
@@ -336,12 +335,12 @@
     <Button
       text="パン削除"
       passive
-      disabled={deleteButtonDisabled}
+      disabled={buttonDisabled}
       on:click={deleteBread} />
     <Button
       text="パン更新"
       active
-      disabled={updateButtonDisabled}
+      disabled={buttonDisabled}
       on:click={updateBread} />
   </div>
 
