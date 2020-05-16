@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=mock parcel mock/testbed/*.html",
-    "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html --public-url ./",
+    "start-dev": "cross-env NODE_ENV=local parcel watch src/index.html --public-url ./ -d public/dist",
     "test": "ava",
     "test:watch": "npm run test -- --watch",
     "dist": "run-s dist:*",

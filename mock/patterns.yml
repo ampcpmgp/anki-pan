@@ -33,6 +33,10 @@ Home:
   ローカルにパン所持:
     - [page, /breads/detail/has-bread-nanoid]
     - [setBreadOnDB]
+  パン更新エラー:
+    - [page, /breads/detail/has-bread-nanoid]
+    - [setBreadOnDB]
+    - [userBread.updatedErrMsg.set, 'サーバーエラー']
   パン取得エラー:
     - [setBreadOnDB]
     - [page, /breads/detail/error-nanoid]

@@ -17,9 +17,14 @@
     bread,
     fetchFromServer,
     fromWhere,
-    errMsg,
+    errMsg as fetchedErrMsg,
   } from '../../../states/bread-detail'
-  import { update, updatedErrMsg } from '../../../states/user-bread'
+  import {
+    update,
+    remove,
+    removedErrMsg,
+    updatedErrMsg,
+  } from '../../../states/user-bread'
   import { success } from '../../../states/alert'
   import { reset } from '../../../states/breads-summary'
   import { getList } from '../../../utils/license'
@@ -52,6 +57,7 @@
   $: titleErrMsg = validator.bread.title.getErrMsg($title)
   $: sourceErrMsg = validator.bread.source.getErrMsg($source)
   $: answersErrMsg = validator.bread.answers.getErrMsg($answers)
+  $: apiErrMsg = $updatedErrMsg || $removedErrMsg
 
   onMount(() => {
     updateFromBreadDetail()
@@ -105,6 +111,28 @@
   }
   function onAnswerEnd() {
     isPlaying = false
+  }
+
+  async function deleteBread() {
+    const isConfirm = window.confirm(
+      '[パンの削除]\nこの操作は取り消せません。削除しますか？'
+    )
+
+    if (!isConfirm) return
+
+    buttonDisabled = true
+
+    await remove(nanoId)
+
+    buttonDisabled = false
+
+    if (!$removedErrMsg) {
+      replace('/')
+      $success = 'パン削除完了'
+      reset()
+
+      idb.deleteBread(nanoId)
+    }
   }
 
   async function updateBread() {
@@ -163,9 +191,9 @@
     isRefreshing = true
     await fetchFromServer(nanoId)
 
-    if ($errMsg) {
+    if ($fetchedErrMsg) {
       isRefreshing = false
-      alert($errMsg)
+      alert($fetchedErrMsg)
       return
     }
 
@@ -227,6 +255,7 @@
   }
 
   .error {
+    margin-top: -12px;
     color: red;
   }
 </style>
@@ -304,13 +333,18 @@
 
   <div class="justify-end">
     <Button
+      text="パン削除"
+      passive
+      disabled={buttonDisabled}
+      on:click={deleteBread} />
+    <Button
       text="パン更新"
       active
       disabled={buttonDisabled}
       on:click={updateBread} />
-
-    {#if $updatedErrMsg}
-      <p class="error">{$updatedErrMsg}</p>
-    {/if}
   </div>
+
+  {#if apiErrMsg}
+    <p class="justify-end error">{apiErrMsg}</p>
+  {/if}
 </div>

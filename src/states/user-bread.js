@@ -4,6 +4,7 @@ import { getRawIdToken } from './auth'
 
 export const bakedErrMsg = writable('')
 export const updatedErrMsg = writable('')
+export const removedErrMsg = writable('')
 
 export async function bake({
   title,
@@ -100,5 +101,35 @@ export async function update({
     updatedErrMsg.set('')
   } catch (error) {
     updatedErrMsg.set('その他エラー')
+  }
+}
+
+export async function remove(nanoId) {
+  try {
+    removedErrMsg.set('')
+
+    const Authorization = await getRawIdToken()
+
+    const response = await loginUser.delete({
+      endpoint: 'user/bread/delete',
+      Authorization,
+      data: {
+        nanoId,
+      },
+    })
+
+    if (response.status === 503) {
+      removedErrMsg.set('サーバーエラー')
+      return
+    }
+
+    if (response.status === 404) {
+      removedErrMsg.set('該当のパンが見つかりません')
+      return
+    }
+
+    removedErrMsg.set('')
+  } catch (error) {
+    removedErrMsg.set('その他エラー')
   }
 }
