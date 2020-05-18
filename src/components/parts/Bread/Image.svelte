@@ -83,10 +83,15 @@
   function completeSpeaking() {
     speakingIndex = -1
     isSpeaking = false
+    document.body.style.backgroundColor = 'initial'
   }
 
   async function play(answer) {
     isSpeaking = true
+
+    document.body.style.backgroundColor = ['green', 'blue', 'purple'][
+      Math.floor(Math.random() * 3)
+    ]
 
     const time =
       Animation.COUNT * Animation.DURATION_MSEC + Animation.BEFORE_SPEAKING_MSEC
@@ -279,6 +284,7 @@
     width: calc(100% - 2px);
     height: calc(var(--height) - 2px);
     margin: 1px;
+    padding: 10px;
   }
 
   .bread {
@@ -286,6 +292,7 @@
     position: relative;
     /* border にしてしまうと、1px分、画像と座標が異るため、box-shadowを利用 */
     box-shadow: 0 0 0 1px darkorange;
+    background-color: white;
   }
   .bread.is-editable {
     cursor: crosshair;
