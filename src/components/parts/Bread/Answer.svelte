@@ -81,11 +81,13 @@
   }
 
   function onWindowKeyUp() {
-    isCtrlDown = false
+    if (event.key === 'Control') {
+      isCtrlDown = false
+    }
   }
 
   function onWindowKeyDown(event) {
-    if (event.ctrlKey) {
+    if (event.key === 'Control') {
       isCtrlDown = true
     }
 
