@@ -23,6 +23,9 @@
     bottom: 0,
     right: 0,
   }
+
+  let isCtrlDown = false
+
   $: answserErrMsg = bread.answerName.getErrMsg(name)
   $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
@@ -77,7 +80,15 @@
     `
   }
 
+  function onWindowKeyUp() {
+    isCtrlDown = false
+  }
+
   function onWindowKeyDown(event) {
+    if (event.ctrlKey) {
+      isCtrlDown = true
+    }
+
     if (event.key === 'Escape') {
       onCancel()
       return
@@ -96,6 +107,12 @@
     if (isEdit && event.key === 'Delete') {
       onDelete()
     }
+  }
+
+  function onSpeak(text, lang) {
+    if (isCtrlDown) return
+
+    speak(text, lang)
   }
 </script>
 
@@ -186,7 +203,7 @@
   }
 </style>
 
-<svelte:window on:keydown={onWindowKeyDown} />
+<svelte:window on:keydown={onWindowKeyDown} on:keyup={onWindowKeyUp} />
 
 <div class="wrapper" style={getWrapperStyle()}>
   <div
@@ -208,7 +225,7 @@
       <button
         type="button"
         class="speak name"
-        on:click={() => speak(name, lang)}>
+        on:click={() => onSpeak(name, lang)}>
         {@html svg.volume2}
       </button>
     {/if}
@@ -225,7 +242,7 @@
       <button
         type="button"
         class="speak reading"
-        on:click={() => speak(reading, lang)}>
+        on:click={() => onSpeak(reading, lang)}>
         {@html svg.volume2}
       </button>
     {/if}
