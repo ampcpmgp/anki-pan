@@ -12,7 +12,6 @@
 
 ```shell
 npm i
-npm i now -g
 ```
 
 ## Mock (with am-mocktimes)
@@ -36,3 +35,4 @@ npm test
 ## Other
 
 * [Github Pages](https://ampcpmgp.github.io/anki-pan/) ( 最新のモック・パーツ一覧を確認可能 )
+* [Setup Infrastructure](./docs/setup-services.md)

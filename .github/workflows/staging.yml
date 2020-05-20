@@ -47,9 +47,9 @@ jobs:
         with:
           node-version: '12.x'
       - name: Deploy to staging
-        uses: amondnet/now-deployment@v2
+        uses: amondnet/vercel-action@v19
         with:
-          zeit-token: ${{ secrets.ZEIT_TOKEN }}
-          now-project-id: ${{ secrets.NOW_PROJECT_ID }}
-          now-org-id: ${{ secrets.NOW_ORG_ID }}
-          now-args: '-A now-staging.json'
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-args: '-A vercel-staging.json'
