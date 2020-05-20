@@ -14,7 +14,7 @@ storybook-static/
 
 # Deploy
 .env
-.now
+.vercel
 
 # Github Pages
 public/*/

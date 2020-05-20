@@ -2,7 +2,11 @@
 
 Create each account - [infrastructure](#infrastructure).
 
-Required `now login`, then set local env vars in  `.env` file on repository root.
+```shell
+npm i vercel -g
+```
+
+Required `vercel login`, then set local env vars in  `.env` file on repository root.
 ```env
 NODE_ENV=local
 FAUNA_DB_SECRET=<staging_fauna_db_secret>
@@ -16,21 +20,21 @@ Setup auth0
 * Create Application, and setting.
 
 Setup Github Actions
-* Set Scretes `NOW_ORG_ID`, `NOW_PROJECT_ID`, `ZEIT_TOKEN`.
+* Set Scretes `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VERCEL_TOKEN`.
 
 ## Local
 
 ```shell
 npm run start-dev
 # Then open other console tab
-now dev
+vercel dev
 # Aceess http://localhost:3000, And open file `./dist/index.html`
 ```
 
 ## Staging
 
 ```shell
-now secrets add staging_fauna_db_secret <staging_fauna_db_secret>
+vercel secrets add staging_fauna_db_secret <staging_fauna_db_secret>
 ```
 
 Each time you deploy, change the following settings in your Auth0 staging environment app to the built URL.
@@ -43,5 +47,5 @@ Each time you deploy, change the following settings in your Auth0 staging enviro
 ## Production
 
 ```shell
-now secrets add prod_fauna_db_secret <prod_fauna_db_secret>
+vercel secrets add prod_fauna_db_secret <prod_fauna_db_secret>
 ```
