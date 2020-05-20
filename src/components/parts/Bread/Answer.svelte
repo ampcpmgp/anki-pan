@@ -27,7 +27,7 @@
   $: readingErrMsg = bread.reading.getErrMsg(reading)
   $: existsReading = !!reading
   $: disabledOk = !name || answserErrMsg || readingErrMsg
-  $: arrowAimUp = coord.top < 0.5
+  $: arrowAimUp = coord.top < 0.7
 
   const BALLOON_WIDTH = '30px'
   const dispatch = createEventDispatcher()
@@ -75,6 +75,27 @@
       ${rightStyle}
       ${isLeft ? leftStyle : ''}
     `
+  }
+
+  function onWindowKeyDown(event) {
+    if (event.key === 'Escape') {
+      onCancel()
+      return
+    }
+
+    if (event.ctrlKey && event.key === 'Enter' && !disabledOk) {
+      if (isEdit) {
+        onUpdate()
+      } else {
+        onCreate()
+      }
+
+      return
+    }
+
+    if (isEdit && event.key === 'Delete') {
+      onDelete()
+    }
   }
 </script>
 
@@ -165,6 +186,8 @@
   }
 </style>
 
+<svelte:window on:keydown={onWindowKeyDown} />
+
 <div class="wrapper" style={getWrapperStyle()}>
   <div
     class="answer"
@@ -213,17 +236,33 @@
     </div>
 
     <div class="buttons">
-      <Button passive text="キャンセル" disabled={false} on:click={onCancel} />
+      <Button
+        passive
+        text="キャンセル"
+        subText="( Escape )"
+        disabled={false}
+        on:click={onCancel} />
 
       {#if isEdit}
-        <Button negative text="削除" disabled={false} on:click={onDelete} />
+        <Button
+          negative
+          text="削除"
+          subText="( Delete )"
+          disabled={false}
+          on:click={onDelete} />
         <Button
           positive
           text="更新"
+          subText="(Ctrl + Enter)"
           disabled={disabledOk}
           on:click={onUpdate} />
       {:else}
-        <Button active text="作成" disabled={disabledOk} on:click={onCreate} />
+        <Button
+          active
+          text="作成"
+          subText="( Ctrl + Enter )"
+          disabled={disabledOk}
+          on:click={onCreate} />
       {/if}
     </div>
   </div>

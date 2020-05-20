@@ -1,5 +1,6 @@
 <script>
   export let text = ''
+  export let subText = ''
   export let hot = false
   export let calm = false
   export let active = false
@@ -21,6 +22,10 @@
     text-align: center;
     border-radius: 4px;
     appearance: none;
+  }
+
+  .sub {
+    font-size: 80%;
   }
 
   .button:hover {
@@ -79,4 +84,7 @@
   class:negative
   on:click>
   {text}
+  {#if subText}
+    <span class="sub">{subText}</span>
+  {/if}
 </button>
