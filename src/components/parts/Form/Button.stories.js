@@ -50,7 +50,7 @@ export const Passive = () => ({
   Component: Button,
   props: {
     text: text('text', 'キャンセル'),
-    subText: text('subText', '(ESC)'),
+    subText: text('subText', '(Escape)'),
     passive: true,
     disabled: boolean('disabled', false),
   },
@@ -63,7 +63,7 @@ export const Negative = () => ({
   Component: Button,
   props: {
     text: text('text', '削除'),
-    subText: text('subText', ''),
+    subText: text('subText', '(Delete)'),
     negative: true,
     disabled: boolean('disabled', false),
   },
@@ -76,7 +76,7 @@ export const Positive = () => ({
   Component: Button,
   props: {
     text: text('text', 'OK'),
-    subText: text('subText', ''),
+    subText: text('subText', '(Ctrl + Enter)'),
     positive: true,
     disabled: boolean('disabled', false),
   },

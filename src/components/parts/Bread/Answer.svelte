@@ -239,7 +239,7 @@
       <Button
         passive
         text="キャンセル"
-        subText="( Escape )"
+        subText="(Escape)"
         disabled={false}
         on:click={onCancel} />
 
@@ -247,7 +247,7 @@
         <Button
           negative
           text="削除"
-          subText="( Delete )"
+          subText="(Delete)"
           disabled={false}
           on:click={onDelete} />
         <Button
@@ -260,7 +260,7 @@
         <Button
           active
           text="作成"
-          subText="( Ctrl + Enter )"
+          subText="(Ctrl + Enter)"
           disabled={disabledOk}
           on:click={onCreate} />
       {/if}
