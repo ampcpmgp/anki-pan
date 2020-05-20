@@ -254,12 +254,6 @@
     answerNewIndex = answerIndex = i
   }
 
-  function onWindowKeyDown(e) {
-    if (e.keyCode === 27) {
-      init()
-    }
-  }
-
   function getAnswerCoord() {
     const { top, left, width, height } = currentRectangle
 
@@ -335,8 +329,6 @@
     max-height: 100%;
   }
 </style>
-
-<svelte:window on:keydown={onWindowKeyDown} />
 
 <div
   class="wrapper"
