@@ -41,6 +41,8 @@ function getVoice(lang) {
         getVoiceByName('Microsoft Haruka Desktop - Japanese') ||
         getVoiceByLang(lang)
       )
+    case Lang.ZH_CN:
+      return getVoiceByName('Google 普通话（中国大陆）') || getVoiceByLang(lang)
     default:
       return getVoiceByLang(lang)
   }
