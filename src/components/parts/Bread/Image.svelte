@@ -173,7 +173,7 @@
     if (isSelecting) return
 
     answerNewIndex = answerIndex = answers.length
-    answerLang = Lang.JA_JP
+    answerLang = answerLang || Lang.JA_JP
     isSelecting = true
   }
 
