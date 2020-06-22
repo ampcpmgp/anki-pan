@@ -325,8 +325,8 @@
     width: 100%;
   }
   .bread:not(.landscape) img {
-    height: 100%;
-    max-height: 100%;
+    /* chrome@83 では以下を指定しないと高さの計算を間違えてしまう。本当は 100% を指定したい */
+    height: calc(var(--height) - 2px);
   }
 </style>
 
