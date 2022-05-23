@@ -58,7 +58,7 @@
     "@auth0/auth0-spa-js": "^1.6.4",
     "array-move": "^2.2.1",
     "compressorjs": "^1.0.6",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "faunadb": "^2.11.1",
     "feather-icons": "^4.26.0",
     "file-drop-element": "^0.2.0",
